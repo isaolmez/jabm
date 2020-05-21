@@ -1,2 +1,7 @@
-/.project
-/.settings/org.eclipse.m2e.core.prefs
+**/target
+
+**/.project
+**/.settings
+
+**/*.iml
+**/.idea
