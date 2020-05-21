@@ -16,24 +16,21 @@ package net.sourceforge.jabm.examples.elfarolbar;
 
 
 /**
- * This strategy forecasts the opposite of the most recent attendance.
- * If the bar was overcrowded last week, then we forecast that it will be
- * under-crowded next week and vice versa.
- * 
- * @author sphelps
+ * This strategy forecasts the opposite of the most recent attendance. If the bar was overcrowded last week, then we
+ * forecast that it will be under-crowded next week and vice versa.
  *
+ * @author sphelps
  */
 public class ContrarianPredictionStrategy extends LowHighPredictionStrategy {
 
-	@Override
-	public void makePrediction() {
-		if (wasOvercrowdedLastWeek()) {
-			predictLow();
-		} else {
-			predictHigh();
-		}
-	}
-	
-	
-	
+    @Override
+    public void makePrediction() {
+        if (wasOvercrowdedLastWeek()) {
+            predictLow();
+        } else {
+            predictHigh();
+        }
+    }
+
+
 }

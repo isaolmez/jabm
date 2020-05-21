@@ -18,6 +18,6 @@ import net.sourceforge.jabm.agent.Agent;
 
 public interface MutationOperator {
 
-	public void mutate(Agent agent);
-	
+    public void mutate(Agent agent);
+
 }

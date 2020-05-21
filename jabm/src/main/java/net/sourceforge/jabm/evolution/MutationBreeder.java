@@ -14,54 +14,52 @@
  */
 package net.sourceforge.jabm.evolution;
 
+import cern.jet.random.engine.RandomEngine;
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.agent.AgentList;
-
 import org.springframework.beans.factory.annotation.Required;
-
-import cern.jet.random.engine.RandomEngine;
 
 public class MutationBreeder implements Breeder {
 
-	protected double mutationProbability = 0.1;
-	
-	protected RandomEngine prng;
-	
-	protected MutationOperator mutationOperator;
-	
-	@Override
-	public AgentList reproduce(AgentList currentGeneration) {
-		for(Agent agent : currentGeneration.getAgents()) {
-			if (prng.nextDouble() < mutationProbability) {
-				mutationOperator.mutate(agent);
-			}
-		}
-		return currentGeneration;
-	}
+    protected double mutationProbability = 0.1;
 
-	public double getMutationProbability() {
-		return mutationProbability;
-	}
+    protected RandomEngine prng;
 
-	public void setMutationProbability(double mutationProbability) {
-		this.mutationProbability = mutationProbability;
-	}
+    protected MutationOperator mutationOperator;
 
-	public RandomEngine getPrng() {
-		return prng;
-	}
+    @Override
+    public AgentList reproduce(AgentList currentGeneration) {
+        for (Agent agent : currentGeneration.getAgents()) {
+            if (prng.nextDouble() < mutationProbability) {
+                mutationOperator.mutate(agent);
+            }
+        }
+        return currentGeneration;
+    }
 
-	@Required
-	public void setPrng(RandomEngine prng) {
-		this.prng = prng;
-	}
+    public double getMutationProbability() {
+        return mutationProbability;
+    }
 
-	public MutationOperator getMutationOperator() {
-		return mutationOperator;
-	}
+    public void setMutationProbability(double mutationProbability) {
+        this.mutationProbability = mutationProbability;
+    }
 
-	public void setMutationOperator(MutationOperator mutationOperator) {
-		this.mutationOperator = mutationOperator;
-	}
-	
+    public RandomEngine getPrng() {
+        return prng;
+    }
+
+    @Required
+    public void setPrng(RandomEngine prng) {
+        this.prng = prng;
+    }
+
+    public MutationOperator getMutationOperator() {
+        return mutationOperator;
+    }
+
+    public void setMutationOperator(MutationOperator mutationOperator) {
+        this.mutationOperator = mutationOperator;
+    }
+
 }

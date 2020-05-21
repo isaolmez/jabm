@@ -17,81 +17,80 @@ package net.sourceforge.jabm.util;
 
 /**
  * <p>
- * A queue with fixed length, which can be useful when tracking a sliding window
- * on a data series
+ * A queue with fixed length, which can be useful when tracking a sliding window on a data series
  * </p>
- * 
+ *
  * @author Jinzhong Niu
  * @version $Revision: 16 $
  */
 
 public class FixedLengthQueue implements Resetable {
 
-	protected double list[];
+    protected double list[];
 
-	protected int curIndex;
+    protected int curIndex;
 
-	protected double sum;
+    protected double sum;
 
-	protected int count;
+    protected int count;
 
-	public FixedLengthQueue(int length) {
-		assert (length >= 0);
-		list = new double[length];
-		initialize();
-	}
+    public FixedLengthQueue(int length) {
+        assert (length >= 0);
+        list = new double[length];
+        initialize();
+    }
 
-	public void initialize() {
-		for (int i = 0; i < list.length; i++) {
-			list[i] = 0;
-		}
-		curIndex = 0;
-		sum = 0;
-		count = 0;
-	}
+    public void initialize() {
+        for (int i = 0; i < list.length; i++) {
+            list[i] = 0;
+        }
+        curIndex = 0;
+        sum = 0;
+        count = 0;
+    }
 
-	public void reset() {
-		initialize();
-	}
+    public void reset() {
+        initialize();
+    }
 
-	public void newData(double value) {
-		sum -= list[curIndex];
-		list[curIndex] = value;
-		sum += value;
+    public void newData(double value) {
+        sum -= list[curIndex];
+        list[curIndex] = value;
+        sum += value;
 
-		curIndex++;
-		curIndex %= list.length;
+        curIndex++;
+        curIndex %= list.length;
 
-		if (count < list.length) {
-			count++;
-		}
-	}
+        if (count < list.length) {
+            count++;
+        }
+    }
 
-	public int count() {
-		return count;
-	}
+    public int count() {
+        return count;
+    }
 
-	public double getMean() {
-		return sum / count();
-	}
+    public double getMean() {
+        return sum / count();
+    }
 
-	public String toString() {
-		String s = "[";
-		int start;
-		if (count() < list.length) {
-			start = 0;
-		} else {
-			start = curIndex;
-		}
+    public String toString() {
+        String s = "[";
+        int start;
+        if (count() < list.length) {
+            start = 0;
+        } else {
+            start = curIndex;
+        }
 
-		for (int i = 0; i < count; i++) {
-			s += list[(start + i) % list.length];
-			if (i < count - 1) {
-				s += ", ";
-			} else {
-				s += "]";
-			}
-		}
-		return s;
-	}
+        for (int i = 0; i < count; i++) {
+            s += list[(start + i) % list.length];
+            if (i < count - 1) {
+                s += ", ";
+            } else {
+                s += "]";
+            }
+        }
+        return s;
+    }
 }

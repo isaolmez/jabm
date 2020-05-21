@@ -15,16 +15,15 @@
 package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.Simulation;
 
 public class GenerationFinishedEvent extends SimulationEvent implements
-		Serializable {
+  Serializable {
 
-	protected int generation;
-	
-	public GenerationFinishedEvent(Simulation model, int generation) {
-		super(model);
-		this.generation = generation;
-	}
+    protected int generation;
+
+    public GenerationFinishedEvent(Simulation model, int generation) {
+        super(model);
+        this.generation = generation;
+    }
 }

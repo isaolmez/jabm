@@ -14,91 +14,85 @@
  */
 package net.sourceforge.jabm.mixing;
 
+import cern.jet.random.engine.RandomEngine;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import net.sourceforge.jabm.Population;
 import net.sourceforge.jabm.SimulationController;
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.agent.AgentList;
 import net.sourceforge.jabm.event.AgentArrivalEvent;
 import net.sourceforge.jabm.event.SimEvent;
-
 import org.apache.log4j.Logger;
 
-import cern.jet.random.engine.RandomEngine;
-
 /**
- * With this mixer, on any given time step an agent arrival event is generated
- * with a given probability. The agent is picked uniformly at random from the
- * group.
- * 
+ * With this mixer, on any given time step an agent arrival event is generated with a given probability. The agent is
+ * picked uniformly at random from the group.
+ *
  * @author Steve Phelps
  */
 public class RandomArrivalAgentMixer implements AgentMixer, Serializable {
 
-	protected RandomEngine prng;
+    protected RandomEngine prng;
 
-	/**
-	 * The probability with which an agent arrives at the simulation on any
-	 * given tick.
-	 */
-	protected double arrivalProbability = 1.0;
+    /**
+     * The probability with which an agent arrives at the simulation on any given tick.
+     */
+    protected double arrivalProbability = 1.0;
 
-	public static final ArrayList<Agent> EMPTY_LIST = new ArrayList<Agent>(0);
+    public static final ArrayList<Agent> EMPTY_LIST = new ArrayList<Agent>(0);
 
-	static Logger logger = Logger.getLogger(RandomArrivalAgentMixer.class);
+    static Logger logger = Logger.getLogger(RandomArrivalAgentMixer.class);
 
-	public RandomArrivalAgentMixer(RandomEngine prng) {
-		this.prng = prng;
-	}
+    public RandomArrivalAgentMixer(RandomEngine prng) {
+        this.prng = prng;
+    }
 
-	public RandomArrivalAgentMixer() {
-		this(null);
-	}
+    public RandomArrivalAgentMixer() {
+        this(null);
+    }
 
-	public void invokeInteractions(AgentList group,
-			SimulationController simulation) {
-		if (group.size() > 0 && prng.nextDouble() <= arrivalProbability) {
-			int n = group.size() - 1;
-			int agentIndex = (int) Math.round(prng.nextDouble() * n);
-			Agent agent = group.get(agentIndex);
-			fireAgentArrivalEvent(agent, group, simulation);
-		}
-	}
+    public void invokeInteractions(AgentList group,
+      SimulationController simulation) {
+        if (group.size() > 0 && prng.nextDouble() <= arrivalProbability) {
+            int n = group.size() - 1;
+            int agentIndex = (int) Math.round(prng.nextDouble() * n);
+            Agent agent = group.get(agentIndex);
+            fireAgentArrivalEvent(agent, group, simulation);
+        }
+    }
 
-	public void fireAgentArrivalEvent(Agent agent, AgentList group,
-			SimulationController simulation) {
-		simulation.fireEvent(new AgentArrivalEvent(simulation, agent,
-				EMPTY_LIST));
-	}
+    public void fireAgentArrivalEvent(Agent agent, AgentList group,
+      SimulationController simulation) {
+        simulation.fireEvent(new AgentArrivalEvent(simulation, agent,
+          EMPTY_LIST));
+    }
 
-	public void invokeAgentInteractions(Population population,
-			SimulationController simulation) {
-		invokeInteractions(population.getAgentList(), simulation);
-	}
+    public void invokeAgentInteractions(Population population,
+      SimulationController simulation) {
+        invokeInteractions(population.getAgentList(), simulation);
+    }
 
-	public void eventOccurred(SimEvent event) {
-	}
+    public void eventOccurred(SimEvent event) {
+    }
 
-	public RandomEngine getPrng() {
-		return prng;
-	}
+    public RandomEngine getPrng() {
+        return prng;
+    }
 
-	public void setPrng(RandomEngine prng) {
-		this.prng = prng;
-	}
+    public void setPrng(RandomEngine prng) {
+        this.prng = prng;
+    }
 
-	public double getArrivalProbability() {
-		return arrivalProbability;
-	}
+    public double getArrivalProbability() {
+        return arrivalProbability;
+    }
 
-	/**
-	 * Configure the probability with which an agent will arrive in any given
-	 * tick.
-	 */
-	public void setArrivalProbability(double arrivalProbability) {
-		this.arrivalProbability = arrivalProbability;
-	}
+    /**
+     * Configure the probability with which an agent will arrive in any given tick.
+     */
+    public void setArrivalProbability(double arrivalProbability) {
+        this.arrivalProbability = arrivalProbability;
+    }
 
 }

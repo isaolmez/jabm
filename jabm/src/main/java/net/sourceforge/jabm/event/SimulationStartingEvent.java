@@ -15,20 +15,18 @@
 package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.Simulation;
 
 /**
  * An event that is fired before a single simulation is started.
- * 
- * @author Steve Phelps
  *
+ * @author Steve Phelps
  */
 public class SimulationStartingEvent extends SimulationEvent implements
-		Serializable {
+  Serializable {
 
-	public SimulationStartingEvent(Simulation model) {
-		super(model);
-	}
+    public SimulationStartingEvent(Simulation model) {
+        super(model);
+    }
 
 }

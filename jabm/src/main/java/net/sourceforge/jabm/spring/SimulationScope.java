@@ -15,92 +15,92 @@
 package net.sourceforge.jabm.spring;
 
 import java.util.HashMap;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.config.Scope;
 
 /**
  * <p>
- * A custom Spring bean scope used to manage objects which persist
- * throughout a single simulation, but are re-instantiated on each new 
- * independent simulation run.
+ * A custom Spring bean scope used to manage objects which persist throughout a single simulation, but are
+ * re-instantiated on each new independent simulation run.
  * </p>
+ *
  * @author Steve Phelps
  */
 public class SimulationScope implements Scope {
 
-	/**
-	 * A mapping from bean names to objects that are bound in this scope.
-	 */
-	protected HashMap<String, Object> boundObjects;
-	
-	protected int simulationId = 1;
-	
-	protected static SimulationScope singletonInstance;
+    /**
+     * A mapping from bean names to objects that are bound in this scope.
+     */
+    protected HashMap<String, Object> boundObjects;
 
-	static Logger logger = Logger.getLogger(SimulationScope.class);
+    protected int simulationId = 1;
 
-	/**
-	 * The string that appears in the scope attribute of a bean definition.
-	 */
-	public static final String ATTRIBUTE_VALUE = "simulation";
-	
-	
-	public SimulationScope() {
-		boundObjects = new HashMap<String, Object>();
-	}
-	
-	@Override
-	public Object get(String name, ObjectFactory<?> objectFactory) {
-		if (logger.isDebugEnabled()) logger.debug("Looking up bean " + name);
-		Object result = boundObjects.get(name);
-		if (result == null) {
-			result = objectFactory.getObject();
-			boundObjects.put(name, result);
-		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Returning " + result + " with hash "
-					+ result.hashCode() + " for " + name);
-		}
-		return result;
-	}
+    protected static SimulationScope singletonInstance;
 
-	@Override
-	public Object remove(String name) {
-		return boundObjects.remove(name);
-	}
+    static Logger logger = Logger.getLogger(SimulationScope.class);
 
-	@Override
-	public void registerDestructionCallback(String name, Runnable callback) {
-		// TODO Auto-generated method stub
-	}
+    /**
+     * The string that appears in the scope attribute of a bean definition.
+     */
+    public static final String ATTRIBUTE_VALUE = "simulation";
 
-	@Override
-	public Object resolveContextualObject(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public String getConversationId() {
-		return simulationId + "";
-	}
+    public SimulationScope() {
+        boundObjects = new HashMap<String, Object>();
+    }
 
-	/**
-	 * Invoked to indicate that a new simulation has begun and that a fresh
-	 * scope is required.
-	 */
-	public void startNewSimulation() {
-		boundObjects.clear();
-		simulationId++;
-	}
+    @Override
+    public Object get(String name, ObjectFactory<?> objectFactory) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Looking up bean " + name);
+        }
+        Object result = boundObjects.get(name);
+        if (result == null) {
+            result = objectFactory.getObject();
+            boundObjects.put(name, result);
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("Returning " + result + " with hash "
+              + result.hashCode() + " for " + name);
+        }
+        return result;
+    }
 
-	public static SimulationScope getSingletonInstance() {
-		if (singletonInstance == null) {
-			singletonInstance = new SimulationScope();
-		} 
-		return singletonInstance;
-	}
+    @Override
+    public Object remove(String name) {
+        return boundObjects.remove(name);
+    }
+
+    @Override
+    public void registerDestructionCallback(String name, Runnable callback) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public Object resolveContextualObject(String key) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getConversationId() {
+        return simulationId + "";
+    }
+
+    /**
+     * Invoked to indicate that a new simulation has begun and that a fresh scope is required.
+     */
+    public void startNewSimulation() {
+        boundObjects.clear();
+        simulationId++;
+    }
+
+    public static SimulationScope getSingletonInstance() {
+        if (singletonInstance == null) {
+            singletonInstance = new SimulationScope();
+        }
+        return singletonInstance;
+    }
 
 }

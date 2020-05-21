@@ -25,8 +25,8 @@ import net.sourceforge.jabm.report.DataWriter;
 
 public interface LearnerMonitor extends DataWriter {
 
-	public void startRecording();
+    public void startRecording();
 
-	public void finishRecording();
+    public void finishRecording();
 
 }

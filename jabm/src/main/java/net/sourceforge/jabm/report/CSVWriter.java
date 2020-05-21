@@ -21,56 +21,55 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.Iterator;
-
 import org.apache.log4j.Logger;
 
 /**
  * A class for writing data to CSV (comma-separated variables) text files.
- * 
+ *
  * @author Steve Phelps
  * @version $Revision: 189 $
  */
 
 public class CSVWriter implements Serializable, DataWriter {
 
-	protected transient PrintStream out;
+    protected transient PrintStream out;
 
-	protected boolean autowrap = true;
+    protected boolean autowrap = true;
 
-	protected int numColumns;
+    protected int numColumns;
 
-	protected int currentColumn = 0;
+    protected int currentColumn = 0;
 
-  protected char separator = DEFAULT_SEPARATOR;
+    protected char separator = DEFAULT_SEPARATOR;
 
-	protected boolean append = true;
+    protected boolean append = true;
 
-  static final char DEFAULT_SEPARATOR = '\t';
+    static final char DEFAULT_SEPARATOR = '\t';
 
-	static Logger logger = Logger.getLogger(CSVWriter.class);
+    static Logger logger = Logger.getLogger(CSVWriter.class);
 
-  public CSVWriter(OutputStream out, int numColumns, char separator) {
-		this.out = new PrintStream(new BufferedOutputStream(out));
-		this.numColumns = numColumns;
-    this.separator = separator;
-	}
+    public CSVWriter(OutputStream out, int numColumns, char separator) {
+        this.out = new PrintStream(new BufferedOutputStream(out));
+        this.numColumns = numColumns;
+        this.separator = separator;
+    }
 
-  public CSVWriter(OutputStream out, char separator) {
-		this.out = new PrintStream(new BufferedOutputStream(out));
-		this.autowrap = false;
-    this.separator = separator;
-	}
+    public CSVWriter(OutputStream out, char separator) {
+        this.out = new PrintStream(new BufferedOutputStream(out));
+        this.autowrap = false;
+        this.separator = separator;
+    }
 
-	public CSVWriter(OutputStream out, int numColumns) {
-    this(out, numColumns, DEFAULT_SEPARATOR);
-	}
+    public CSVWriter(OutputStream out, int numColumns) {
+        this(out, numColumns, DEFAULT_SEPARATOR);
+    }
 
-	public CSVWriter(OutputStream out) {
-    this(out, DEFAULT_SEPARATOR);
-	}
+    public CSVWriter(OutputStream out) {
+        this(out, DEFAULT_SEPARATOR);
+    }
 
-	public CSVWriter() {
-	}
+    public CSVWriter() {
+    }
 //
 //	public void setup(ParameterDatabase parameters, Parameter base) {
 //		try {
@@ -91,141 +90,146 @@ public class CSVWriter implements Serializable, DataWriter {
 //		}
 //	}
 
-	@SuppressWarnings("rawtypes")
-	public void newData(Iterator i) {
-		while (i.hasNext()) {
-			newData(i.next());
-		}
-	}
+    @SuppressWarnings("rawtypes")
+    public void newData(Iterator i) {
+        while (i.hasNext()) {
+            newData(i.next());
+        }
+    }
 
-	public void newData(Object[] data) {
-		for (int i = 0; i < data.length; i++) {
-			newData(data[i]);
-		}
-	}
+    public void newData(Object[] data) {
+        for (int i = 0; i < data.length; i++) {
+            newData(data[i]);
+        }
+    }
 
-	public void newData(Boolean data) {
-		if (data.booleanValue()) {
-			newData(1);
-		} else {
-			newData(0);
-		}
-	}
+    public void newData(Boolean data) {
+        if (data.booleanValue()) {
+            newData(1);
+        } else {
+            newData(0);
+        }
+    }
 
-	public void newData(Integer data) {
-		newData(data.intValue());
-	}
+    public void newData(Integer data) {
+        newData(data.intValue());
+    }
 
-	public void newData(Double data) {
-		newData(data.doubleValue());
-	}
+    public void newData(Double data) {
+        newData(data.doubleValue());
+    }
 
-	public void newData(Long data) {
-		newData(data.longValue());
-	}
+    public void newData(Long data) {
+        newData(data.longValue());
+    }
 
-	public void newData(String data) {
-		prepareColumn();
-		out.print(data);
-		nextColumn();
-	}
+    public void newData(String data) {
+        prepareColumn();
+        out.print(data);
+        nextColumn();
+    }
 
-	public void newData(int data) {
-		prepareColumn();
-		out.print(data);
-		nextColumn();
-	}
+    public void newData(int data) {
+        prepareColumn();
+        out.print(data);
+        nextColumn();
+    }
 
-	public void newData(long data) {
-		prepareColumn();
-		out.print(data);
-		nextColumn();
-	}
+    public void newData(long data) {
+        prepareColumn();
+        out.print(data);
+        nextColumn();
+    }
 
-	public void newData(double data) {
-		prepareColumn();
-		out.print(data);
-		nextColumn();
-	}
+    public void newData(double data) {
+        prepareColumn();
+        out.print(data);
+        nextColumn();
+    }
 
-	public void newData(float data) {
-		prepareColumn();
-		out.print(data);
-		nextColumn();
-	}
+    public void newData(float data) {
+        prepareColumn();
+        out.print(data);
+        nextColumn();
+    }
 
-	public void newData(boolean data) {
-		if (data) {
-			newData(1);
-		} else {
-			newData(0);
-		}
-	}
+    public void newData(boolean data) {
+        if (data) {
+            newData(1);
+        } else {
+            newData(0);
+        }
+    }
 
-	public void newData(Object data) {
-		if (data instanceof Boolean) {
-			newData((Boolean) data);
-		} else {
-			prepareColumn();
-			out.print(data.toString());
-			nextColumn();
-		}
-	}
+    public void newData(Object data) {
+        if (data instanceof Boolean) {
+            newData((Boolean) data);
+        } else {
+            prepareColumn();
+            out.print(data.toString());
+            nextColumn();
+        }
+    }
 
-	public void setAutowrap(boolean autowrap) {
-		this.autowrap = autowrap;
-	}
+    public void setAutowrap(boolean autowrap) {
+        this.autowrap = autowrap;
+    }
 
-	public void setAppend(boolean append) {
-		this.append = append;
-	}
+    public void setAppend(boolean append) {
+        this.append = append;
+    }
 
-	public void endRecord() {
-		if (autowrap)
-			new Error("endRecord() should NOT be invoked when autowrap is enabled.");
-		newLine();
-	}
+    public void endRecord() {
+        if (autowrap) {
+            new Error("endRecord() should NOT be invoked when autowrap is enabled.");
+        }
+        newLine();
+    }
 
-	public void flush() {
-		out.flush();
-	}
+    public void flush() {
+        out.flush();
+    }
 
-	public void close() {
-		out.close();
-	}
+    public void close() {
+        out.close();
+    }
 
-	public void setNumColumns(int numColumns) {
-		if (!autowrap)
-      new Error("The number of columns should NOT be set when autowrap is disabled.");
-		this.numColumns = numColumns;
-	}
+    public void setNumColumns(int numColumns) {
+        if (!autowrap) {
+            new Error("The number of columns should NOT be set when autowrap is disabled.");
+        }
+        this.numColumns = numColumns;
+    }
 
-	protected void prepareColumn() {
-		if (!autowrap)
-			if (currentColumn > 0)
-        out.print(separator);
-	}
+    protected void prepareColumn() {
+        if (!autowrap) {
+            if (currentColumn > 0) {
+                out.print(separator);
+            }
+        }
+    }
 
-	protected void nextColumn() {
-		currentColumn++;
-		if (autowrap)
-			if (currentColumn < numColumns) {
-        out.print(separator);
-			} else {
-				newLine();
-			}
-	}
+    protected void nextColumn() {
+        currentColumn++;
+        if (autowrap) {
+            if (currentColumn < numColumns) {
+                out.print(separator);
+            } else {
+                newLine();
+            }
+        }
+    }
 
-	private void newLine() {
-		out.println();
-		currentColumn = 0;
-	}
+    private void newLine() {
+        out.println();
+        currentColumn = 0;
+    }
 
-	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-	}
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+    }
 
-	private void readObject(java.io.ObjectInputStream in) throws IOException,
-	    ClassNotFoundException {
-	}
+    private void readObject(java.io.ObjectInputStream in) throws IOException,
+      ClassNotFoundException {
+    }
 
 }

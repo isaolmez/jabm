@@ -20,18 +20,17 @@ package net.sourceforge.jabm.util;
 
 /**
  * <p>
- * Classes implementing this interface indicate that they can be initialised
- * from a parameter database using the "Clique" pattern of ECJ. It is planned to
- * move over to a bean-based XML approach at some time in the future.
+ * Classes implementing this interface indicate that they can be initialised from a parameter database using the
+ * "Clique" pattern of ECJ. It is planned to move over to a bean-based XML approach at some time in the future.
  * </p>
  */
 
 @Deprecated
 public interface Parameterizable {
 
-	/**
-	 * Initialise this object from a parameter database.
-	 */
+    /**
+     * Initialise this object from a parameter database.
+     */
 //	public abstract void setup(ParameterDatabase parameters, Parameter base);
 
 }

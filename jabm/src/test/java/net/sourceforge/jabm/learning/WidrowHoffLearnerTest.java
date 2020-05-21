@@ -15,71 +15,70 @@
 
 package net.sourceforge.jabm.learning;
 
+import cern.jet.random.engine.MersenneTwister64;
+import cern.jet.random.engine.RandomEngine;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import net.sourceforge.jabm.learning.WidrowHoffLearner;
 import net.sourceforge.jabm.test.PRNGTestSeeds;
 import net.sourceforge.jabm.util.MathUtil;
-import cern.jet.random.engine.MersenneTwister64;
-import cern.jet.random.engine.RandomEngine;
 
 public class WidrowHoffLearnerTest extends TestCase {
 
-	/**
-	 * @uml.property name="learner1"
-	 * @uml.associationEnd
-	 */
-	WidrowHoffLearner learner1;
+    /**
+     * @uml.property name="learner1"
+     * @uml.associationEnd
+     */
+    WidrowHoffLearner learner1;
 
-	/**
-	 * @uml.property name="score"
-	 */
-	double score;
-	
-	RandomEngine prng;
+    /**
+     * @uml.property name="score"
+     */
+    double score;
 
-	static final double LEARNING_RATE = 0.8;
+    RandomEngine prng;
 
-	static final double TARGET_VALUE = 0.12;
+    static final double LEARNING_RATE = 0.8;
 
-	static final int ITERATIONS = 100;
+    static final double TARGET_VALUE = 0.12;
 
-	public WidrowHoffLearnerTest(String name) {
-		super(name);
-	}
+    static final int ITERATIONS = 100;
 
-	public void setUp() {
-		prng = new MersenneTwister64(PRNGTestSeeds.UNIT_TEST_SEED);
-		learner1 = new WidrowHoffLearner(LEARNING_RATE, prng);
-	}
+    public WidrowHoffLearnerTest(String name) {
+        super(name);
+    }
 
-	public void testConvergence() {
-		train(ITERATIONS);
-		assertTrue(MathUtil.approxEqual(learner1.act(), TARGET_VALUE, 0.01));
-		assertTrue(MathUtil.approxEqual(learner1.getLearningDelta(), 0, 0.01));
-	}
+    public void setUp() {
+        prng = new MersenneTwister64(PRNGTestSeeds.UNIT_TEST_SEED);
+        learner1 = new WidrowHoffLearner(LEARNING_RATE, prng);
+    }
 
-	public void testReset() {
-		train(2);
-		assertTrue(learner1.getLearningDelta() > 0.01);
-		learner1.reset();
-		assertTrue(MathUtil.approxEqual(learner1.getLearningDelta(), 0, 0.00001));
-	}
+    public void testConvergence() {
+        train(ITERATIONS);
+        assertTrue(MathUtil.approxEqual(learner1.act(), TARGET_VALUE, 0.01));
+        assertTrue(MathUtil.approxEqual(learner1.getLearningDelta(), 0, 0.01));
+    }
 
-	protected void train(int iterations) {
-		for (int i = 0; i < iterations; i++) {
-			learner1.train(TARGET_VALUE);
-			System.out.println("Learning delta = " + learner1.getLearningDelta());
-			System.out.println("Current output = " + learner1.act());
-		}
-	}
+    public void testReset() {
+        train(2);
+        assertTrue(learner1.getLearningDelta() > 0.01);
+        learner1.reset();
+        assertTrue(MathUtil.approxEqual(learner1.getLearningDelta(), 0, 0.00001));
+    }
 
-	public static Test suite() {
-		return new TestSuite(WidrowHoffLearnerTest.class);
-	}
+    protected void train(int iterations) {
+        for (int i = 0; i < iterations; i++) {
+            learner1.train(TARGET_VALUE);
+            System.out.println("Learning delta = " + learner1.getLearningDelta());
+            System.out.println("Current output = " + learner1.act());
+        }
+    }
 
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public static Test suite() {
+        return new TestSuite(WidrowHoffLearnerTest.class);
+    }
+
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 }

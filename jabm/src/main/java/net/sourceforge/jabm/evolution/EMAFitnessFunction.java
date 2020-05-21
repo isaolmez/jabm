@@ -1,15 +1,13 @@
 package net.sourceforge.jabm.evolution;
 
+import java.util.HashMap;
+import java.util.Map;
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.event.InteractionsFinishedEvent;
 import net.sourceforge.jabm.event.SimEvent;
 import net.sourceforge.jabm.event.SimulationStartingEvent;
-import net.sourceforge.jabm.evolution.FitnessFunction;
 import net.sourceforge.jabm.report.Report;
 import org.springframework.beans.factory.annotation.Required;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * (c) Steve Phelps 2013
@@ -18,7 +16,7 @@ public class EMAFitnessFunction implements FitnessFunction, Report {
 
     protected FitnessFunction baseFitnessFunction;
 
-    protected HashMap<Agent,Double> fitnesses = new HashMap<Agent,Double>();
+    protected HashMap<Agent, Double> fitnesses = new HashMap<Agent, Double>();
 
     protected double alpha;
 
@@ -68,7 +66,7 @@ public class EMAFitnessFunction implements FitnessFunction, Report {
     }
 
     protected void updateFitnesses() {
-        for(Agent i: fitnesses.keySet()) {
+        for (Agent i : fitnesses.keySet()) {
             Double existingFitness = getFitness(i);
             double newFitness = alpha * existingFitness + (1 - alpha) * baseFitnessFunction.getFitness(i);
             fitnesses.put(i, newFitness);
@@ -77,8 +75,8 @@ public class EMAFitnessFunction implements FitnessFunction, Report {
 
     protected void initialiseFitnesses(SimulationStartingEvent event) {
         this.fitnesses = new HashMap<Agent, Double>();
-        for(Agent agent : event.getSimulation().getPopulation().getAgents()) {
-        	this.fitnesses.put(agent, 0.0);
+        for (Agent agent : event.getSimulation().getPopulation().getAgents()) {
+            this.fitnesses.put(agent, 0.0);
         }
 
     }

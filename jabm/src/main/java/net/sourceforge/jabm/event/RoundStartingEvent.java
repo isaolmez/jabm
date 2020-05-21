@@ -15,19 +15,17 @@
 package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.Simulation;
 
 /**
  * An event that is fired before the start of a simulation tick (round).
- * 
- * @author Steve Phelps
  *
+ * @author Steve Phelps
  */
 public class RoundStartingEvent extends SimulationEvent implements Serializable {
 
-	public RoundStartingEvent(Simulation simulation) {
-		super(simulation);
-	}
+    public RoundStartingEvent(Simulation simulation) {
+        super(simulation);
+    }
 
 }

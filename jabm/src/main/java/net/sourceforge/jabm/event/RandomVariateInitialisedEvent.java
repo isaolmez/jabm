@@ -16,37 +16,37 @@ package net.sourceforge.jabm.event;
 
 public class RandomVariateInitialisedEvent extends SimEvent {
 
-	protected String propertyName;
-	
-	protected double value;
+    protected String propertyName;
 
-	public RandomVariateInitialisedEvent(String propertyName, double value) {
-		super();
-		this.propertyName = propertyName;
-		this.value = value;
-	}
+    protected double value;
 
-	public String getPropertyName() {
-		return propertyName;
-	}
+    public RandomVariateInitialisedEvent(String propertyName, double value) {
+        super();
+        this.propertyName = propertyName;
+        this.value = value;
+    }
 
-	public void setPropertyName(String propertyName) {
-		this.propertyName = propertyName;
-	}
+    public String getPropertyName() {
+        return propertyName;
+    }
 
-	public double getValue() {
-		return value;
-	}
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
+    }
 
-	public void setValue(double value) {
-		this.value = value;
-	}
+    public double getValue() {
+        return value;
+    }
 
-	@Override
-	public String toString() {
-		return "(" + this.getClass() + " propertyName=" + propertyName
-				+ " value=" + value + ")";
-	}
-	
-	
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + this.getClass() + " propertyName=" + propertyName
+          + " value=" + value + ")";
+    }
+
+
 }

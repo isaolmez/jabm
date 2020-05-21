@@ -16,26 +16,24 @@ package net.sourceforge.jabm.report;
 
 import net.sourceforge.jabm.event.SimEvent;
 import net.sourceforge.jabm.event.SimulationFinishedEvent;
-
 import org.apache.log4j.Logger;
 
 /**
- * A report which initialises its variables at the start of each simulation
- * and updates them at the end of each simulation.
- * 
- * @author Steve Phelps
+ * A report which initialises its variables at the start of each simulation and updates them at the end of each
+ * simulation.
  *
+ * @author Steve Phelps
  */
 public class SimulationFinishedNoInitialisation extends AbstractReport implements Report {
 
-	static Logger logger = Logger.getLogger(SimulationFinishedNoInitialisation.class);
+    static Logger logger = Logger.getLogger(SimulationFinishedNoInitialisation.class);
 
-	@Override
-	public void eventOccurred(SimEvent event) {
-		super.eventOccurred(event);
-		if (event instanceof SimulationFinishedEvent) {
-			reportVariables.compute((SimulationFinishedEvent) event);
-		} 
-	}
+    @Override
+    public void eventOccurred(SimEvent event) {
+        super.eventOccurred(event);
+        if (event instanceof SimulationFinishedEvent) {
+            reportVariables.compute((SimulationFinishedEvent) event);
+        }
+    }
 
 }

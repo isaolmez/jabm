@@ -18,136 +18,132 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import net.sourceforge.jabm.event.AbstractModel;
 import net.sourceforge.jabm.event.ReportVariablesChangedEvent;
 import net.sourceforge.jabm.event.SimEvent;
 import net.sourceforge.jabm.view.TimeSeriesChart;
-
 import org.springframework.beans.factory.InitializingBean;
 
 /**
- * A report which incrementally records values from an underlying
- * {@link ReportVariables} object to an array each time it is computed. This can
- * be used as the model for a, e.g. {@link TimeSeriesChart}.
- * 
+ * A report which incrementally records values from an underlying {@link ReportVariables} object to an array each time
+ * it is computed. This can be used as the model for a, e.g. {@link TimeSeriesChart}.
+ *
  * @author Steve Phelps
- * 
  */
-public class SeriesReportVariables extends AbstractModel 
-		implements Serializable, InitializingBean, Timeseries {
+public class SeriesReportVariables extends AbstractModel
+  implements Serializable, InitializingBean, Timeseries {
 
-	protected ArrayList<ArrayList<Number>> xData;
-	
-	protected ArrayList<ArrayList<Number>> yData;
-	
-	protected XYReportVariables reportVariables;
-	
-	protected int n;
-	
-	@Override
-	public Map<Object, Number> getVariableBindings() {
-		return reportVariables.getVariableBindings();
-	}
-	
-	@Override
-	public List<Object> getyVariableNames() {
-		return reportVariables.getyVariableNames();
-	}
+    protected ArrayList<ArrayList<Number>> xData;
 
-	public String getxVariableName() {
-		return reportVariables.getxVariableName();
-	}
+    protected ArrayList<ArrayList<Number>> yData;
 
-	@Override
-	public void eventOccurred(SimEvent event) {
-	}
+    protected XYReportVariables reportVariables;
 
-	@Override
-	public void compute(SimEvent event) {
+    protected int n;
+
+    @Override
+    public Map<Object, Number> getVariableBindings() {
+        return reportVariables.getVariableBindings();
+    }
+
+    @Override
+    public List<Object> getyVariableNames() {
+        return reportVariables.getyVariableNames();
+    }
+
+    public String getxVariableName() {
+        return reportVariables.getxVariableName();
+    }
+
+    @Override
+    public void eventOccurred(SimEvent event) {
+    }
+
+    @Override
+    public void compute(SimEvent event) {
 //		this.reportVariables.compute(event); 
-		this.n = reportVariables.getNumberOfSeries();
-		for(int i=0; i<n; i++) {
-			xData.get(i).add(reportVariables.getX(i));
-			yData.get(i).add(reportVariables.getY(i));
-		}
-		fireEvent(new ReportVariablesChangedEvent(this));
-	}
+        this.n = reportVariables.getNumberOfSeries();
+        for (int i = 0; i < n; i++) {
+            xData.get(i).add(reportVariables.getX(i));
+            yData.get(i).add(reportVariables.getY(i));
+        }
+        fireEvent(new ReportVariablesChangedEvent(this));
+    }
 
-	@Override
-	public void dispose(SimEvent event) {
+    @Override
+    public void dispose(SimEvent event) {
 //		this.reportVariables.dispose(event);
-	}
+    }
 
-	@Override
-	public void initialise(SimEvent event) {
+    @Override
+    public void initialise(SimEvent event) {
 //		this.reportVariables.initialise(event);
-		initialiseSeries();
-	}
+        initialiseSeries();
+    }
 
-	public void initialiseSeries() {
-		this.n = reportVariables.getNumberOfSeries();
-		this.xData = new ArrayList<ArrayList<Number>>(n);
-		this.yData = new ArrayList<ArrayList<Number>>(n);
-		for(int i=0; i<n; i++) {
-			xData.add(new ArrayList<Number>());
-			yData.add(new ArrayList<Number>());
-		}
-		fireEvent(new ReportVariablesChangedEvent(this));
-	}
+    public void initialiseSeries() {
+        this.n = reportVariables.getNumberOfSeries();
+        this.xData = new ArrayList<ArrayList<Number>>(n);
+        this.yData = new ArrayList<ArrayList<Number>>(n);
+        for (int i = 0; i < n; i++) {
+            xData.add(new ArrayList<Number>());
+            yData.add(new ArrayList<Number>());
+        }
+        fireEvent(new ReportVariablesChangedEvent(this));
+    }
 
-	@Override
-	public String getName() {
-		return reportVariables.getName();
-	}
-	
-	/* (non-Javadoc)
-	 * @see net.sourceforge.jabm.report.Timeseries#getX(int, int)
-	 */
-	@Override
-	public Number getX(int seriesIndex, int itemIndex) {
-		return xData.get(seriesIndex).get(itemIndex);
-	}
-	
-	/* (non-Javadoc)
-	 * @see net.sourceforge.jabm.report.Timeseries#getY(int, int)
-	 */
-	@Override
-	public Number getY(int seriesIndex, int itemIndex) {
-		return yData.get(seriesIndex).get(itemIndex);
-	}
+    @Override
+    public String getName() {
+        return reportVariables.getName();
+    }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.jabm.report.Timeseries#size()
-	 */
-	@Override
-	public int size(int seriesIndex) {
-		if (xData == null) {
-			return 0;
-		} else {
-			return xData.get(seriesIndex).size();
-		}
-	}
+    /* (non-Javadoc)
+     * @see net.sourceforge.jabm.report.Timeseries#getX(int, int)
+     */
+    @Override
+    public Number getX(int seriesIndex, int itemIndex) {
+        return xData.get(seriesIndex).get(itemIndex);
+    }
 
-	public XYReportVariables getReportVariables() {
-		return reportVariables;
-	}
+    /* (non-Javadoc)
+     * @see net.sourceforge.jabm.report.Timeseries#getY(int, int)
+     */
+    @Override
+    public Number getY(int seriesIndex, int itemIndex) {
+        return yData.get(seriesIndex).get(itemIndex);
+    }
 
-	public void setReportVariables(XYReportVariables reportVariables) {
-		this.reportVariables = reportVariables;
-	}
+    /* (non-Javadoc)
+     * @see net.sourceforge.jabm.report.Timeseries#size()
+     */
+    @Override
+    public int size(int seriesIndex) {
+        if (xData == null) {
+            return 0;
+        } else {
+            return xData.get(seriesIndex).size();
+        }
+    }
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.jabm.report.Timeseries#getNumberOfSeries()
-	 */
-	@Override
-	public int getNumberOfSeries() {
-		return n;
-	}
+    public XYReportVariables getReportVariables() {
+        return reportVariables;
+    }
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		initialiseSeries();
-	}
-	
+    public void setReportVariables(XYReportVariables reportVariables) {
+        this.reportVariables = reportVariables;
+    }
+
+    /* (non-Javadoc)
+     * @see net.sourceforge.jabm.report.Timeseries#getNumberOfSeries()
+     */
+    @Override
+    public int getNumberOfSeries() {
+        return n;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        initialiseSeries();
+    }
+
 }

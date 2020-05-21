@@ -16,11 +16,11 @@ package net.sourceforge.jabm.event;
 
 public interface Model {
 
-	public void removeListener(EventListener listener);
+    public void removeListener(EventListener listener);
 
-	public void addListener(EventListener listener);
+    public void addListener(EventListener listener);
 
-	@SuppressWarnings("rawtypes")
-	public void addListener(Class eventClass, EventListener listener);
+    @SuppressWarnings("rawtypes")
+    public void addListener(Class eventClass, EventListener listener);
 
 }

@@ -18,11 +18,12 @@ import net.sourceforge.jabm.Simulation;
 import net.sourceforge.jabm.SimulationController;
 
 /**
- * Classes implementing this interface 
+ * Classes implementing this interface
+ *
  * @author Steve Phelps
  */
 public interface SimulationFactory {
 
-	public Simulation initialise(SimulationController simulationController);
+    public Simulation initialise(SimulationController simulationController);
 
 }

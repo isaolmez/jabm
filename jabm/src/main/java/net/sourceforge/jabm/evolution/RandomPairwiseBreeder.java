@@ -14,113 +14,110 @@
  */
 package net.sourceforge.jabm.evolution;
 
+import cern.jet.random.engine.RandomEngine;
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.agent.AgentList;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 
-import cern.jet.random.engine.RandomEngine;
-
 /**
  * <p>
- * A breeder which implements Fitness-proportionate reproduction. Agents are
- * selected for inclusion in the next generation with a probability
- * proportionate to their fitness, as defined by an exogenous fitness function.
- * When agents reproduce they do so via an {@link ImitationOperator} which
- * specifies how agents are copied from one generation to the next.
+ * A breeder which implements Fitness-proportionate reproduction. Agents are selected for inclusion in the next
+ * generation with a probability proportionate to their fitness, as defined by an exogenous fitness function. When
+ * agents reproduce they do so via an {@link ImitationOperator} which specifies how agents are copied from one
+ * generation to the next.
  * </p>
- * 
+ *
  * @author Steve Phelps
  */
 public class RandomPairwiseBreeder implements Breeder {
 
-	/**
-	 * The fitness function which specifies the fitness of each agent.
-	 */
-	protected FitnessFunction fitnessFunction;
-	
-	protected ImitationOperator imitationOperator = 
-			new StrategyImitationOperator();
-	
-	protected RandomEngine prng;
-	
-	protected double mixing = 1.0;
-	
-	static Logger logger = Logger.getLogger(RandomPairwiseBreeder.class);
-	
-	
-	public AgentList reproduce(AgentList currentGeneration) {
-		
-		int n = currentGeneration.size();
-		AgentList nextGeneration = new AgentList(currentGeneration);
-		
-		int numPairs = (int) Math.round(mixing * (n*n));
-		for(int i=0; i<numPairs; i++) {
-			Agent x = chooseRandomAgent(currentGeneration);
-			Agent y = chooseRandomAgent(currentGeneration);
-			if (x != y) {
-				if (getFitness(x) > getFitness(y)) {
-					imitationOperator.inheritBehaviour(y, x);
-				} else if (getFitness(x) < getFitness(y)) {
-					imitationOperator.inheritBehaviour(x, y);
-				}
-			}
-		}
-		return nextGeneration;
-	}
+    /**
+     * The fitness function which specifies the fitness of each agent.
+     */
+    protected FitnessFunction fitnessFunction;
 
-	public Agent chooseRandomAgent(AgentList agents) {
-		int n = agents.size();
-		int i = (int) Math.round(prng.nextDouble() * (n-1));
-		return agents.get(i);
-	}
+    protected ImitationOperator imitationOperator =
+      new StrategyImitationOperator();
 
-	public double getFitness(Agent i) {
+    protected RandomEngine prng;
+
+    protected double mixing = 1.0;
+
+    static Logger logger = Logger.getLogger(RandomPairwiseBreeder.class);
+
+
+    public AgentList reproduce(AgentList currentGeneration) {
+
+        int n = currentGeneration.size();
+        AgentList nextGeneration = new AgentList(currentGeneration);
+
+        int numPairs = (int) Math.round(mixing * (n * n));
+        for (int i = 0; i < numPairs; i++) {
+            Agent x = chooseRandomAgent(currentGeneration);
+            Agent y = chooseRandomAgent(currentGeneration);
+            if (x != y) {
+                if (getFitness(x) > getFitness(y)) {
+                    imitationOperator.inheritBehaviour(y, x);
+                } else if (getFitness(x) < getFitness(y)) {
+                    imitationOperator.inheritBehaviour(x, y);
+                }
+            }
+        }
+        return nextGeneration;
+    }
+
+    public Agent chooseRandomAgent(AgentList agents) {
+        int n = agents.size();
+        int i = (int) Math.round(prng.nextDouble() * (n - 1));
+        return agents.get(i);
+    }
+
+    public double getFitness(Agent i) {
         double result = 0.0;
-		if (fitnessFunction != null) {
-			result = fitnessFunction.getFitness(i);
-		} else {
-			result = i.getPayoff();
-		}
+        if (fitnessFunction != null) {
+            result = fitnessFunction.getFitness(i);
+        } else {
+            result = i.getPayoff();
+        }
         if (result < 0.0) {
             result = 0.0;
         }
         return result;
-	}
+    }
 
-	public FitnessFunction getFitnessFunction() {
-		return fitnessFunction;
-	}
+    public FitnessFunction getFitnessFunction() {
+        return fitnessFunction;
+    }
 
-	public void setFitnessFunction(FitnessFunction fitnessFunction) {
-		this.fitnessFunction = fitnessFunction;
-	}
+    public void setFitnessFunction(FitnessFunction fitnessFunction) {
+        this.fitnessFunction = fitnessFunction;
+    }
 
-	public RandomEngine getPrng() {
-		return prng;
-	}
+    public RandomEngine getPrng() {
+        return prng;
+    }
 
-	@Required
-	public void setPrng(RandomEngine prng) {
-		this.prng = prng;
-	}
+    @Required
+    public void setPrng(RandomEngine prng) {
+        this.prng = prng;
+    }
 
-	public ImitationOperator getImitationOperator() {
-		return imitationOperator;
-	}
+    public ImitationOperator getImitationOperator() {
+        return imitationOperator;
+    }
 
-	public void setImitationOperator(ImitationOperator imitationFunction) {
-		this.imitationOperator = imitationFunction;
-	}
+    public void setImitationOperator(ImitationOperator imitationFunction) {
+        this.imitationOperator = imitationFunction;
+    }
 
-	public double getMixing() {
-		return mixing;
-	}
+    public double getMixing() {
+        return mixing;
+    }
 
-	public void setMixing(double mixing) {
-		this.mixing = mixing;
-	}
+    public void setMixing(double mixing) {
+        this.mixing = mixing;
+    }
 
-	
+
 }

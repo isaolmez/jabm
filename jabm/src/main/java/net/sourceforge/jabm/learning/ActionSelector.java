@@ -16,31 +16,25 @@ package net.sourceforge.jabm.learning;
 
 /**
  * <p>
- * An action selection policy for a reinforcement-learning algorithm. The job of
- * the action selector is to select from the available actions in a particular
- * state in such a way as to balance exploitation against exploration.
+ * An action selection policy for a reinforcement-learning algorithm. The job of the action selector is to select from
+ * the available actions in a particular state in such a way as to balance exploitation against exploration.
  * </p>
- * 
+ *
  * <p>
- * See:<br>
- * Sutton, R. S., Barto, A. G., 1998. Reinforcement Learning: An Introduction.
- * MIT Press.<br>
+ * See:<br> Sutton, R. S., Barto, A. G., 1998. Reinforcement Learning: An Introduction. MIT Press.<br>
  * </p>
- * 
+ *
  * @author Steve Phelps
- * 
  */
 public interface ActionSelector {
 
-	/**
-	 * Choose an action according to the current state and the 
-	 * current value estimates for each action.
-	 * 
-	 * @param state  	The current state of the MDP.
-	 * @param learner  The algorithm used to update the value estimates.
-	 * 
-	 * @return An integer representing the action chosen (indexed from 0).
-	 */
-	public int act(int state, MDPLearner learner);
+    /**
+     * Choose an action according to the current state and the current value estimates for each action.
+     *
+     * @param state The current state of the MDP.
+     * @param learner The algorithm used to update the value estimates.
+     * @return An integer representing the action chosen (indexed from 0).
+     */
+    public int act(int state, MDPLearner learner);
 
 }

@@ -19,101 +19,100 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import org.apache.commons.math3.stat.Frequency;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.AbstractDataset;
 
 @SuppressWarnings("rawtypes")
 public class CategoryDatasetFrequencyAdaptor extends AbstractDataset implements
-		CategoryDataset, Serializable {
+  CategoryDataset, Serializable {
 
-	protected Frequency frequency;
-	
-	public static final String ROW = "frequency";
-	
-	protected HashMap<String,Integer> columnMap;
-	
-	protected HashMap<String,Comparable<?>> objectMap;
-	
-	protected ArrayList<String> columns;
-	
-	public CategoryDatasetFrequencyAdaptor(Frequency frequency) {
-		super();
-		this.frequency = frequency;
-		updateCategories();
-	}
-	
-	public void updateCategories() {
-		columnMap = new HashMap<String,Integer>();
-		objectMap = new HashMap<String,Comparable<?>>();
-		columns = new ArrayList<String>();
-		Iterator<Comparable<?>> it = frequency.valuesIterator();
-		int i = 0;
-		while (it.hasNext()) {
-			Comparable<?> value = it.next();
-			objectMap.put(value.toString(), value);
-			columns.add(i, value.toString());
-			columnMap.put(value.toString(), i);
-			i++;
-		}
-	}
-	
-	public void clear() {
-		frequency.clear();
-		columnMap.clear();
-		objectMap.clear();
-		columns.clear();
-	}
-	
-	public void fireDatasetChanged() {
-		super.fireDatasetChanged();
-	}
+    protected Frequency frequency;
 
-	public int getColumnIndex(Comparable key) {
-		return columnMap.get(key);
-	}
+    public static final String ROW = "frequency";
 
-	public Comparable getColumnKey(int column) {
-		return columns.get(column);
-	}
+    protected HashMap<String, Integer> columnMap;
 
-	public List getColumnKeys() {
-		return columns;
-	}
+    protected HashMap<String, Comparable<?>> objectMap;
 
-	public int getRowIndex(Comparable key) {
-		return 0;
-	}
+    protected ArrayList<String> columns;
 
-	public Comparable getRowKey(int row) {
-		return ROW;
-	}
+    public CategoryDatasetFrequencyAdaptor(Frequency frequency) {
+        super();
+        this.frequency = frequency;
+        updateCategories();
+    }
 
-	@SuppressWarnings("unchecked")
-	public List getRowKeys() {
-		ArrayList result = new ArrayList();
-		result.add(ROW);
-		return result;
-	}
+    public void updateCategories() {
+        columnMap = new HashMap<String, Integer>();
+        objectMap = new HashMap<String, Comparable<?>>();
+        columns = new ArrayList<String>();
+        Iterator<Comparable<?>> it = frequency.valuesIterator();
+        int i = 0;
+        while (it.hasNext()) {
+            Comparable<?> value = it.next();
+            objectMap.put(value.toString(), value);
+            columns.add(i, value.toString());
+            columnMap.put(value.toString(), i);
+            i++;
+        }
+    }
 
-	public Number getValue(Comparable rowKey, Comparable columnKey) {
-		Integer column = (Integer) columnKey;
-		String columnName = columns.get(column);
-		return frequency.getCount(objectMap.get(columnName));
-	}
+    public void clear() {
+        frequency.clear();
+        columnMap.clear();
+        objectMap.clear();
+        columns.clear();
+    }
 
-	public int getColumnCount() {
-		return columns.size();
-	}
+    public void fireDatasetChanged() {
+        super.fireDatasetChanged();
+    }
 
-	public int getRowCount() {
-		return 1;
-	}
+    public int getColumnIndex(Comparable key) {
+        return columnMap.get(key);
+    }
 
-	public Number getValue(int row, int column) {
-		return getValue(null, column);
-	}
+    public Comparable getColumnKey(int column) {
+        return columns.get(column);
+    }
 
-	
+    public List getColumnKeys() {
+        return columns;
+    }
+
+    public int getRowIndex(Comparable key) {
+        return 0;
+    }
+
+    public Comparable getRowKey(int row) {
+        return ROW;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List getRowKeys() {
+        ArrayList result = new ArrayList();
+        result.add(ROW);
+        return result;
+    }
+
+    public Number getValue(Comparable rowKey, Comparable columnKey) {
+        Integer column = (Integer) columnKey;
+        String columnName = columns.get(column);
+        return frequency.getCount(objectMap.get(columnName));
+    }
+
+    public int getColumnCount() {
+        return columns.size();
+    }
+
+    public int getRowCount() {
+        return 1;
+    }
+
+    public Number getValue(int row, int column) {
+        return getValue(null, column);
+    }
+
+
 }

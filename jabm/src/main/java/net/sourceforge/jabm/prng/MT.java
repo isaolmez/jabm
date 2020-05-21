@@ -20,16 +20,16 @@ import cern.jet.random.engine.RandomEngine;
 
 public class MT extends PRNGFactory {
 
-	public RandomEngine create() {
-		return new MersenneTwister64();
-	}
+    public RandomEngine create() {
+        return new MersenneTwister64();
+    }
 
-	public RandomEngine create(long seed) {
-		return new MersenneTwister64((int) seed);
-	}
+    public RandomEngine create(long seed) {
+        return new MersenneTwister64((int) seed);
+    }
 
-	public String getDescription() {
-		return "64-bit Mersenne Twister (Matsumoto and Nishimura)";
-	}
+    public String getDescription() {
+        return "64-bit Mersenne Twister (Matsumoto and Nishimura)";
+    }
 
 }

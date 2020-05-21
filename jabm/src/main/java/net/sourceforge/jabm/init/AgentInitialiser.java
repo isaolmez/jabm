@@ -24,11 +24,10 @@ import net.sourceforge.jabm.Population;
  */
 public interface AgentInitialiser {
 
-	/**
-	 * Initialise a population of agents.  The initial state of any
-	 * given agent may depend on the current state of other agents in
-	 * the collection.
-	 */
-	public void initialise(Population population);
-	
+    /**
+     * Initialise a population of agents.  The initial state of any given agent may depend on the current state of other
+     * agents in the collection.
+     */
+    public void initialise(Population population);
+
 }

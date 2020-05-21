@@ -17,16 +17,16 @@ package net.sourceforge.jabm.learning;
 
 /**
  * A learning algorithm that outputs a continuous signal.
- * 
+ *
  * @author Steve Phelps
  * @version $Revision: 16 $
  */
 
 public interface ContinuousLearner extends Learner {
 
-	/**
-	 * Generate an output from the learning algorithm.
-	 */
-	public double act();
+    /**
+     * Generate an output from the learning algorithm.
+     */
+    public double act();
 
 }

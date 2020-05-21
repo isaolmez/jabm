@@ -19,96 +19,94 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
 import net.sourceforge.jabm.Population;
 import net.sourceforge.jabm.agent.Agent;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Required;
 
 public class ProportionalCombiAgentInitialiser implements AgentInitialiser,
-		Serializable, InitializingBean {
+  Serializable, InitializingBean {
 
-	protected float[] proportions;
+    protected float[] proportions;
 
-	protected List<AgentInitialiser> initialisers;
+    protected List<AgentInitialiser> initialisers;
 
-	public ProportionalCombiAgentInitialiser(float[] proportions,
-			List<AgentInitialiser> initialisers) {
-		this();
-		this.proportions = proportions;
-		this.initialisers = initialisers;
-	}
-	
-	public ProportionalCombiAgentInitialiser() {
-		super();
-	}
+    public ProportionalCombiAgentInitialiser(float[] proportions,
+      List<AgentInitialiser> initialisers) {
+        this();
+        this.proportions = proportions;
+        this.initialisers = initialisers;
+    }
 
-	public void initialise(Population population) {
-		Collection<Agent> agents = population.getAgents();
-		int total = agents.size();
-		Iterator<Agent> agentIterator = agents.iterator();
-		for (int p = 0; p < proportions.length; p++) {
-			float proportion = proportions[p];
-			AgentInitialiser subInitialiser = initialisers.get(p);
-			int n = Math.round(proportion * total);
-			Population subPopulation = new Population();
-			for (int i = 0; i < n; i++) {
-				Agent agent = agentIterator.next();
-				subPopulation.add(agent);
-				subInitialiser.initialise(subPopulation);
-			}
-		}
-	}
+    public ProportionalCombiAgentInitialiser() {
+        super();
+    }
 
-	public float[] getProportions() {
-		return proportions;
-	}
+    public void initialise(Population population) {
+        Collection<Agent> agents = population.getAgents();
+        int total = agents.size();
+        Iterator<Agent> agentIterator = agents.iterator();
+        for (int p = 0; p < proportions.length; p++) {
+            float proportion = proportions[p];
+            AgentInitialiser subInitialiser = initialisers.get(p);
+            int n = Math.round(proportion * total);
+            Population subPopulation = new Population();
+            for (int i = 0; i < n; i++) {
+                Agent agent = agentIterator.next();
+                subPopulation.add(agent);
+                subInitialiser.initialise(subPopulation);
+            }
+        }
+    }
 
-	@Required
-	public void setProportions(float[] proportions) {
-		this.proportions = proportions;
-	}
+    public float[] getProportions() {
+        return proportions;
+    }
 
-	public List<AgentInitialiser> getInitialisers() {
-		return initialisers;
-	}
+    @Required
+    public void setProportions(float[] proportions) {
+        this.proportions = proportions;
+    }
 
-	@Required
-	public void setInitialisers(List<AgentInitialiser> initialisers) {
-		this.initialisers = initialisers;
-	}
+    public List<AgentInitialiser> getInitialisers() {
+        return initialisers;
+    }
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		if (initialisers.size() == proportions.length+1 ) {
-			inferMissingProportion();
-		}
-		if (! (initialisers.size() == proportions.length)) {
-			throw new RuntimeException("Proportion/initialisers size mismatch");
-		}
-		checkSumToOne();
-	}
+    @Required
+    public void setInitialisers(List<AgentInitialiser> initialisers) {
+        this.initialisers = initialisers;
+    }
 
-	public void inferMissingProportion() {
-		float[] shortProportions = this.proportions;
-		int n = shortProportions.length;			
-		this.proportions = Arrays.copyOf(shortProportions, n + 1);
-		float sigma = 0;
-		for(int i=0; i<n; i++) {
-			sigma += shortProportions[i];
-		}
-		this.proportions[n] = 1 - sigma;
-	}
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (initialisers.size() == proportions.length + 1) {
+            inferMissingProportion();
+        }
+        if (!(initialisers.size() == proportions.length)) {
+            throw new RuntimeException("Proportion/initialisers size mismatch");
+        }
+        checkSumToOne();
+    }
 
-	public void checkSumToOne() {
-		float sigma = 0.0f;
-		for(int i=0; i<proportions.length; i++) {
-			sigma += proportions[i];
-		}
-		if ( (sigma > 1.00001f) || (sigma < 0) ) {
-			throw new RuntimeException("Proportions do not sum to 1");
-		}
-	}
-	
+    public void inferMissingProportion() {
+        float[] shortProportions = this.proportions;
+        int n = shortProportions.length;
+        this.proportions = Arrays.copyOf(shortProportions, n + 1);
+        float sigma = 0;
+        for (int i = 0; i < n; i++) {
+            sigma += shortProportions[i];
+        }
+        this.proportions[n] = 1 - sigma;
+    }
+
+    public void checkSumToOne() {
+        float sigma = 0.0f;
+        for (int i = 0; i < proportions.length; i++) {
+            sigma += proportions[i];
+        }
+        if ((sigma > 1.00001f) || (sigma < 0)) {
+            throw new RuntimeException("Proportions do not sum to 1");
+        }
+    }
+
 }

@@ -16,6 +16,6 @@ package net.sourceforge.jabm.strategy;
 
 public interface ImitableStrategy {
 
-	public Strategy createMimicStrategy();
+    public Strategy createMimicStrategy();
 
 }

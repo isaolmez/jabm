@@ -15,166 +15,162 @@
 
 package net.sourceforge.jabm.learning;
 
+import cern.jet.random.engine.RandomEngine;
 import java.io.Serializable;
-
 import net.sourceforge.jabm.util.Prototypeable;
 import net.sourceforge.jabm.util.Resetable;
-
 import org.springframework.beans.factory.annotation.Required;
-
-import cern.jet.random.engine.RandomEngine;
 
 /**
  * A memory-less version of the Q-Learning algorithm.
- * 
- * This class implements StimuliResponseLearner instead of MDPLearner, and so
- * can be used in place of, e.g. a RothErevLearner.
- * 
- * We use the standard MDP QLearner class, but fool it with this wrapper into
- * thinking that there is only one state.
- * 
+ *
+ * This class implements StimuliResponseLearner instead of MDPLearner, and so can be used in place of, e.g. a
+ * RothErevLearner.
+ *
+ * We use the standard MDP QLearner class, but fool it with this wrapper into thinking that there is only one state.
+ *
  * @author Steve Phelps
  * @version $Revision: 189 $
  */
 public class StatelessQLearner extends AbstractLearner implements
-		StimuliResponseLearner, Resetable, Serializable,
-		Prototypeable {
+  StimuliResponseLearner, Resetable, Serializable,
+  Prototypeable {
 
-	QLearner qLearner;
+    QLearner qLearner;
 
-	public StatelessQLearner(RandomEngine prng) {
-		qLearner = new QLearner(prng);
-	}
+    public StatelessQLearner(RandomEngine prng) {
+        qLearner = new QLearner(prng);
+    }
 
-	public StatelessQLearner(int numActions, 
-			double learningRate, double discountRate, RandomEngine prng) {
+    public StatelessQLearner(int numActions,
+      double learningRate, double discountRate, RandomEngine prng) {
 
-		qLearner = new QLearner(1, numActions, learningRate,
-				discountRate, prng);
-	}
-	
-	public StatelessQLearner(int numActions, RandomEngine prng) {
-		this(numActions,QLearner.DEFAULT_LEARNING_RATE, QLearner.DEFAULT_DISCOUNT_RATE, prng);
-	}
+        qLearner = new QLearner(1, numActions, learningRate,
+          discountRate, prng);
+    }
+
+    public StatelessQLearner(int numActions, RandomEngine prng) {
+        this(numActions, QLearner.DEFAULT_LEARNING_RATE, QLearner.DEFAULT_DISCOUNT_RATE, prng);
+    }
 
 
-	public int act() {
-		return qLearner.act();
-	}
+    public int act() {
+        return qLearner.act();
+    }
 
-	public int bestAction() {
-		return qLearner.bestAction(0);
-	}
-	
-	public int worstAction() {
-		return qLearner.worstAction(0);
-	}
+    public int bestAction() {
+        return qLearner.bestAction(0);
+    }
 
-	public double getDiscountRate() {
-		return qLearner.getDiscountRate();
-	}
+    public int worstAction() {
+        return qLearner.worstAction(0);
+    }
 
-	public int getLastActionChosen() {
-		return qLearner.getLastActionChosen();
-	}
+    public double getDiscountRate() {
+        return qLearner.getDiscountRate();
+    }
 
-	public double getLearningRate() {
-		return qLearner.getLearningRate();
-	}
+    public int getLastActionChosen() {
+        return qLearner.getLastActionChosen();
+    }
 
-	public int getNumActions() {
-		return qLearner.getNumberOfActions();
-	}
+    public double getLearningRate() {
+        return qLearner.getLearningRate();
+    }
 
-	public int getPreviousState() {
-		return qLearner.getPreviousState();
-	}
+    public int getNumActions() {
+        return qLearner.getNumberOfActions();
+    }
 
-	public RandomEngine getPrng() {
-		return qLearner.getPrng();
-	}
+    public int getPreviousState() {
+        return qLearner.getPreviousState();
+    }
 
-	public int getState() {
-		return qLearner.getState();
-	}
+    public RandomEngine getPrng() {
+        return qLearner.getPrng();
+    }
 
-	public void initialise() {
-		qLearner.initialise();
-	}
+    public int getState() {
+        return qLearner.getState();
+    }
 
-	public double maxQ(int newState) {
-		return qLearner.maxQ(newState);
-	}
+    public void initialise() {
+        qLearner.initialise();
+    }
 
-	public void setDiscountRate(double discountRate) {
-		qLearner.setDiscountRate(discountRate);
-	}
+    public double maxQ(int newState) {
+        return qLearner.maxQ(newState);
+    }
 
-	public void setLearningRate(double learningRate) {
-		qLearner.setLearningRate(learningRate);
-	}
-	
-	public String toString() {
-		return qLearner.toString();
-	}
+    public void setDiscountRate(double discountRate) {
+        qLearner.setDiscountRate(discountRate);
+    }
 
-	public void reward(double reward) {
-		qLearner.newState(reward, 0);
-	}
+    public void setLearningRate(double learningRate) {
+        qLearner.setLearningRate(learningRate);
+    }
 
-	public void reset() {
-		qLearner.reset();
-	}
+    public String toString() {
+        return qLearner.toString();
+    }
 
-	public double getLearningDelta() {
-		return qLearner.getLearningDelta();
-	}
+    public void reward(double reward) {
+        qLearner.newState(reward, 0);
+    }
 
-	public int getNumberOfActions() {
-		return qLearner.getNumberOfActions();
-	}
+    public void reset() {
+        qLearner.reset();
+    }
 
-	public void setNumberOfActions(int n) {
-		qLearner.setStatesAndActions(1, n);
-	}
-	
-	public QLearner getqLearner() {
-		return qLearner;
-	}
+    public double getLearningDelta() {
+        return qLearner.getLearningDelta();
+    }
 
-	public void setqLearner(QLearner qLearner) {
-		this.qLearner = qLearner;
-	}
+    public int getNumberOfActions() {
+        return qLearner.getNumberOfActions();
+    }
 
-	public ActionSelector getActionSelector() {
-		return qLearner.getActionSelector();
-	}
+    public void setNumberOfActions(int n) {
+        qLearner.setStatesAndActions(1, n);
+    }
 
-	@Required
-	public void setActionSelector(ActionSelector actionSelector) {
-		qLearner.setActionSelector(actionSelector);
-	}
+    public QLearner getqLearner() {
+        return qLearner;
+    }
 
-	public void dumpState(net.sourceforge.jabm.report.DataWriter out) {
-		qLearner.dumpState(out);
-	}
+    public void setqLearner(QLearner qLearner) {
+        this.qLearner = qLearner;
+    }
 
-	public Object protoClone() {
-		try {
-			StatelessQLearner cloned = (StatelessQLearner) this.clone();
-			cloned.qLearner = (QLearner) this.qLearner.protoClone();
-			return cloned;
-		} catch (CloneNotSupportedException e) {
-			throw new Error(e);
-		}
-	}
-	
-	public void setInitialQValue(double initialQ) {
-		qLearner.setInitialQValue(initialQ);
-	}
-	
-	public double getInitialQValue() {
-		return qLearner.getInitialQValue();
-	}
+    public ActionSelector getActionSelector() {
+        return qLearner.getActionSelector();
+    }
+
+    @Required
+    public void setActionSelector(ActionSelector actionSelector) {
+        qLearner.setActionSelector(actionSelector);
+    }
+
+    public void dumpState(net.sourceforge.jabm.report.DataWriter out) {
+        qLearner.dumpState(out);
+    }
+
+    public Object protoClone() {
+        try {
+            StatelessQLearner cloned = (StatelessQLearner) this.clone();
+            cloned.qLearner = (QLearner) this.qLearner.protoClone();
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            throw new Error(e);
+        }
+    }
+
+    public void setInitialQValue(double initialQ) {
+        qLearner.setInitialQValue(initialQ);
+    }
+
+    public double getInitialQValue() {
+        return qLearner.getInitialQValue();
+    }
 
 }

@@ -15,51 +15,48 @@
 package net.sourceforge.jabm.report;
 
 import java.util.Map;
-
 import net.sourceforge.jabm.event.SimEvent;
 
 public abstract class AbstractReport implements Report {
 
-	protected ReportVariables reportVariables;
+    protected ReportVariables reportVariables;
 
-	public AbstractReport(ReportVariables reportVariables) {
-		super();
-		this.reportVariables = reportVariables;
-	}
-	
-	public AbstractReport() {
-		super();
-	}
-	
-	@Override
-	public Map<Object, Number> getVariableBindings() {
-		return reportVariables.getVariableBindings();
-	}
+    public AbstractReport(ReportVariables reportVariables) {
+        super();
+        this.reportVariables = reportVariables;
+    }
 
-	public ReportVariables getReportVariables() {
-		return reportVariables;
-	}
+    public AbstractReport() {
+        super();
+    }
 
-	/**
-	 * Configure the variables that will be updated by this report.
-	 * 
-	 * @see ReportVariables
-	 * @param reportVariables
-	 */
-	public void setReportVariables(ReportVariables reportVariables) {
-		this.reportVariables = reportVariables;
-	}
+    @Override
+    public Map<Object, Number> getVariableBindings() {
+        return reportVariables.getVariableBindings();
+    }
 
-	@Override
-	public void eventOccurred(SimEvent event) {
-		reportVariables.eventOccurred(event);
-	}
+    public ReportVariables getReportVariables() {
+        return reportVariables;
+    }
 
-	@Override
-	public String getName() {
-		return getClass().getName();
-	}
-	
-	
+    /**
+     * Configure the variables that will be updated by this report.
+     *
+     * @see ReportVariables
+     */
+    public void setReportVariables(ReportVariables reportVariables) {
+        this.reportVariables = reportVariables;
+    }
+
+    @Override
+    public void eventOccurred(SimEvent event) {
+        reportVariables.eventOccurred(event);
+    }
+
+    @Override
+    public String getName() {
+        return getClass().getName();
+    }
+
 
 }

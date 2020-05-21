@@ -15,36 +15,35 @@
 package net.sourceforge.jabm.agent.utility;
 
 import java.io.Serializable;
-
 import org.apache.log4j.Logger;
 
 public class ThresholdUtilityFunction extends AbstractUtilityFunction implements
-		Serializable {
+  Serializable {
 
-	protected double threshold;
-	
-	static Logger logger = Logger.getLogger(ThresholdUtilityFunction.class);
+    protected double threshold;
 
-	public ThresholdUtilityFunction() {
-		super();
-	}
+    static Logger logger = Logger.getLogger(ThresholdUtilityFunction.class);
 
-	@Override
-	public double calculatePayoff(double profit) {
-		if (profit > threshold) {
-			return profit;
-		} else {
-			return 0;
-		}
-	}
+    public ThresholdUtilityFunction() {
+        super();
+    }
 
-	public double getThreshold() {
-		return threshold;
-	}
+    @Override
+    public double calculatePayoff(double profit) {
+        if (profit > threshold) {
+            return profit;
+        } else {
+            return 0;
+        }
+    }
 
-	public void setThreshold(double threshold) {
-		this.threshold = threshold;
-	}
+    public double getThreshold() {
+        return threshold;
+    }
 
-	
+    public void setThreshold(double threshold) {
+        this.threshold = threshold;
+    }
+
+
 }

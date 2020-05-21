@@ -14,113 +14,108 @@
  */
 package net.sourceforge.jabm.examples.elfarolbar;
 
+import cern.jet.random.Uniform;
+import cern.jet.random.engine.RandomEngine;
 import java.util.List;
-
 import net.sourceforge.jabm.agent.Agent;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cern.jet.random.Uniform;
-import cern.jet.random.engine.RandomEngine;
-
 /**
- * A prediction strategy which adaptively chooses amongst a set of other
- * prediction strategies by choosing the one with the minimum
- * forecasting error at any given time.
- * 
+ * A prediction strategy which adaptively chooses amongst a set of other prediction strategies by choosing the one with
+ * the minimum forecasting error at any given time.
+ *
  * @author Steve Phelps
  */
-public class AdaptivePredictionStrategy extends AbstractPredictionStrategy 
-		implements InitializingBean {
+public class AdaptivePredictionStrategy extends AbstractPredictionStrategy
+  implements InitializingBean {
 
-	protected AbstractPredictionStrategy[] rules;
-	
-	protected int numRules;
-	
-	protected ObjectFactory<AbstractPredictionStrategy> ruleFactory;
-	
-	protected AbstractPredictionStrategy currentBestPredictor;
-	
-	/**
-	 * The pseudo-random number generator used to tie-break rules with
-	 * the same forecast error.
-	 */
-	protected RandomEngine prng;
+    protected AbstractPredictionStrategy[] rules;
 
-	public AdaptivePredictionStrategy(int numRules,
-			ObjectFactory<AbstractPredictionStrategy> ruleFactory) {
-		this.numRules = numRules;
-		this.ruleFactory = ruleFactory;
-		afterPropertiesSet();
-	}
-	
-	public AdaptivePredictionStrategy() {
-		super();
-	}
-	
-	public int getNumRules() {
-		return numRules;
-	}
+    protected int numRules;
 
-	public void setNumRules(int numRules) {
-		this.numRules = numRules;
-	}
+    protected ObjectFactory<AbstractPredictionStrategy> ruleFactory;
 
-	public ObjectFactory<AbstractPredictionStrategy> getRuleFactory() {
-		return ruleFactory;
-	}
+    protected AbstractPredictionStrategy currentBestPredictor;
 
-	public void setRuleFactory(ObjectFactory<AbstractPredictionStrategy> ruleFactory) {
-		this.ruleFactory = ruleFactory;
-	}
-	
-	public void execute(List<Agent> otherAgents) {
-		super.execute(otherAgents);
-		if (logger.isDebugEnabled()) {
-			logger.debug("currentPrediction = " + currentPrediction);
-			logger.debug("Executing best predictor: " + currentBestPredictor);
-		}
-		currentBestPredictor.execute(otherAgents);
-	}
-	
-	public void makePrediction() {
-		findBestPredictor();
-		currentPrediction = currentBestPredictor.getCurrentPrediction();
-	}
-	
-	public AbstractPredictionStrategy findBestPredictor() {
-		Uniform dist = new Uniform(0, rules.length-1, prng);
-		currentBestPredictor = rules[dist.nextInt()];
-		for(int i=0; i<rules.length; i++) {
-			if (rules[i].getForecastError()  
-					< currentBestPredictor.getForecastError()) {
-				currentBestPredictor = rules[i];
-			}
-		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("currentBestPredictor = " + currentBestPredictor);
-		}
-		return currentBestPredictor;
-	}
+    /**
+     * The pseudo-random number generator used to tie-break rules with the same forecast error.
+     */
+    protected RandomEngine prng;
 
-	@Override
-	public void setAgent(Agent agent) {
-		super.setAgent(agent);
-		for(int i=0; i < rules.length; i++) {
-			rules[i].setAgent(agent);
-		}
-	}
+    public AdaptivePredictionStrategy(int numRules,
+      ObjectFactory<AbstractPredictionStrategy> ruleFactory) {
+        this.numRules = numRules;
+        this.ruleFactory = ruleFactory;
+        afterPropertiesSet();
+    }
 
-	public RandomEngine getPrng() {
-		return prng;
-	}
+    public AdaptivePredictionStrategy() {
+        super();
+    }
 
-	@Required
-	public void setPrng(RandomEngine prng) {
-		this.prng = prng;
-	}
+    public int getNumRules() {
+        return numRules;
+    }
+
+    public void setNumRules(int numRules) {
+        this.numRules = numRules;
+    }
+
+    public ObjectFactory<AbstractPredictionStrategy> getRuleFactory() {
+        return ruleFactory;
+    }
+
+    public void setRuleFactory(ObjectFactory<AbstractPredictionStrategy> ruleFactory) {
+        this.ruleFactory = ruleFactory;
+    }
+
+    public void execute(List<Agent> otherAgents) {
+        super.execute(otherAgents);
+        if (logger.isDebugEnabled()) {
+            logger.debug("currentPrediction = " + currentPrediction);
+            logger.debug("Executing best predictor: " + currentBestPredictor);
+        }
+        currentBestPredictor.execute(otherAgents);
+    }
+
+    public void makePrediction() {
+        findBestPredictor();
+        currentPrediction = currentBestPredictor.getCurrentPrediction();
+    }
+
+    public AbstractPredictionStrategy findBestPredictor() {
+        Uniform dist = new Uniform(0, rules.length - 1, prng);
+        currentBestPredictor = rules[dist.nextInt()];
+        for (int i = 0; i < rules.length; i++) {
+            if (rules[i].getForecastError()
+              < currentBestPredictor.getForecastError()) {
+                currentBestPredictor = rules[i];
+            }
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("currentBestPredictor = " + currentBestPredictor);
+        }
+        return currentBestPredictor;
+    }
+
+    @Override
+    public void setAgent(Agent agent) {
+        super.setAgent(agent);
+        for (int i = 0; i < rules.length; i++) {
+            rules[i].setAgent(agent);
+        }
+    }
+
+    public RandomEngine getPrng() {
+        return prng;
+    }
+
+    @Required
+    public void setPrng(RandomEngine prng) {
+        this.prng = prng;
+    }
 
 //	@Override
 //	public void eventOccurred(SimEvent event) {
@@ -130,25 +125,25 @@ public class AdaptivePredictionStrategy extends AbstractPredictionStrategy
 //		}
 //	}
 
-	@Override
-	public void afterPropertiesSet() {
-		rules = new AbstractPredictionStrategy[numRules];
-		for (int i = 0; i < numRules; i++) {
-			rules[i] = ruleFactory.getObject();
-		}
-	}
+    @Override
+    public void afterPropertiesSet() {
+        rules = new AbstractPredictionStrategy[numRules];
+        for (int i = 0; i < numRules; i++) {
+            rules[i] = ruleFactory.getObject();
+        }
+    }
 
-	public AbstractPredictionStrategy[] getRules() {
-		return rules;
-	}
+    public AbstractPredictionStrategy[] getRules() {
+        return rules;
+    }
 
-	public void setRules(AbstractPredictionStrategy[] rules) {
-		this.rules = rules;
-	}
+    public void setRules(AbstractPredictionStrategy[] rules) {
+        this.rules = rules;
+    }
 
-	public AbstractPredictionStrategy getCurrentBestPredictor() {
-		return currentBestPredictor;
-	}
-	
-	
+    public AbstractPredictionStrategy getCurrentBestPredictor() {
+        return currentBestPredictor;
+    }
+
+
 }

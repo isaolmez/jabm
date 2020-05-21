@@ -16,53 +16,50 @@ package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import net.sourceforge.jabm.SimulationController;
 import net.sourceforge.jabm.agent.Agent;
 
 /**
- * An event that is fired whenever an agent arrives at the simulation.
- * Typically, but not always, this will be at the start of a simulation tick.
- * 
+ * An event that is fired whenever an agent arrives at the simulation. Typically, but not always, this will be at the
+ * start of a simulation tick.
+ *
  * @author Steve Phelps
- * 
  */
 public class AgentArrivalEvent extends SimulationControllerEvent implements
-		Serializable {
+  Serializable {
 
-	/**
-	 * The main agent that has arrived at the simulation.
-	 */
-	protected Agent subject;
+    /**
+     * The main agent that has arrived at the simulation.
+     */
+    protected Agent subject;
 
-	/**
-	 * An optional list of agents that have arrived at the same time as the main
-	 * agent. This is used to implement mixing models in which, for example,
-	 * agents are randomly paired with one another in some interaction.
-	 */
-	protected ArrayList<Agent> objects;
+    /**
+     * An optional list of agents that have arrived at the same time as the main agent. This is used to implement mixing
+     * models in which, for example, agents are randomly paired with one another in some interaction.
+     */
+    protected ArrayList<Agent> objects;
 
-	public AgentArrivalEvent(SimulationController controller, Agent subject,
-			ArrayList<Agent> objects) {
-		super(controller);
-		this.subject = subject;
-		this.objects = objects;
-	}
+    public AgentArrivalEvent(SimulationController controller, Agent subject,
+      ArrayList<Agent> objects) {
+        super(controller);
+        this.subject = subject;
+        this.objects = objects;
+    }
 
-	public Agent getSubject() {
-		return subject;
-	}
+    public Agent getSubject() {
+        return subject;
+    }
 
-	public void setSubject(Agent subject) {
-		this.subject = subject;
-	}
+    public void setSubject(Agent subject) {
+        this.subject = subject;
+    }
 
-	public ArrayList<Agent> getObjects() {
-		return objects;
-	}
+    public ArrayList<Agent> getObjects() {
+        return objects;
+    }
 
-	public void setObjects(ArrayList<Agent> objects) {
-		this.objects = objects;
-	}
-	
+    public void setObjects(ArrayList<Agent> objects) {
+        this.objects = objects;
+    }
+
 }

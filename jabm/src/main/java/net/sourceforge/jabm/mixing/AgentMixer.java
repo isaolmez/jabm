@@ -19,20 +19,17 @@ import net.sourceforge.jabm.SimulationController;
 
 /**
  * <p>
- * An AgentMixer defines how agents in the population interact with each other
- * during the course of the simulation.
+ * An AgentMixer defines how agents in the population interact with each other during the course of the simulation.
  * </p>
- * 
+ *
  * @author Steve Phelps
- * 
  */
-public interface AgentMixer  {
+public interface AgentMixer {
 
-	/**
-	 * Schedule events of type AgentArrivalEvent for each agent in the
-	 * simulation.
-	 */
-	public void invokeAgentInteractions(Population population,
-			SimulationController simulation);
+    /**
+     * Schedule events of type AgentArrivalEvent for each agent in the simulation.
+     */
+    public void invokeAgentInteractions(Population population,
+      SimulationController simulation);
 
 }

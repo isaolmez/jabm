@@ -17,60 +17,59 @@ package net.sourceforge.jabm.util;
 
 /**
  * Miscalleneous mathematical functions.
- * 
+ *
  * @author Steve Phelps
  * @version $Revision: 16 $
  */
 
 public class MathUtil {
 
-	public static final double DEFAULT_ERROR = 0.0000001;
+    public static final double DEFAULT_ERROR = 0.0000001;
 
-	/**
-	 * Calculate the square of x.
-	 */
-	public static double squared(double x) {
-		return x * x;
-	}
+    /**
+     * Calculate the square of x.
+     */
+    public static double squared(double x) {
+        return x * x;
+    }
 
-	/**
-	 * Calculate the squared difference of x and y.
-	 */
-	public static double diffSq(double x, double y) {
-		return squared(x - y);
-	}
+    /**
+     * Calculate the squared difference of x and y.
+     */
+    public static double diffSq(double x, double y) {
+        return squared(x - y);
+    }
 
-	/**
-	 * Returns true if the difference between x and y is less than error.
-	 */
-	public static boolean approxEqual(double x, double y, double error) {
-		return Math.abs(x - y) <= error;
-	}
+    /**
+     * Returns true if the difference between x and y is less than error.
+     */
+    public static boolean approxEqual(double x, double y, double error) {
+        return Math.abs(x - y) <= error;
+    }
 
-	public static boolean approxEqual(double x, double y) {
-		return MathUtil.approxEqual(x, y, DEFAULT_ERROR);
-	}
+    public static boolean approxEqual(double x, double y) {
+        return MathUtil.approxEqual(x, y, DEFAULT_ERROR);
+    }
 
-	public static double sum(double[] series) {
-		double total = 0;
-		for (int i = 0; i < series.length; i++) {
-			total += series[i];
-		}
-		return total;
-	}
+    public static double sum(double[] series) {
+        double total = 0;
+        for (int i = 0; i < series.length; i++) {
+            total += series[i];
+        }
+        return total;
+    }
 
-	/**
-	 * Use cern.jet.random.Arithmetic.factorial instead.
-	 * 
-	 * @deprecated
-	 * 
-	 */
-	public static long factorial(int n) {
-		long result = 1;
-		for (int i = 0; i < n - 1; i++) {
-			result *= n - i;
-		}
-		return result;
-	}
+    /**
+     * Use cern.jet.random.Arithmetic.factorial instead.
+     *
+     * @deprecated
+     */
+    public static long factorial(int n) {
+        long result = 1;
+        for (int i = 0; i < n - 1; i++) {
+            result *= n - i;
+        }
+        return result;
+    }
 
 }

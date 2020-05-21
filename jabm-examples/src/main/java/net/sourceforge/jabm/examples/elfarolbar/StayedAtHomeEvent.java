@@ -17,19 +17,17 @@ package net.sourceforge.jabm.examples.elfarolbar;
 import net.sourceforge.jabm.event.SimEvent;
 
 /**
- * An event that is fired whenever an agent decides to stay at home
- * instead of attending the bar.
- * 
- * @author Steve Phelps
+ * An event that is fired whenever an agent decides to stay at home instead of attending the bar.
  *
+ * @author Steve Phelps
  */
 public class StayedAtHomeEvent extends SimEvent {
 
-	protected PatronAgent agent;
+    protected PatronAgent agent;
 
-	public StayedAtHomeEvent(PatronAgent agent) {
-		super();
-		this.agent = agent;
-	}
-	
+    public StayedAtHomeEvent(PatronAgent agent) {
+        super();
+        this.agent = agent;
+    }
+
 }

@@ -15,26 +15,23 @@
 package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.Simulation;
 
 /**
  * An event that is fired when agents have finished interacting.
- * 
- * @author Steve Phelps
  *
+ * @author Steve Phelps
  */
 public class InteractionsFinishedEvent extends SimulationEvent implements
-		Serializable {
+  Serializable {
 
-	public InteractionsFinishedEvent(Simulation model) {
-		super(model);
-	}
+    public InteractionsFinishedEvent(Simulation model) {
+        super(model);
+    }
 
-	public InteractionsFinishedEvent() {
-		super();
-	}
-	
-	
+    public InteractionsFinishedEvent() {
+        super();
+    }
+
 
 }

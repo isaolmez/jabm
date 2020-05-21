@@ -27,23 +27,23 @@ import net.sourceforge.jabm.report.DataSeriesWriter;
  */
 
 public class GraphLearnerMonitor extends DataSeriesWriter implements
-    LearnerMonitor {
+  LearnerMonitor {
 
-	public GraphLearnerMonitor() {
-		super();
+    public GraphLearnerMonitor() {
+        super();
 
-	}
+    }
 //
 //	public void setup(ParameterDatabase parameters, Parameter base) {
 //		// TODO
 //	}
 
-	public void startRecording() {
-		clear();
-	}
+    public void startRecording() {
+        clear();
+    }
 
-	public void finishRecording() {
-		// TODO
-	}
+    public void finishRecording() {
+        // TODO
+    }
 
 }

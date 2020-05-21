@@ -22,6 +22,6 @@ package net.sourceforge.jabm.util;
 @Deprecated
 public interface Prototypeable extends Cloneable {
 
-	public Object protoClone();
+    public Object protoClone();
 
 }

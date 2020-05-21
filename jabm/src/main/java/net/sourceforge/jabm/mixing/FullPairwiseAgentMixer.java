@@ -16,64 +16,61 @@ package net.sourceforge.jabm.mixing;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import net.sourceforge.jabm.Population;
 import net.sourceforge.jabm.SimulationController;
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.agent.AgentList;
 import net.sourceforge.jabm.event.AgentArrivalEvent;
 import net.sourceforge.jabm.event.SimEvent;
-
 import org.apache.log4j.Logger;
 
 /**
  * Every pair of agents interacts with each other.
- * 
- * @author Steve Phelps
  *
+ * @author Steve Phelps
  */
 public class FullPairwiseAgentMixer implements AgentMixer, Serializable {
-	
-	protected int numSteps = 1;
-	
-	static Logger logger = Logger.getLogger(FullPairwiseAgentMixer.class);
-	
-	public FullPairwiseAgentMixer() {
-	}
-	
-	public void invokeInteraction(AgentList group, SimulationController simulation) {
-		ArrayList<Agent> agents = new ArrayList<Agent>(group.size());
-		for(Agent ai : group.getAgents()) {
-			for(Agent aj : group.getAgents()) {
-				if (ai != aj) {					
-					agents.add(aj);
-				}
-			}
-			simulation.fireEvent(new AgentArrivalEvent(simulation, ai, agents));
-		}
-	}
-	
-	public void invokeInteractions(AgentList agentList, SimulationController simulation) {
-		for(int i=0; i<numSteps; i++) {
-			invokeInteraction(agentList, simulation);
-		}
-	}
-	
-	@Override
-	public void invokeAgentInteractions(Population population, SimulationController simulation) {
-		invokeInteractions(population.getAgentList(), simulation);
-	}
-	
-	public int getNumSteps() {
-		return numSteps;
-	}
 
-	public void setNumSteps(int numSteps) {
-		this.numSteps = numSteps;
-	}
+    protected int numSteps = 1;
 
-	public void eventOccurred(SimEvent event) {
-	}
+    static Logger logger = Logger.getLogger(FullPairwiseAgentMixer.class);
 
-	
+    public FullPairwiseAgentMixer() {
+    }
+
+    public void invokeInteraction(AgentList group, SimulationController simulation) {
+        ArrayList<Agent> agents = new ArrayList<Agent>(group.size());
+        for (Agent ai : group.getAgents()) {
+            for (Agent aj : group.getAgents()) {
+                if (ai != aj) {
+                    agents.add(aj);
+                }
+            }
+            simulation.fireEvent(new AgentArrivalEvent(simulation, ai, agents));
+        }
+    }
+
+    public void invokeInteractions(AgentList agentList, SimulationController simulation) {
+        for (int i = 0; i < numSteps; i++) {
+            invokeInteraction(agentList, simulation);
+        }
+    }
+
+    @Override
+    public void invokeAgentInteractions(Population population, SimulationController simulation) {
+        invokeInteractions(population.getAgentList(), simulation);
+    }
+
+    public int getNumSteps() {
+        return numSteps;
+    }
+
+    public void setNumSteps(int numSteps) {
+        this.numSteps = numSteps;
+    }
+
+    public void eventOccurred(SimEvent event) {
+    }
+
+
 }

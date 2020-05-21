@@ -16,7 +16,6 @@ package net.sourceforge.jabm;
 
 import net.sourceforge.jabm.init.SpringSimulationFactory;
 import net.sourceforge.jabm.spring.SimulationScope;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -28,108 +27,102 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 /**
  * <p>
  * <code>SpringSimulationController</code> is responsible for running
- * one or more independent JABM simulations which are configured using the 
+ * one or more independent JABM simulations which are configured using the
  * <a href="http://www.springsource.com/developer/spring">Spring Framework</a>.
  * </p>
- * 
+ *
  * <p>
- * It is responsible for running one or more Monte-carlo simulations; that is,
- * any object implementing the <code>Simulation</code> interface.
- * Typically a simulation will be run several hundred times with different
- * realisations of random variables.  In order to ensure that each sample
- * is independent, the underlying simulation is initialised as a freshly
- * constructed bean from the Spring factory for every run.
+ * It is responsible for running one or more Monte-carlo simulations; that is, any object implementing the
+ * <code>Simulation</code> interface. Typically a simulation will be run several hundred times with different
+ * realisations of random variables.  In order to ensure that each sample is independent, the underlying simulation is
+ * initialised as a freshly constructed bean from the Spring factory for every run.
  * </p>
- * 
+ *
  * <p>
- * A simulation model is constructed using 
- * <a href="http://martinfowler.com/articles/injection.html">dependency injection</a> 
- * by creating a 
+ * A simulation model is constructed using
+ * <a href="http://martinfowler.com/articles/injection.html">dependency injection</a>
+ * by creating a
  * <a href="http://unmaintainable.wordpress.com/2007/11/01/configuration-with-spring-beans/">
- * Spring beans configuration file</a> which specifies which classes to use 
- * in the simulation and the values of any attributes (parameters).  
- * The Spring configuration file is specified using the system property 
- * <code>jabm.config</code>.  
+ * Spring beans configuration file</a> which specifies which classes to use in the simulation and the values of any
+ * attributes (parameters). The Spring configuration file is specified using the system property
+ * <code>jabm.config</code>.
  * </p>
- * 
+ *
  * @author Steve Phelps
  * @see Simulation
- *
  */
-public class SpringSimulationController extends SimulationController 
-		implements BeanFactoryAware, InitializingBean {
+public class SpringSimulationController extends SimulationController
+  implements BeanFactoryAware, InitializingBean {
 
-	/**
-	 * The name of the bean representing the </code>Simulation</code>.
-	 */
-	protected String simulationBeanName;
-	
-	/**
-	 * The container for beans with scope="simulation".
-	 */
-	protected SimulationScope simulationScope;
+    /**
+     * The name of the bean representing the </code>Simulation</code>.
+     */
+    protected String simulationBeanName;
 
-	protected BeanFactory beanFactory;
-	
-	protected boolean simulationInitialised = false;
-	
-	static Logger logger = Logger.getLogger(SpringSimulationController.class);
-	
-	@Override
-	protected void tearDownSimulation() {
-		super.tearDownSimulation();
-		simulationScope.startNewSimulation();
-	}
-	
-	@Override
-	protected void constructSimulation() {
-		logger.debug("Constructing simulation... ");
-		// Tear down any existing simulation object so that we can run afresh.
-		tearDownSimulation();
-		// First wire the reports so that they can listen to events fired
-		//  during the initialisation phase.
-		wireReports();
-		// Now construct a fresh simulation.
-		this.simulation = simulationFactory.initialise(this);
-		logger.debug("simulation = " + simulation);
-		// Now establish the remaining listeners
-		wireSimulation();
-		// All done
-		this.simulationInitialised = true;
-	}
+    /**
+     * The container for beans with scope="simulation".
+     */
+    protected SimulationScope simulationScope;
 
-	public String getSimulationBeanName() {
-		return simulationBeanName;
-	}
+    protected BeanFactory beanFactory;
 
-	/**
-	 * The name of bean representing the Simulation to be run
-	 * as part of this experiment.
-	 * 
-	 * @see Simulation
-	 * @param simulationBean
-	 */
-	@Required
-	public void setSimulationBeanName(String simulationBean) {
-		this.simulationBeanName = simulationBean;
-	}
+    protected boolean simulationInitialised = false;
 
-	@Override
-	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-		this.beanFactory = (DefaultListableBeanFactory) beanFactory;
-	}
-	
-	public BeanFactory getBeanFactory() {
-		return beanFactory;
-	}
+    static Logger logger = Logger.getLogger(SpringSimulationController.class);
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		this.simulation = (Simulation) beanFactory.getBean(simulationBeanName);
-		this.simulationScope = SimulationScope.getSingletonInstance();
-		if (this.simulationFactory == null) {
-			this.simulationFactory = new SpringSimulationFactory();
-		}
-	}
-	
+    @Override
+    protected void tearDownSimulation() {
+        super.tearDownSimulation();
+        simulationScope.startNewSimulation();
+    }
+
+    @Override
+    protected void constructSimulation() {
+        logger.debug("Constructing simulation... ");
+        // Tear down any existing simulation object so that we can run afresh.
+        tearDownSimulation();
+        // First wire the reports so that they can listen to events fired
+        //  during the initialisation phase.
+        wireReports();
+        // Now construct a fresh simulation.
+        this.simulation = simulationFactory.initialise(this);
+        logger.debug("simulation = " + simulation);
+        // Now establish the remaining listeners
+        wireSimulation();
+        // All done
+        this.simulationInitialised = true;
+    }
+
+    public String getSimulationBeanName() {
+        return simulationBeanName;
+    }
+
+    /**
+     * The name of bean representing the Simulation to be run as part of this experiment.
+     *
+     * @see Simulation
+     */
+    @Required
+    public void setSimulationBeanName(String simulationBean) {
+        this.simulationBeanName = simulationBean;
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = (DefaultListableBeanFactory) beanFactory;
+    }
+
+    public BeanFactory getBeanFactory() {
+        return beanFactory;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        this.simulation = (Simulation) beanFactory.getBean(simulationBeanName);
+        this.simulationScope = SimulationScope.getSingletonInstance();
+        if (this.simulationFactory == null) {
+            this.simulationFactory = new SpringSimulationFactory();
+        }
+    }
+
 }

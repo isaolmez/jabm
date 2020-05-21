@@ -19,47 +19,45 @@ import net.sourceforge.jabm.event.EventListener;
 import net.sourceforge.jabm.strategy.Strategy;
 
 /**
- * A simulated agent. Every agent has a strategy, which specifies the behaviour
- * of the agent.
- * 
+ * A simulated agent. Every agent has a strategy, which specifies the behaviour of the agent.
+ *
  * @author sphelps
  */
 public interface Agent extends EventListener {
 
-	/**
-	 * @return the accrued payoff to the agent during the course of the simulation.
-	 */
-	public double getPayoff();
-	
-	/**
-	 * @return the change in payoff during the most recent period.
-	 */
-	public double getPayoffDelta();
-	
-	/**
-	 * Initialise the agent.
-	 */
-	public void initialise();
-	
-	/**
-	 * Find out whether the agent has interacted with the environment or other
-	 * agents.
-	 */
-	public boolean isInteracted();
+    /**
+     * @return the accrued payoff to the agent during the course of the simulation.
+     */
+    public double getPayoff();
 
-	/**
-	 * Set the event scheduler for this agent.
-	 */
-	public void setScheduler(EventScheduler eventScheduler);
-	
-	/**
-	 * @return the current <code>Strategy</code> used by this agent.
-	 */
-	public Strategy getStrategy();
+    /**
+     * @return the change in payoff during the most recent period.
+     */
+    public double getPayoffDelta();
 
-	/**
-	 * Configure the current <code>Strategy</code> for this agent.
-	 */
-	public void setStrategy(Strategy strategy);
-	
+    /**
+     * Initialise the agent.
+     */
+    public void initialise();
+
+    /**
+     * Find out whether the agent has interacted with the environment or other agents.
+     */
+    public boolean isInteracted();
+
+    /**
+     * Set the event scheduler for this agent.
+     */
+    public void setScheduler(EventScheduler eventScheduler);
+
+    /**
+     * @return the current <code>Strategy</code> used by this agent.
+     */
+    public Strategy getStrategy();
+
+    /**
+     * Configure the current <code>Strategy</code> for this agent.
+     */
+    public void setStrategy(Strategy strategy);
+
 }

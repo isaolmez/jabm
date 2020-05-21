@@ -19,40 +19,40 @@ import java.util.Iterator;
 
 /**
  * Interface for logging data to a back-end store.
- * 
+ *
  * @author Steve Phelps
  * @version $Revision: 104 $
  */
 
 public interface DataWriter {
 
-	@SuppressWarnings("rawtypes")
-	public void newData(Iterator i);
+    @SuppressWarnings("rawtypes")
+    public void newData(Iterator i);
 
-	public void newData(Object[] data);
+    public void newData(Object[] data);
 
-	public void newData(String data);
+    public void newData(String data);
 
-	public void newData(Double data);
+    public void newData(Double data);
 
-	public void newData(Integer data);
+    public void newData(Integer data);
 
-	public void newData(Long data);
+    public void newData(Long data);
 
-	public void newData(Object data);
+    public void newData(Object data);
 
-	public void newData(int data);
+    public void newData(int data);
 
-	public void newData(long data);
+    public void newData(long data);
 
-	public void newData(double data);
+    public void newData(double data);
 
-	public void newData(float data);
+    public void newData(float data);
 
-	public void newData(boolean data);
+    public void newData(boolean data);
 
-	public void flush();
+    public void flush();
 
-	public void close();
+    public void close();
 
 }

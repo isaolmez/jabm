@@ -18,6 +18,6 @@ import net.sourceforge.jabm.agent.Agent;
 
 public interface FitnessFunction {
 
-	public double getFitness(Agent i);
-	
+    public double getFitness(Agent i);
+
 }

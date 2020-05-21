@@ -16,48 +16,47 @@ package net.sourceforge.jabm.report;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import net.sourceforge.jabm.event.SimEvent;
 
 public class TimelessReportVariables implements ReportVariables {
 
-	protected ReportVariables reportVariables;
-	
-	@Override
-	public Map<Object, Number> getVariableBindings() {
-		Map<Object, Number> bindings = reportVariables.getVariableBindings();
-		Map<Object, Number> result = new LinkedHashMap<Object, Number>(bindings);
-		result.remove(reportVariables.getName() + ".t");
-		return result;
-	}
+    protected ReportVariables reportVariables;
 
-	@Override
-	public void eventOccurred(SimEvent event) {
-	}
+    @Override
+    public Map<Object, Number> getVariableBindings() {
+        Map<Object, Number> bindings = reportVariables.getVariableBindings();
+        Map<Object, Number> result = new LinkedHashMap<Object, Number>(bindings);
+        result.remove(reportVariables.getName() + ".t");
+        return result;
+    }
 
-	@Override
-	public void compute(SimEvent event) {
-	}
+    @Override
+    public void eventOccurred(SimEvent event) {
+    }
 
-	@Override
-	public void dispose(SimEvent event) {
-	}
+    @Override
+    public void compute(SimEvent event) {
+    }
 
-	@Override
-	public void initialise(SimEvent event) {
-	}
+    @Override
+    public void dispose(SimEvent event) {
+    }
 
-	@Override
-	public String getName() {
-		return reportVariables.getName();
-	}
+    @Override
+    public void initialise(SimEvent event) {
+    }
 
-	public ReportVariables getReportVariables() {
-		return reportVariables;
-	}
+    @Override
+    public String getName() {
+        return reportVariables.getName();
+    }
 
-	public void setReportVariables(ReportVariables reportVariables) {
-		this.reportVariables = reportVariables;
-	}
+    public ReportVariables getReportVariables() {
+        return reportVariables;
+    }
+
+    public void setReportVariables(ReportVariables reportVariables) {
+        this.reportVariables = reportVariables;
+    }
 
 }

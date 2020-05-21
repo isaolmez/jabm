@@ -15,19 +15,18 @@
 package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.SimulationController;
 
 /**
  * An event that is fired when a batch of one or more simulations has finished.
- * 
+ *
  * @author Steve Phelps
  */
 public class BatchFinishedEvent extends SimulationControllerEvent implements
-		Serializable {
+  Serializable {
 
-	public BatchFinishedEvent(SimulationController model) {
-		super(model);
-	}
+    public BatchFinishedEvent(SimulationController model) {
+        super(model);
+    }
 
 }

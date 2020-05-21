@@ -16,38 +16,32 @@
 package net.sourceforge.jabm.learning;
 
 /**
- * Classes implementing this interface implement learning algorithms for Markoff
- * descision processes (MDPs).
- * 
+ * Classes implementing this interface implement learning algorithms for Markoff descision processes (MDPs).
+ *
  * @author Steve Phelps
  * @version $Revision: 98 $
  */
 
 public interface MDPLearner extends DiscreteLearner {
 
-	/**
-	 * The call-back after performing an action.
-	 * 
-	 * @param reward
-	 *            The reward received from taking the most recently-selected
-	 *            action.
-	 * 
-	 * @param newState
-	 *            The new state encountered after taking the most
-	 *            recently-selected action.
-	 */
-	public void newState(double reward, int newState);
+    /**
+     * The call-back after performing an action.
+     *
+     * @param reward The reward received from taking the most recently-selected action.
+     * @param newState The new state encountered after taking the most recently-selected action.
+     */
+    public void newState(double reward, int newState);
 
-	/**
-	 * @param state The current state of the MDP.
-	 * @return An array representing the Q values indexed by action.
-	 */
-	public double[] getValueEstimates(int state);
+    /**
+     * @param state The current state of the MDP.
+     * @return An array representing the Q values indexed by action.
+     */
+    public double[] getValueEstimates(int state);
 
-	public int bestAction(int state);
+    public int bestAction(int state);
 
-	public int getNumberOfActions();
-	
-	public int getNumberOfStates();
+    public int getNumberOfActions();
+
+    public int getNumberOfStates();
 
 }

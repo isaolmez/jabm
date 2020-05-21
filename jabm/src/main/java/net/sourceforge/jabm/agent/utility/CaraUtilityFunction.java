@@ -16,21 +16,20 @@ package net.sourceforge.jabm.agent.utility;
 
 public class CaraUtilityFunction implements UtilityFunction {
 
-	protected double alpha = 0.1;
-	
-	@Override
-	public double calculatePayoff(double profit) {
-		return 1 - Math.exp(-1 * alpha * profit);
-	}
+    protected double alpha = 0.1;
 
-	public double getAlpha() {
-		return alpha;
-	}
+    @Override
+    public double calculatePayoff(double profit) {
+        return 1 - Math.exp(-1 * alpha * profit);
+    }
 
-	public void setAlpha(double alpha) {
-		this.alpha = alpha;
-	}
-	
-	
+    public double getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(double alpha) {
+        this.alpha = alpha;
+    }
+
 
 }

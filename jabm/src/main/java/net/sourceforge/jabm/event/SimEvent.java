@@ -18,9 +18,8 @@ import java.io.Serializable;
 
 /**
  * Superclass for all JABM events.
- * 
- * @author Steve Phelps
  *
+ * @author Steve Phelps
  */
 public class SimEvent implements Serializable {
 

@@ -15,20 +15,18 @@
 package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.Simulation;
 
 /**
  * An event that is fired after a single simulation has completed.
- * 
- * @author Steve Phelps
  *
+ * @author Steve Phelps
  */
 public class SimulationFinishedEvent extends SimulationEvent implements
-		Serializable {
+  Serializable {
 
-	public SimulationFinishedEvent(Simulation model) {
-		super(model);
-	}
+    public SimulationFinishedEvent(Simulation model) {
+        super(model);
+    }
 
 }

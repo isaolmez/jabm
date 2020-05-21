@@ -18,9 +18,9 @@ import java.util.Comparator;
 
 public class HashCodeComparator<T> implements Comparator<T> {
 
-	@Override
-	public int compare(T o1, T o2) {
-		return new Integer(o1.hashCode()).compareTo(new Integer(o2.hashCode()));
-	}
+    @Override
+    public int compare(T o1, T o2) {
+        return new Integer(o1.hashCode()).compareTo(new Integer(o2.hashCode()));
+    }
 
 }

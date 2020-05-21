@@ -13,16 +13,15 @@
  * See the GNU General Public License for more details.
  */
 package net.sourceforge.jabm.report;
- 
+
 import javax.swing.JComponent;
 
 /**
- * A report which provides a graphical user-interface in the form
- * of a swing {@link JComponent}.
- * 
+ * A report which provides a graphical user-interface in the form of a swing {@link JComponent}.
+ *
  * @author Steve Phelps
  */
 public interface ReportWithGUI extends Report {
 
-	public JComponent getComponent();
+    public JComponent getComponent();
 }

@@ -17,32 +17,31 @@ package net.sourceforge.jabm.util;
 
 /**
  * <p>
- * A simple wrapper for a primitive <code>int</code> value which is publically
- * mutable.
+ * A simple wrapper for a primitive <code>int</code> value which is publically mutable.
  * </p>
  */
 public class MutableIntWrapper {
 
-	public int value;
+    public int value;
 
-	public MutableIntWrapper() {
-		this(0);
-	}
+    public MutableIntWrapper() {
+        this(0);
+    }
 
-	public MutableIntWrapper(int value) {
-		this.value = value;
-	}
+    public MutableIntWrapper(int value) {
+        this.value = value;
+    }
 
-	public int intValue() {
-		return value;
-	}
+    public int intValue() {
+        return value;
+    }
 
-	public int getValue() {
-		return value;
-	}
+    public int getValue() {
+        return value;
+    }
 
-	public void setValue(int value) {
-		this.value = value;
-	}
-	
+    public void setValue(int value) {
+        this.value = value;
+    }
+
 }

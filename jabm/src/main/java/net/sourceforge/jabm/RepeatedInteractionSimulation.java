@@ -17,60 +17,55 @@ package net.sourceforge.jabm;
 import java.io.Serializable;
 
 /**
- * A simulation in which agents repeatedly arrive at the simulation in 
- * multiple rounds.
- *  
- * @author Steve Phelps
+ * A simulation in which agents repeatedly arrive at the simulation in multiple rounds.
  *
+ * @author Steve Phelps
  */
-public class RepeatedInteractionSimulation extends SimpleSimulation 
-		implements Serializable {
+public class RepeatedInteractionSimulation extends SimpleSimulation
+  implements Serializable {
 
-	/**
-	 * The current round a.k.a. tick.
-	 */
-	protected int round = 0;
-	
-	/**
-	 * The maximum number of rounds.
-	 */
-	protected int maximumRounds = Integer.MAX_VALUE;
-	
-	public RepeatedInteractionSimulation(
-			SimulationController simulationController) {
-		super(simulationController);
-	}
-	
-	public RepeatedInteractionSimulation() {
-		super();
-	}
+    /**
+     * The current round a.k.a. tick.
+     */
+    protected int round = 0;
 
-	@Override
-	public SimulationTime getSimulationTime() {
-		return new SimulationTime(round);
-	}
+    /**
+     * The maximum number of rounds.
+     */
+    protected int maximumRounds = Integer.MAX_VALUE;
 
-	@Override
-	public void run() {
-		begin();
-		for(round = 0; round < maximumRounds && isRunning; round++) {
-			step();
-		}
-		end();
-	}
+    public RepeatedInteractionSimulation(
+      SimulationController simulationController) {
+        super(simulationController);
+    }
 
-	public int getMaximumRounds() {
-		return maximumRounds;
-	}
+    public RepeatedInteractionSimulation() {
+        super();
+    }
 
-	/**
-	 * Configure the maximum number of rounds this simulation will run before
-	 * being automatically terminated.
-	 * 
-	 * @param maximumRounds
-	 */
-	public void setMaximumRounds(int maximumRounds) {
-		this.maximumRounds = maximumRounds;
-	}
-	
+    @Override
+    public SimulationTime getSimulationTime() {
+        return new SimulationTime(round);
+    }
+
+    @Override
+    public void run() {
+        begin();
+        for (round = 0; round < maximumRounds && isRunning; round++) {
+            step();
+        }
+        end();
+    }
+
+    public int getMaximumRounds() {
+        return maximumRounds;
+    }
+
+    /**
+     * Configure the maximum number of rounds this simulation will run before being automatically terminated.
+     */
+    public void setMaximumRounds(int maximumRounds) {
+        this.maximumRounds = maximumRounds;
+    }
+
 }

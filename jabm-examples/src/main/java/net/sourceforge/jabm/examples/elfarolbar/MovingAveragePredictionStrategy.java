@@ -17,48 +17,47 @@ package net.sourceforge.jabm.examples.elfarolbar;
 
 /**
  * A prediction strategy that uses a simple moving average.
- * 
- * @author Steve Phelps
  *
+ * @author Steve Phelps
  */
 public class MovingAveragePredictionStrategy extends AbstractPredictionStrategy {
 
-	/**
-	 * The window size.
-	 */
-	protected int windowSize;
-	
-	@Override
-	public void makePrediction() {
-		currentPrediction += 
-				(double) barTender.getAttendanceAtLag(1) / (double) windowSize;
-		currentPrediction -= 
-				(double) barTender.getAttendanceAtLag(windowSize + 1) 
-					/ (double) windowSize;
-		if (logger.isDebugEnabled()) {
-			logger.debug("currentPrediction = " + currentPrediction);
-			logger.debug("windowSize = " + windowSize);
-		}
-	}
+    /**
+     * The window size.
+     */
+    protected int windowSize;
 
-	public int getWindowSize() {
-		return windowSize;
-	}
+    @Override
+    public void makePrediction() {
+        currentPrediction +=
+          (double) barTender.getAttendanceAtLag(1) / (double) windowSize;
+        currentPrediction -=
+          (double) barTender.getAttendanceAtLag(windowSize + 1)
+            / (double) windowSize;
+        if (logger.isDebugEnabled()) {
+            logger.debug("currentPrediction = " + currentPrediction);
+            logger.debug("windowSize = " + windowSize);
+        }
+    }
 
-	/**
-	 * Configure the window size.
-	 * 
-	 * @param windowSize  The size of the window used to calculate the MA.
-	 */
-	public void setWindowSize(int windowSize) {
-		this.windowSize = windowSize;
-	}
+    public int getWindowSize() {
+        return windowSize;
+    }
 
-	@Override
-	public String toString() {
-		return "MovingAveragePredictionStrategy [windowSize=" + windowSize
-				+ " currentPrediction=" + currentPrediction + "]";
-	}
+    /**
+     * Configure the window size.
+     *
+     * @param windowSize The size of the window used to calculate the MA.
+     */
+    public void setWindowSize(int windowSize) {
+        this.windowSize = windowSize;
+    }
 
-	
+    @Override
+    public String toString() {
+        return "MovingAveragePredictionStrategy [windowSize=" + windowSize
+          + " currentPrediction=" + currentPrediction + "]";
+    }
+
+
 }

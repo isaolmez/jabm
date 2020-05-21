@@ -15,56 +15,49 @@
 package net.sourceforge.jabm.strategy;
 
 import java.util.List;
-
 import net.sourceforge.jabm.EventScheduler;
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.event.EventListener;
 
 /**
- * Classes implementing this interface define strategies for agents. A strategy
- * encapsulates the behaviour of the agent. Different agents of the same type
- * may be configured with heterogenous behaviours, and a single agent can switch
- * between several different behaviours during the course of a simulation. Since
- * the outcome of following a specific behaviour can depend on the actions of
- * other agents we use the term strategy from game-theory to refer to
+ * Classes implementing this interface define strategies for agents. A strategy encapsulates the behaviour of the agent.
+ * Different agents of the same type may be configured with heterogenous behaviours, and a single agent can switch
+ * between several different behaviours during the course of a simulation. Since the outcome of following a specific
+ * behaviour can depend on the actions of other agents we use the term strategy from game-theory to refer to
  * behaviours.
- * 
+ *
  * @author Steve Phelps
- * 
  */
 public interface Strategy extends EventListener, Cloneable {
-	
-	/**
-	 * Configure the agent associated with this strategy.
-	 */
-	public void setAgent(Agent agent);
-	
-	public Agent getAgent();
-	
-	/**
-	 * A Strategy should subscribe to any events it wants to receive by calling
-	 * the {@link addListener} method in the {@link EventScheduler} class.
-	 * 
-	 * @param scheduler
-	 *            The {@link EventScheduler} on which to listen.
-	 */
-	public void subscribeToEvents(EventScheduler scheduler);
 
-	/**
-	 * Execute the behaviour defined by this strategy.
-	 * 
-	 * @param otherAgents  The other agents with which the agent associated
-	 *   						with this strategy is interacting. 
-	 */
-	public void execute(List<Agent> otherAgents);
+    /**
+     * Configure the agent associated with this strategy.
+     */
+    public void setAgent(Agent agent);
 
-	/**
-	 * The strategy should call {@link EventScheduler.removeListener()}
-	 * to unsubscribe from events when this method is called.  This hook is 
-	 * used to clean-up, for example when the strategy is disposed of.
-	 */
-	public void unsubscribeFromEvents();
-	
-	public Object clone() throws CloneNotSupportedException;
-	
+    public Agent getAgent();
+
+    /**
+     * A Strategy should subscribe to any events it wants to receive by calling the {@link addListener} method in the
+     * {@link EventScheduler} class.
+     *
+     * @param scheduler The {@link EventScheduler} on which to listen.
+     */
+    public void subscribeToEvents(EventScheduler scheduler);
+
+    /**
+     * Execute the behaviour defined by this strategy.
+     *
+     * @param otherAgents The other agents with which the agent associated with this strategy is interacting.
+     */
+    public void execute(List<Agent> otherAgents);
+
+    /**
+     * The strategy should call {@link EventScheduler.removeListener()} to unsubscribe from events when this method is
+     * called.  This hook is used to clean-up, for example when the strategy is disposed of.
+     */
+    public void unsubscribeFromEvents();
+
+    public Object clone() throws CloneNotSupportedException;
+
 }

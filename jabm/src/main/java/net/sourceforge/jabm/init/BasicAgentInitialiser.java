@@ -15,27 +15,27 @@
 package net.sourceforge.jabm.init;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.Population;
 import net.sourceforge.jabm.agent.Agent;
-
 import org.apache.log4j.Logger;
 
 public class BasicAgentInitialiser implements AgentInitialiser, Serializable {
 
-	static Logger logger = Logger.getLogger(BasicAgentInitialiser.class);
-	
-	public void initialise(Population population) {
-		for (Agent agent : population.getAgents()) {
-			
-			if (logger.isDebugEnabled())
-				logger.debug("Initialising agent: " + agent);
-			
-			agent.initialise();
-			
-			if (logger.isDebugEnabled())
-				logger.debug("Finished initialising agent: " + agent);
-		}
-	}
+    static Logger logger = Logger.getLogger(BasicAgentInitialiser.class);
+
+    public void initialise(Population population) {
+        for (Agent agent : population.getAgents()) {
+
+            if (logger.isDebugEnabled()) {
+                logger.debug("Initialising agent: " + agent);
+            }
+
+            agent.initialise();
+
+            if (logger.isDebugEnabled()) {
+                logger.debug("Finished initialising agent: " + agent);
+            }
+        }
+    }
 
 }

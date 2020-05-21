@@ -21,82 +21,78 @@ import net.sourceforge.jabm.event.SimulationStartingEvent;
 
 /**
  * <p>
- * A report which samples data regularly in response to
- * an InteractionsFinishedEvent.  The data to be sampled
- * is configured by specifying an instance of <code>ReportVariables</code>.
+ * A report which samples data regularly in response to an InteractionsFinishedEvent.  The data to be sampled is
+ * configured by specifying an instance of <code>ReportVariables</code>.
  * </p>
- *  
- * @see ReportVariables
- * @author Steve Phelps
  *
+ * @author Steve Phelps
+ * @see ReportVariables
  */
 public class InteractionIntervalReport extends AbstractReport {
 
-	protected int interactions;
-	
-	protected int sampleInterval;
-	
-	public static final int DEFAULT_SAMPLE_INTERVAL = 1;
+    protected int interactions;
 
-	public InteractionIntervalReport(int sampleInterval,
-			ReportVariables reportVariables) {
-		super(reportVariables);
-		this.sampleInterval = sampleInterval;
-	}
+    protected int sampleInterval;
 
-	public InteractionIntervalReport() {
-		this(DEFAULT_SAMPLE_INTERVAL, null);
-	}
-	
-	public InteractionIntervalReport(int sampleInterval) {
-		this(sampleInterval, null);
-	}
-	
-	public InteractionIntervalReport(ReportVariables reportVariables) {
-		this(DEFAULT_SAMPLE_INTERVAL, reportVariables);
-	}
+    public static final int DEFAULT_SAMPLE_INTERVAL = 1;
 
-	public void eventOccurred(SimEvent event) {
-		super.eventOccurred(event);
-		if (event instanceof SimulationStartingEvent) {
-			onSimulationStarting((SimulationStartingEvent) event);
-		}
-		if (event instanceof InteractionsFinishedEvent) {
-			onInteractionsFinished((InteractionsFinishedEvent) event);
-		} 
-		if (event instanceof SimulationFinishedEvent) {
-			onSimulationFinished(event);
-		}
-	}
-	
-	public void onSimulationFinished(SimEvent event) {
-		reportVariables.dispose(event);
-	}
+    public InteractionIntervalReport(int sampleInterval,
+      ReportVariables reportVariables) {
+        super(reportVariables);
+        this.sampleInterval = sampleInterval;
+    }
 
-	public void onSimulationStarting(SimulationStartingEvent event) {
-		interactions = 0;
-		reportVariables.initialise(event);
-	}
+    public InteractionIntervalReport() {
+        this(DEFAULT_SAMPLE_INTERVAL, null);
+    }
 
-	public void onInteractionsFinished(InteractionsFinishedEvent event) {
-		interactions++;
-		if ((interactions % sampleInterval ) ==0) {
-			reportVariables.compute(event);
-		}
-	}
-	
-	public int getSampleInterval() {
-		return sampleInterval;
-	}
+    public InteractionIntervalReport(int sampleInterval) {
+        this(sampleInterval, null);
+    }
 
-	/**
-	 * Configure the sampling interval for this report.  The underlying
-	 * ReportVariables will be updated at the corresponding frequency.
-	 * 
-	 * @param sampleInterval
-	 */
-	public void setSampleInterval(int sampleInterval) {
-		this.sampleInterval = sampleInterval;
-	}
-	
+    public InteractionIntervalReport(ReportVariables reportVariables) {
+        this(DEFAULT_SAMPLE_INTERVAL, reportVariables);
+    }
+
+    public void eventOccurred(SimEvent event) {
+        super.eventOccurred(event);
+        if (event instanceof SimulationStartingEvent) {
+            onSimulationStarting((SimulationStartingEvent) event);
+        }
+        if (event instanceof InteractionsFinishedEvent) {
+            onInteractionsFinished((InteractionsFinishedEvent) event);
+        }
+        if (event instanceof SimulationFinishedEvent) {
+            onSimulationFinished(event);
+        }
+    }
+
+    public void onSimulationFinished(SimEvent event) {
+        reportVariables.dispose(event);
+    }
+
+    public void onSimulationStarting(SimulationStartingEvent event) {
+        interactions = 0;
+        reportVariables.initialise(event);
+    }
+
+    public void onInteractionsFinished(InteractionsFinishedEvent event) {
+        interactions++;
+        if ((interactions % sampleInterval) == 0) {
+            reportVariables.compute(event);
+        }
+    }
+
+    public int getSampleInterval() {
+        return sampleInterval;
+    }
+
+    /**
+     * Configure the sampling interval for this report.  The underlying ReportVariables will be updated at the
+     * corresponding frequency.
+     */
+    public void setSampleInterval(int sampleInterval) {
+        this.sampleInterval = sampleInterval;
+    }
+
 }

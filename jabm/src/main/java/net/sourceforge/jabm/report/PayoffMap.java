@@ -15,104 +15,105 @@
 package net.sourceforge.jabm.report;
 
 import java.io.Serializable;
-import java.util.*;
-
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.Vector;
 import net.sourceforge.jabm.strategy.Strategy;
-
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.ObjectFactory;
 
 @SuppressWarnings("StringConcatenationInsideStringBufferAppend")
 public class PayoffMap implements Serializable, Cloneable {
 
-	protected LinkedHashMap<Strategy, StatisticalSummary> payoffs
-		= new LinkedHashMap<Strategy, StatisticalSummary>();
+    protected LinkedHashMap<Strategy, StatisticalSummary> payoffs
+      = new LinkedHashMap<Strategy, StatisticalSummary>();
 
-	protected Vector<Strategy> strategyIndex = new Vector<Strategy>();
+    protected Vector<Strategy> strategyIndex = new Vector<Strategy>();
 
-	protected List<Strategy> strategies;
+    protected List<Strategy> strategies;
 
-	public PayoffMap() {
-		this(new LinkedList<Strategy>());
-	}
-	
-	public PayoffMap(List<Strategy> strategies) {
-		this.strategies = strategies;
-		initialise();
+    public PayoffMap() {
+        this(new LinkedList<Strategy>());
+    }
+
+    public PayoffMap(List<Strategy> strategies) {
+        this.strategies = strategies;
+        initialise();
     }
 
     public void initialise() {
-		payoffs = new LinkedHashMap<Strategy, StatisticalSummary>();
-		strategyIndex = new Vector<Strategy>();
-        for(Strategy strategy : strategies) {
-			strategyIndex.add(strategy);
-            payoffs.put(strategy, createStatisticalSummary(strategy) );
+        payoffs = new LinkedHashMap<Strategy, StatisticalSummary>();
+        strategyIndex = new Vector<Strategy>();
+        for (Strategy strategy : strategies) {
+            strategyIndex.add(strategy);
+            payoffs.put(strategy, createStatisticalSummary(strategy));
         }
     }
 
     public void updatePayoff(Strategy strategy, double fitness) {
-		SummaryStatistics stats = (SummaryStatistics) payoffs.get(strategy);
+        SummaryStatistics stats = (SummaryStatistics) payoffs.get(strategy);
         if (stats == null) {
             stats = (SummaryStatistics) createStatisticalSummary(strategy);
             payoffs.put(strategy, stats);
-			strategyIndex.add(strategy);
-		}
-		stats.addValue(fitness);
-	}
+            strategyIndex.add(strategy);
+        }
+        stats.addValue(fitness);
+    }
 
-	public Set<Strategy> getStrategies() {
-		return payoffs.keySet();
-	}
+    public Set<Strategy> getStrategies() {
+        return payoffs.keySet();
+    }
 
-	public double getMeanPayoff(Strategy strategy) {
-		return payoffs.get(strategy).getMean();
-	}
+    public double getMeanPayoff(Strategy strategy) {
+        return payoffs.get(strategy).getMean();
+    }
 
-	public StatisticalSummary getPayoffDistribution(Strategy strategy) {
-		return payoffs.get(strategy);
-	}
+    public StatisticalSummary getPayoffDistribution(Strategy strategy) {
+        return payoffs.get(strategy);
+    }
 
-	public StatisticalSummary getPayoffDistribution(int i) {
-		return getPayoffDistribution(strategyIndex.get(i));
-	}
-	
-	public double getMeanPayoff(int i) {
-		return getMeanPayoff(strategyIndex.get(i));
-	}
+    public StatisticalSummary getPayoffDistribution(int i) {
+        return getPayoffDistribution(strategyIndex.get(i));
+    }
 
-	public String toString() {
-		StringBuilder result = new StringBuilder("[");
-		Iterator<Strategy> i = payoffs.keySet().iterator();
-		while (i.hasNext()) {
-			Strategy s = i.next();
-			double meanPayoff = getMeanPayoff(s);
-			result.append(s).append("=").append(meanPayoff);
-			if (i.hasNext()) {
-				result.append(" ");
-			}
-		}
-		result.append("]");
-		return result.toString();
-	}
+    public double getMeanPayoff(int i) {
+        return getMeanPayoff(strategyIndex.get(i));
+    }
 
-	public int size() {
-		return strategyIndex.size();
-	}
+    public String toString() {
+        StringBuilder result = new StringBuilder("[");
+        Iterator<Strategy> i = payoffs.keySet().iterator();
+        while (i.hasNext()) {
+            Strategy s = i.next();
+            double meanPayoff = getMeanPayoff(s);
+            result.append(s).append("=").append(meanPayoff);
+            if (i.hasNext()) {
+                result.append(" ");
+            }
+        }
+        result.append("]");
+        return result.toString();
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object clone() throws CloneNotSupportedException {
-		PayoffMap result = (PayoffMap) super.clone();
-		result.payoffs = (LinkedHashMap<Strategy, StatisticalSummary>) this.payoffs
-				.clone();
-		result.strategyIndex = (Vector<Strategy>) this.strategyIndex.clone();
-		return result;
-	}
+    public int size() {
+        return strategyIndex.size();
+    }
 
-	public StatisticalSummary createStatisticalSummary(Strategy s) {
-		return new SummaryStatistics();
-	}
-	
+    @Override
+    @SuppressWarnings("unchecked")
+    public Object clone() throws CloneNotSupportedException {
+        PayoffMap result = (PayoffMap) super.clone();
+        result.payoffs = (LinkedHashMap<Strategy, StatisticalSummary>) this.payoffs
+          .clone();
+        result.strategyIndex = (Vector<Strategy>) this.strategyIndex.clone();
+        return result;
+    }
+
+    public StatisticalSummary createStatisticalSummary(Strategy s) {
+        return new SummaryStatistics();
+    }
+
 }

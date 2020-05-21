@@ -15,39 +15,37 @@
 package net.sourceforge.jabm.evolution;
 
 import java.util.List;
-
 import net.sourceforge.jabm.agent.AgentList;
 
 /**
  * <p>
- * A combination of different breeders which forms a pipeline for producing the
- * next generation.
+ * A combination of different breeders which forms a pipeline for producing the next generation.
  * </p>
- * 
+ *
  * @author Steve Phelps
  */
 public class CombiBreeder implements Breeder {
 
-	/**
-	 * The breeding pipeline.
-	 */
-	protected List<Breeder> breedingPipeline;
-	
-	@Override
-	public AgentList reproduce(AgentList currentGeneration) {
-		AgentList nextGeneration = currentGeneration;
-		for(Breeder breeder : breedingPipeline) {
-			nextGeneration = breeder.reproduce(nextGeneration);
-		}
-		return nextGeneration;
-	}
+    /**
+     * The breeding pipeline.
+     */
+    protected List<Breeder> breedingPipeline;
 
-	public List<Breeder> getBreedingPipeline() {
-		return breedingPipeline;
-	}
+    @Override
+    public AgentList reproduce(AgentList currentGeneration) {
+        AgentList nextGeneration = currentGeneration;
+        for (Breeder breeder : breedingPipeline) {
+            nextGeneration = breeder.reproduce(nextGeneration);
+        }
+        return nextGeneration;
+    }
 
-	public void setBreedingPipeline(List<Breeder> breedingPipeline) {
-		this.breedingPipeline = breedingPipeline;
-	}
+    public List<Breeder> getBreedingPipeline() {
+        return breedingPipeline;
+    }
+
+    public void setBreedingPipeline(List<Breeder> breedingPipeline) {
+        this.breedingPipeline = breedingPipeline;
+    }
 
 }

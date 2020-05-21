@@ -15,21 +15,20 @@
 package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.SimulationController;
 
-public class SimulationControllerEvent extends SimEvent 
-		implements Serializable {
+public class SimulationControllerEvent extends SimEvent
+  implements Serializable {
 
-	protected SimulationController simulationController;
+    protected SimulationController simulationController;
 
-	public SimulationControllerEvent(SimulationController simulationController) {
-		super();
-		this.simulationController = simulationController;
-	}
+    public SimulationControllerEvent(SimulationController simulationController) {
+        super();
+        this.simulationController = simulationController;
+    }
 
-	public SimulationController getSimulationController() {
-		return simulationController;
-	}
+    public SimulationController getSimulationController() {
+        return simulationController;
+    }
 
 }

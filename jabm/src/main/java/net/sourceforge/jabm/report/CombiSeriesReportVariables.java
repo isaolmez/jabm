@@ -18,82 +18,80 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import net.sourceforge.jabm.event.AbstractModel;
 import net.sourceforge.jabm.event.ReportVariablesChangedEvent;
 import net.sourceforge.jabm.event.SimEvent;
-
 import org.springframework.beans.factory.InitializingBean;
 
 public class CombiSeriesReportVariables extends AbstractModel implements
-		Timeseries, InitializingBean {
+  Timeseries, InitializingBean {
 
-	protected List<Timeseries> seriesList;
-	
-	protected String name;
-	
-	@Override
-	public void compute(SimEvent event) {
-		for(Timeseries series: seriesList) {
-			series.compute(event);
-		}
-	}
+    protected List<Timeseries> seriesList;
 
-	@Override
-	public void dispose(SimEvent event) {
-		for(Timeseries series : seriesList) {
-			series.dispose(event);
-		}
-	}
+    protected String name;
 
-	@Override
-	public void initialise(SimEvent event) {
-		for(Timeseries series : seriesList) {
-			series.initialise(event);
-		}
-	}
+    @Override
+    public void compute(SimEvent event) {
+        for (Timeseries series : seriesList) {
+            series.compute(event);
+        }
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Override
+    public void dispose(SimEvent event) {
+        for (Timeseries series : seriesList) {
+            series.dispose(event);
+        }
+    }
 
-	@Override
-	public Map<Object, Number> getVariableBindings() {
-		LinkedHashMap<Object, Number> result = new LinkedHashMap<Object, Number>();
-		for(Timeseries series : seriesList) {
-			result.putAll(series.getVariableBindings());
-		}
-		return result;
- 	}
+    @Override
+    public void initialise(SimEvent event) {
+        for (Timeseries series : seriesList) {
+            series.initialise(event);
+        }
+    }
 
-	@Override
-	public void eventOccurred(SimEvent event) {
-		if (event instanceof ReportVariablesChangedEvent) {
-			fireEvent(event);
-		} else {
-			for(Timeseries series : seriesList) {
-				series.eventOccurred(event);
-			}
-		}
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public Number getX(int seriesIndex, int itemIndex) {
-		return seriesList.get(seriesIndex).getX(0, itemIndex);
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public Number getY(int seriesIndex, int itemIndex) {
-		return seriesList.get(seriesIndex).getY(0, itemIndex);
-	}
+    @Override
+    public Map<Object, Number> getVariableBindings() {
+        LinkedHashMap<Object, Number> result = new LinkedHashMap<Object, Number>();
+        for (Timeseries series : seriesList) {
+            result.putAll(series.getVariableBindings());
+        }
+        return result;
+    }
 
-	@Override
-	public int size(int seriesIndex) {
+    @Override
+    public void eventOccurred(SimEvent event) {
+        if (event instanceof ReportVariablesChangedEvent) {
+            fireEvent(event);
+        } else {
+            for (Timeseries series : seriesList) {
+                series.eventOccurred(event);
+            }
+        }
+    }
+
+    @Override
+    public Number getX(int seriesIndex, int itemIndex) {
+        return seriesList.get(seriesIndex).getX(0, itemIndex);
+    }
+
+    @Override
+    public Number getY(int seriesIndex, int itemIndex) {
+        return seriesList.get(seriesIndex).getY(0, itemIndex);
+    }
+
+    @Override
+    public int size(int seriesIndex) {
 //		Timeseries series = seriesList.get(seriesIndex);
 //		int n = series.getNumberOfSeries();
 //		int result = 0;
@@ -101,39 +99,37 @@ public class CombiSeriesReportVariables extends AbstractModel implements
 //			result += series.size(i);
 //		}
 //		return result;
-		return seriesList.get(seriesIndex).size(0);
-	}
+        return seriesList.get(seriesIndex).size(0);
+    }
 
-	@Override
-	public int getNumberOfSeries() {
-		return seriesList.size();
-	}
+    @Override
+    public int getNumberOfSeries() {
+        return seriesList.size();
+    }
 
-	public List<Timeseries> getSeriesList() {
-		return seriesList;
-	}
+    public List<Timeseries> getSeriesList() {
+        return seriesList;
+    }
 
-	public void setSeriesList(List<Timeseries> seriesList) {
-		this.seriesList = seriesList;
-	}
+    public void setSeriesList(List<Timeseries> seriesList) {
+        this.seriesList = seriesList;
+    }
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		for(Timeseries series : seriesList) {
-			series.addListener(this);
-		}
-	}
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        for (Timeseries series : seriesList) {
+            series.addListener(this);
+        }
+    }
 
-	@Override
-	public List<Object> getyVariableNames() {
-		LinkedList<Object> result = new LinkedList<Object>();
-		for(Timeseries series : seriesList) {
-			result.addAll(series.getyVariableNames());
-		}
-		return result;
-	}
-		
-	
-	
-	
+    @Override
+    public List<Object> getyVariableNames() {
+        LinkedList<Object> result = new LinkedList<Object>();
+        for (Timeseries series : seriesList) {
+            result.addAll(series.getyVariableNames());
+        }
+        return result;
+    }
+
+
 }

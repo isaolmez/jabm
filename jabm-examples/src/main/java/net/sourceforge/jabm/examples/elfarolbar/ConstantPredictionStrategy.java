@@ -16,32 +16,30 @@ package net.sourceforge.jabm.examples.elfarolbar;
 
 
 /**
- * A prediction strategy which always predicts the same pre-specified
- * attendance level.
- * 
- * @author Steve Phelps
+ * A prediction strategy which always predicts the same pre-specified attendance level.
  *
+ * @author Steve Phelps
  */
 public class ConstantPredictionStrategy extends AbstractPredictionStrategy {
 
-	protected double prediction;
+    protected double prediction;
 
-	@Override
-	public void makePrediction() {
-		this.currentPrediction = prediction;
-	}
+    @Override
+    public void makePrediction() {
+        this.currentPrediction = prediction;
+    }
 
-	public double getPrediction() {
-		return prediction;
-	}
+    public double getPrediction() {
+        return prediction;
+    }
 
-	public void setPrediction(double prediction) {
-		this.prediction = prediction;
-	}
+    public void setPrediction(double prediction) {
+        this.prediction = prediction;
+    }
 
-	@Override
-	public String toString() {
-		return "ConstantPredictionStrategy [prediction=" + prediction + "]";
-	}
-	
+    @Override
+    public String toString() {
+        return "ConstantPredictionStrategy [prediction=" + prediction + "]";
+    }
+
 }

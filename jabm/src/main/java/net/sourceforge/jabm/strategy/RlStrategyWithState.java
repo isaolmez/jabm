@@ -16,86 +16,84 @@ package net.sourceforge.jabm.strategy;
 
 import java.io.Serializable;
 import java.util.List;
-
 import net.sourceforge.jabm.EventScheduler;
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.learning.MDPLearner;
 import net.sourceforge.jabm.learning.StatelessQLearner;
 import net.sourceforge.jabm.report.Taggable;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-public abstract class RlStrategyWithState extends AbstractRlStrategy 
-		implements Serializable, InitializingBean, Taggable {
+public abstract class RlStrategyWithState extends AbstractRlStrategy
+  implements Serializable, InitializingBean, Taggable {
 
-	protected MDPLearner learner;
-	
-	static Logger logger = Logger.getLogger(RlStrategyWithState.class);
-	
-	public RlStrategyWithState(Agent agent, 
-							ObjectFactory<Strategy> strategyFactory, 
-							MDPLearner learner) {
-		super(agent);
-		this.learner = learner;
-		this.strategyFactory = strategyFactory;
-		initialise();
-	}
-	
-	public RlStrategyWithState(ObjectFactory<Strategy> strategyFactory,
-			MDPLearner learner) {
-		this(null, strategyFactory, learner);
-	}
-	
-	public RlStrategyWithState() {
-	}
-	
-	
-	@Override
-	public void subscribeToEvents(EventScheduler scheduler) {
-		super.subscribeToEvents(scheduler);
-		for(int i=0; i<actions.length; i++) {
-			actions[i].subscribeToEvents(scheduler);
-		}
+    protected MDPLearner learner;
+
+    static Logger logger = Logger.getLogger(RlStrategyWithState.class);
+
+    public RlStrategyWithState(Agent agent,
+      ObjectFactory<Strategy> strategyFactory,
+      MDPLearner learner) {
+        super(agent);
+        this.learner = learner;
+        this.strategyFactory = strategyFactory;
+        initialise();
+    }
+
+    public RlStrategyWithState(ObjectFactory<Strategy> strategyFactory,
+      MDPLearner learner) {
+        this(null, strategyFactory, learner);
+    }
+
+    public RlStrategyWithState() {
+    }
+
+
+    @Override
+    public void subscribeToEvents(EventScheduler scheduler) {
+        super.subscribeToEvents(scheduler);
+        for (int i = 0; i < actions.length; i++) {
+            actions[i].subscribeToEvents(scheduler);
+        }
 //		scheduler.addListener(SimulationFinishedEvent.class, this);
 //		scheduler.addListener(InteractionsFinishedEvent.class, this);
-	}
+    }
 
-	public void execute(List<Agent> otherAgents) {		
-		assert this.agent != null;
-		double reward = agent.getPayoffDelta();
-		int state = getState();
-		learner.newState(reward, state);
-		int action = learner.act();
-		currentStrategy = actions[action];
-		assert currentStrategy.getAgent() != null;
-		currentStrategy.execute(otherAgents);		
-	}
+    public void execute(List<Agent> otherAgents) {
+        assert this.agent != null;
+        double reward = agent.getPayoffDelta();
+        int state = getState();
+        learner.newState(reward, state);
+        int action = learner.act();
+        currentStrategy = actions[action];
+        assert currentStrategy.getAgent() != null;
+        currentStrategy.execute(otherAgents);
+    }
 
-	public MDPLearner getLearner() {
-		return learner;
-	}
+    public MDPLearner getLearner() {
+        return learner;
+    }
 
-	@Required
-	public void setLearner(MDPLearner learner) {
-		this.learner = learner;
-		initialise();
-	}
+    @Required
+    public void setLearner(MDPLearner learner) {
+        this.learner = learner;
+        initialise();
+    }
 
-	@Override
-	public void setAgent(Agent agent) {
-		super.setAgent(agent);
-		for(int i=0; i<actions.length; i++) {
-			actions[i].setAgent(agent);
-		}
-	}
+    @Override
+    public void setAgent(Agent agent) {
+        super.setAgent(agent);
+        for (int i = 0; i < actions.length; i++) {
+            actions[i].setAgent(agent);
+        }
+    }
 
-	@Override
-	public Strategy clone() throws CloneNotSupportedException {
-		throw new CloneNotSupportedException();
-	}
+    @Override
+    public Strategy clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
 //
 //	@Override
 //	public void eventOccurred(SimEvent event) {
@@ -104,63 +102,63 @@ public abstract class RlStrategyWithState extends AbstractRlStrategy
 //			onInteractionsFinished();
 //		}
 //	}
-	
+
 //	public void onInteractionsFinished() {
 //		double reward = agent.getPayoffDelta();
 //		learner.reward(reward);
 //	}
 
-	@Override
-	public void unsubscribeFromEvents() {
-		for(int i=0; i<actions.length; i++) {
-			actions[i].unsubscribeFromEvents();
-		}
-		super.unsubscribeFromEvents();
-	}
+    @Override
+    public void unsubscribeFromEvents() {
+        for (int i = 0; i < actions.length; i++) {
+            actions[i].unsubscribeFromEvents();
+        }
+        super.unsubscribeFromEvents();
+    }
 
-	public ObjectFactory<Strategy> getStrategyFactory() {
-		return strategyFactory;
-	}
+    public ObjectFactory<Strategy> getStrategyFactory() {
+        return strategyFactory;
+    }
 
-	@Required
-	public void setStrategyFactory(ObjectFactory<Strategy> strategyFactory) {
-		this.strategyFactory = strategyFactory;
-	}
+    @Required
+    public void setStrategyFactory(ObjectFactory<Strategy> strategyFactory) {
+        this.strategyFactory = strategyFactory;
+    }
 
-	public double[] getInitialPropensities() {
-		return initialPropensities;
-	}
+    public double[] getInitialPropensities() {
+        return initialPropensities;
+    }
 
-	public void setInitialPropensities(double[] initialPropensities) {
-		StatelessQLearner qLearner = (StatelessQLearner) this.learner;
-		double[] propensities = qLearner.getqLearner().getValueEstimates(0);
-		for(int i=0; i<actions.length; i++) {
-			propensities[i] = initialPropensities[i];
-		}
-	}
+    public void setInitialPropensities(double[] initialPropensities) {
+        StatelessQLearner qLearner = (StatelessQLearner) this.learner;
+        double[] propensities = qLearner.getqLearner().getValueEstimates(0);
+        for (int i = 0; i < actions.length; i++) {
+            propensities[i] = initialPropensities[i];
+        }
+    }
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
+    @Override
+    public void afterPropertiesSet() throws Exception {
 //		initialise();
-	}
-	
-	@Override
-	public String getTag() {
-		if (currentStrategy != null && currentStrategy instanceof Taggable) {
-			return "SRL: " + ((Taggable) currentStrategy).getTag();
-		} else {
-			return this.getClass().toString();
-		}
-	}
+    }
 
-	@Override
-	public void setTag(String tag) {
-	}
-	
-	public int getNumberOfActions() {
-		return learner.getNumberOfActions();
-	}
+    @Override
+    public String getTag() {
+        if (currentStrategy != null && currentStrategy instanceof Taggable) {
+            return "SRL: " + ((Taggable) currentStrategy).getTag();
+        } else {
+            return this.getClass().toString();
+        }
+    }
 
-	public abstract int getState();
-	
+    @Override
+    public void setTag(String tag) {
+    }
+
+    public int getNumberOfActions() {
+        return learner.getNumberOfActions();
+    }
+
+    public abstract int getState();
+
 }

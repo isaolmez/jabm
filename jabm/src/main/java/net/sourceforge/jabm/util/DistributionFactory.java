@@ -28,13 +28,13 @@ import org.apache.log4j.Logger;
 
 public abstract class DistributionFactory {
 
-	protected static DistributionFactory currentFactory = new Cummulative();
+    protected static DistributionFactory currentFactory = new Cummulative();
 
-	public static final String P_DISTFACTORY = "distribution";
+    public static final String P_DISTFACTORY = "distribution";
 
-	public static final String P_DEF_BASE = "P_DISTFACTORY";
+    public static final String P_DEF_BASE = "P_DISTFACTORY";
 
-	static Logger logger = Logger.getLogger(DistributionFactory.class);
+    static Logger logger = Logger.getLogger(DistributionFactory.class);
 
 //	public static void setup(ParameterDatabase parameters, Parameter base) {
 //		try {
@@ -46,13 +46,13 @@ public abstract class DistributionFactory {
 //		}
 //	}
 
-	public static DistributionFactory getFactory() {
-		return currentFactory;
-	}
+    public static DistributionFactory getFactory() {
+        return currentFactory;
+    }
 
-	public abstract Distribution create();
+    public abstract Distribution create();
 
-	public abstract Distribution create(String name);
+    public abstract Distribution create(String name);
 
 //	public static class Heavyweight extends DistributionFactory {
 //
@@ -65,14 +65,14 @@ public abstract class DistributionFactory {
 //		}
 //	}
 
-	public static class Cummulative extends DistributionFactory {
+    public static class Cummulative extends DistributionFactory {
 
-		public Distribution create() {
-			return new SummaryStats();
-		}
+        public Distribution create() {
+            return new SummaryStats();
+        }
 
-		public Distribution create(String name) {
-			return new SummaryStats(name);
-		}
-	}
+        public Distribution create(String name) {
+            return new SummaryStats(name);
+        }
+    }
 }

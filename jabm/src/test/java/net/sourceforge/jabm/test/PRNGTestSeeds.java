@@ -16,6 +16,6 @@ package net.sourceforge.jabm.test;
 
 public class PRNGTestSeeds {
 
-	public static final int UNIT_TEST_SEED = 1536817716;
+    public static final int UNIT_TEST_SEED = 1536817716;
 
 }

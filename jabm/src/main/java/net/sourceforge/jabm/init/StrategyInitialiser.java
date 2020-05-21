@@ -15,42 +15,40 @@
 package net.sourceforge.jabm.init;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.Population;
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.strategy.AbstractStrategy;
 import net.sourceforge.jabm.strategy.Strategy;
-
 import org.springframework.beans.factory.ObjectFactory;
 
 public class StrategyInitialiser implements AgentInitialiser, Serializable {
 
-	protected transient ObjectFactory<Strategy> strategyFactory;
-	// TODO
+    protected transient ObjectFactory<Strategy> strategyFactory;
+    // TODO
 
-	public StrategyInitialiser(ObjectFactory<Strategy> strategyFactory) {
-		super();
-		this.strategyFactory = strategyFactory;
-	}
-	
-	public StrategyInitialiser() {
-	}
+    public StrategyInitialiser(ObjectFactory<Strategy> strategyFactory) {
+        super();
+        this.strategyFactory = strategyFactory;
+    }
 
-	public void initialise(Population population) {
-		for (Agent agent : population.getAgents()) {
-			AbstractStrategy strategy = (AbstractStrategy) strategyFactory
-					.getObject();
-			agent.setStrategy(strategy);
-			strategy.setAgent(agent);
-		}
-	}
+    public StrategyInitialiser() {
+    }
 
-	public ObjectFactory<Strategy> getStrategyFactory() {
-		return strategyFactory;
-	}
+    public void initialise(Population population) {
+        for (Agent agent : population.getAgents()) {
+            AbstractStrategy strategy = (AbstractStrategy) strategyFactory
+              .getObject();
+            agent.setStrategy(strategy);
+            strategy.setAgent(agent);
+        }
+    }
 
-	public void setStrategyFactory(ObjectFactory<Strategy> strategyFactory) {
-		this.strategyFactory = strategyFactory;
-	}
+    public ObjectFactory<Strategy> getStrategyFactory() {
+        return strategyFactory;
+    }
+
+    public void setStrategyFactory(ObjectFactory<Strategy> strategyFactory) {
+        this.strategyFactory = strategyFactory;
+    }
 
 }

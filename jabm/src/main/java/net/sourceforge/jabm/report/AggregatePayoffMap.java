@@ -1,10 +1,9 @@
 package net.sourceforge.jabm.report;
 
+import java.util.List;
 import net.sourceforge.jabm.strategy.Strategy;
 import org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics;
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary;
-
-import java.util.List;
 
 /**
  * (C) Steve Phelps 2015

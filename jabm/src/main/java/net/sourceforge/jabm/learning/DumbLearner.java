@@ -19,53 +19,52 @@ package net.sourceforge.jabm.learning;
 //import ec.util.Parameter;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.report.DataWriter;
 
 /**
  * A learner that chooses the same specified action on every iteration.
- * 
+ *
  * @author Steve Phelps
  * @version $Revision: 189 $
  */
 
 public class DumbLearner extends AbstractLearner implements DiscreteLearner,
-		Serializable {
+  Serializable {
 
-	protected int action;
+    protected int action;
 
-	static final String P_ACTION = "action";
+    static final String P_ACTION = "action";
 
-	public DumbLearner() {
-	}
+    public DumbLearner() {
+    }
 
 //	public void setup(ParameterDatabase parameters, Parameter base) {
 //		super.setup(parameters, base);
 //		action = parameters.getInt(base.push(P_ACTION), null, 0);
 //	}
 
-	public void setAction(int action) {
-		this.action = action;
-	}
+    public void setAction(int action) {
+        this.action = action;
+    }
 
-	public int getAction() {
-		return action;
-	}
+    public int getAction() {
+        return action;
+    }
 
-	public int act() {
-		return action;
-	}
+    public int act() {
+        return action;
+    }
 
-	public double getLearningDelta() {
-		return 0.0;
-	}
+    public double getLearningDelta() {
+        return 0.0;
+    }
 
-	public void dumpState(DataWriter out) {
-		// TODO
-	}
+    public void dumpState(DataWriter out) {
+        // TODO
+    }
 
-	public int getNumberOfActions() {
-		return 1;
-	}
+    public int getNumberOfActions() {
+        return 1;
+    }
 
 }

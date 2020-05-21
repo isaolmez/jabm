@@ -21,24 +21,24 @@ import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 
 public class PropertyOverrideWithReferencesConfigurer extends
-		PropertyOverrideConfigurer {
+  PropertyOverrideConfigurer {
 
-	@Override
-	protected void applyPropertyValue(ConfigurableListableBeanFactory factory,
-			String beanName, String property, String value) {
-		if (value != null && value.length() > 0 && !(value.charAt(0) == '&')) {
-			super.applyPropertyValue(factory, beanName, property, value);
-		} else {
-			BeanDefinition bd = factory.getBeanDefinition(beanName);
-			while (bd.getOriginatingBeanDefinition() != null) {
-				bd = bd.getOriginatingBeanDefinition();
-			}
-			Object referencedValue = new RuntimeBeanReference(
-					value.substring(1));
-			PropertyValue pv = new PropertyValue(property, referencedValue);
-			pv.setOptional(false);
-			bd.getPropertyValues().addPropertyValue(pv);
-		}
-	}
-	
+    @Override
+    protected void applyPropertyValue(ConfigurableListableBeanFactory factory,
+      String beanName, String property, String value) {
+        if (value != null && value.length() > 0 && !(value.charAt(0) == '&')) {
+            super.applyPropertyValue(factory, beanName, property, value);
+        } else {
+            BeanDefinition bd = factory.getBeanDefinition(beanName);
+            while (bd.getOriginatingBeanDefinition() != null) {
+                bd = bd.getOriginatingBeanDefinition();
+            }
+            Object referencedValue = new RuntimeBeanReference(
+              value.substring(1));
+            PropertyValue pv = new PropertyValue(property, referencedValue);
+            pv.setOptional(false);
+            bd.getPropertyValues().addPropertyValue(pv);
+        }
+    }
+
 }

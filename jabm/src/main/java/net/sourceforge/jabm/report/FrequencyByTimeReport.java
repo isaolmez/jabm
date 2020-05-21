@@ -18,6 +18,6 @@ import java.io.Serializable;
 
 public interface FrequencyByTimeReport extends Report, Serializable {
 
-	public FrequencyByTimeDataset getFrequencyByTimeDataset();
-	
+    public FrequencyByTimeDataset getFrequencyByTimeDataset();
+
 }

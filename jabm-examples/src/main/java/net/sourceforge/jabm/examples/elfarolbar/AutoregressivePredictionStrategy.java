@@ -14,101 +14,98 @@
  */
 package net.sourceforge.jabm.examples.elfarolbar;
 
+import cern.jet.random.AbstractContinousDistribution;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Required;
 
-import cern.jet.random.AbstractContinousDistribution;
-
 public class AutoregressivePredictionStrategy extends
-		AbstractPredictionStrategy implements InitializingBean {
-	
-	protected double[] coefficients;
-	
-	protected double offset;
-	
-	protected int windowSize;
-	
-	protected AbstractContinousDistribution coefficientDistribution;
-	
-	protected AbstractContinousDistribution offsetDistribution;
-	
-	public AutoregressivePredictionStrategy(int memorySize, 
-								AbstractContinousDistribution coefficientDistribution) {
-		super();
-		this.coefficientDistribution = coefficientDistribution;
-		afterPropertiesSet();
-	}
-	
-	public AutoregressivePredictionStrategy() {
-		super();
-	}
+  AbstractPredictionStrategy implements InitializingBean {
 
-	public void randomlyInitialise() {
-		for(int i=0; i<windowSize; i++) {
-			coefficients[i] = coefficientDistribution.nextDouble();
-		}
-		offset = offsetDistribution.nextDouble();
-	}
+    protected double[] coefficients;
 
-	@Override
-	public void makePrediction() {
-		currentPrediction = 0.0;
-		for(int i=0; i<windowSize; i++) {
-			currentPrediction += barTender.getAttendanceAtLag(i+1) 
-									* coefficients[i];
-		}
-		currentPrediction += offset * 100;
-	}
+    protected double offset;
 
-	public AbstractContinousDistribution getCoefficientDistribution() {
-		return coefficientDistribution;
-	}
+    protected int windowSize;
 
-	/**
-	 * The probability distribution used to draw coefficient values.
-	 * @param coefficientDistribution
-	 */
-	@Required
-	public void setCoefficientDistribution(
-			AbstractContinousDistribution coefficientDistribution) {
-		this.coefficientDistribution = coefficientDistribution;
-	}
-	
-	/**
-	 * The probability distribution used to draw the offset value.
-	 * @return
-	 */
-	@Required
-	public AbstractContinousDistribution getOffsetDistribution() {
-		return offsetDistribution;
-	}
+    protected AbstractContinousDistribution coefficientDistribution;
 
-	public void setOffsetDistribution(
-			AbstractContinousDistribution offsetDistribution) {
-		this.offsetDistribution = offsetDistribution;
-	}
+    protected AbstractContinousDistribution offsetDistribution;
 
-	@Override
-	public void afterPropertiesSet() {
-		coefficients = new double[windowSize];
-		randomlyInitialise();
-	}
+    public AutoregressivePredictionStrategy(int memorySize,
+      AbstractContinousDistribution coefficientDistribution) {
+        super();
+        this.coefficientDistribution = coefficientDistribution;
+        afterPropertiesSet();
+    }
 
-	public int getWindowSize() {
-		return windowSize;
-	}
+    public AutoregressivePredictionStrategy() {
+        super();
+    }
 
-	public void setWindowSize(int windowSize) {
-		this.windowSize = windowSize;
-	}
+    public void randomlyInitialise() {
+        for (int i = 0; i < windowSize; i++) {
+            coefficients[i] = coefficientDistribution.nextDouble();
+        }
+        offset = offsetDistribution.nextDouble();
+    }
 
-	@Override
-	public String toString() {
-		return "AutoregressivePredictionStrategy [offset=" + offset
-				+ ", windowSize=" + windowSize + ", coefficientDistribution="
-				+ coefficientDistribution + ", offsetDistribution="
-				+ offsetDistribution + "]";
-	}
-	
-	
+    @Override
+    public void makePrediction() {
+        currentPrediction = 0.0;
+        for (int i = 0; i < windowSize; i++) {
+            currentPrediction += barTender.getAttendanceAtLag(i + 1)
+              * coefficients[i];
+        }
+        currentPrediction += offset * 100;
+    }
+
+    public AbstractContinousDistribution getCoefficientDistribution() {
+        return coefficientDistribution;
+    }
+
+    /**
+     * The probability distribution used to draw coefficient values.
+     */
+    @Required
+    public void setCoefficientDistribution(
+      AbstractContinousDistribution coefficientDistribution) {
+        this.coefficientDistribution = coefficientDistribution;
+    }
+
+    /**
+     * The probability distribution used to draw the offset value.
+     */
+    @Required
+    public AbstractContinousDistribution getOffsetDistribution() {
+        return offsetDistribution;
+    }
+
+    public void setOffsetDistribution(
+      AbstractContinousDistribution offsetDistribution) {
+        this.offsetDistribution = offsetDistribution;
+    }
+
+    @Override
+    public void afterPropertiesSet() {
+        coefficients = new double[windowSize];
+        randomlyInitialise();
+    }
+
+    public int getWindowSize() {
+        return windowSize;
+    }
+
+    public void setWindowSize(int windowSize) {
+        this.windowSize = windowSize;
+    }
+
+    @Override
+    public String toString() {
+        return "AutoregressivePredictionStrategy [offset=" + offset
+          + ", windowSize=" + windowSize + ", coefficientDistribution="
+          + coefficientDistribution + ", offsetDistribution="
+          + offsetDistribution + "]";
+    }
+
+
 }

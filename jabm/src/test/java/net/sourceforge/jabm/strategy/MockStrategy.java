@@ -1,10 +1,9 @@
 package net.sourceforge.jabm.strategy;
 
+import java.util.List;
 import net.sourceforge.jabm.EventScheduler;
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.event.SimEvent;
-
-import java.util.List;
 
 /**
  * Created by sphelps on 09/07/15.

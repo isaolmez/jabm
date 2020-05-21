@@ -18,26 +18,24 @@ import org.springframework.beans.factory.FactoryBean;
 
 /**
  * <p>
- * A <a href="http://www.springsource.com/developer/spring">Spring</a> factory
- * bean which generates random Integer values from the specified probability
- * distribution. This can be used to auto-magically configure properties as
- * random variates in a Monte-Carlo simulation.
+ * A <a href="http://www.springsource.com/developer/spring">Spring</a> factory bean which generates random Integer
+ * values from the specified probability distribution. This can be used to auto-magically configure properties as random
+ * variates in a Monte-Carlo simulation.
  * </p>
- * 
+ *
  * @author Steve Phelps
- * 
  */
 public class RandomIntegerFactoryBean extends AbstractRandomVariateFactoryBean implements
-		FactoryBean<Integer> {
+  FactoryBean<Integer> {
 
-	@Override
-	public Integer getObject() {
-		return new Integer((int) Math.round(distribution.nextDouble()));
-	}
+    @Override
+    public Integer getObject() {
+        return new Integer((int) Math.round(distribution.nextDouble()));
+    }
 
-	@Override
-	public Class<?> getObjectType() {
-		return Integer.class;
-	}
+    @Override
+    public Class<?> getObjectType() {
+        return Integer.class;
+    }
 
 }

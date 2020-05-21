@@ -17,39 +17,37 @@ package net.sourceforge.jabm.examples.elfarolbar;
 
 /**
  * A prediction strategy which uses an exponential moving average.
- * 
- * @author Steve Phelps
  *
+ * @author Steve Phelps
  */
-public class ExponentialMovingAveragePredictionStrategy 
-		extends AbstractPredictionStrategy {
+public class ExponentialMovingAveragePredictionStrategy
+  extends AbstractPredictionStrategy {
 
-	protected double alpha = 0.1;
-	
-	@Override
-	public void makePrediction() {
-		currentPrediction = alpha * barTender.getAttendanceAtLag(1) +
-			(1 - alpha) * currentPrediction;
-	}
+    protected double alpha = 0.1;
 
-	public double getAlpha() {
-		return alpha;
-	}
+    @Override
+    public void makePrediction() {
+        currentPrediction = alpha * barTender.getAttendanceAtLag(1) +
+          (1 - alpha) * currentPrediction;
+    }
 
-	/**
-	 * Configure half-life parameter.
-	 * 
-	 * @param alpha  Higher values of this parameter will put more weight
-	 *                   on recent values as opposed to old values.
-	 */
-	public void setAlpha(double alpha) {
-		this.alpha = alpha;
-	}
+    public double getAlpha() {
+        return alpha;
+    }
 
-	@Override
-	public String toString() {
-		return "ExponentialMovingAveragePredictionStrategy [alpha=" + alpha
-				+ " currentPrediction=" + currentPrediction + "]";
-	}
-	
+    /**
+     * Configure half-life parameter.
+     *
+     * @param alpha Higher values of this parameter will put more weight on recent values as opposed to old values.
+     */
+    public void setAlpha(double alpha) {
+        this.alpha = alpha;
+    }
+
+    @Override
+    public String toString() {
+        return "ExponentialMovingAveragePredictionStrategy [alpha=" + alpha
+          + " currentPrediction=" + currentPrediction + "]";
+    }
+
 }

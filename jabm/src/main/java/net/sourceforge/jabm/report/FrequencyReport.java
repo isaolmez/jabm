@@ -15,11 +15,10 @@
 package net.sourceforge.jabm.report;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.stat.Frequency;
 
 public interface FrequencyReport extends Report, Serializable {
 
-	public Frequency getFrequency();
-	
+    public Frequency getFrequency();
+
 }

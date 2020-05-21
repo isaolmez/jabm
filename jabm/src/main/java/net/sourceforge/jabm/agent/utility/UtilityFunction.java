@@ -16,6 +16,6 @@ package net.sourceforge.jabm.agent.utility;
 
 public interface UtilityFunction {
 
-	public double calculatePayoff(double profit);
+    public double calculatePayoff(double profit);
 
 }

@@ -16,7 +16,6 @@
 package net.sourceforge.jabm.learning;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.report.DataWriter;
 
 /**
@@ -25,20 +24,20 @@ import net.sourceforge.jabm.report.DataWriter;
  */
 
 public class MetaLearner extends AbstractLearner implements
-    StimuliResponseLearner, Serializable {
-	
-	protected int currentLearner;
-	
-	protected StimuliResponseLearner[] subLearners;
-	
-	protected StimuliResponseLearner masterLearner;
+  StimuliResponseLearner, Serializable {
 
-	public MetaLearner() {
-	}
+    protected int currentLearner;
 
-	public MetaLearner(int numLearners) {
-		subLearners = new StimuliResponseLearner[numLearners];
-	}
+    protected StimuliResponseLearner[] subLearners;
+
+    protected StimuliResponseLearner masterLearner;
+
+    public MetaLearner() {
+    }
+
+    public MetaLearner(int numLearners) {
+        subLearners = new StimuliResponseLearner[numLearners];
+    }
 
 //	public void setup(ParameterDatabase parameters, Parameter base) {
 //
@@ -67,40 +66,39 @@ public class MetaLearner extends AbstractLearner implements
 //		}
 //	}
 
-	public int act() {
-		currentLearner = masterLearner.act();
-		return subLearners[currentLearner].act();
-	}
+    public int act() {
+        currentLearner = masterLearner.act();
+        return subLearners[currentLearner].act();
+    }
 
-	public void reward(double reward) {
-		masterLearner.reward(reward);
-		subLearners[currentLearner].reward(reward);
-	}
+    public void reward(double reward) {
+        masterLearner.reward(reward);
+        subLearners[currentLearner].reward(reward);
+    }
 
-	public double getLearningDelta() {
-		return masterLearner.getLearningDelta();
-	}
+    public double getLearningDelta() {
+        return masterLearner.getLearningDelta();
+    }
 
-	public int getNumberOfActions() {
-		return subLearners.length;
-	}
+    public int getNumberOfActions() {
+        return subLearners.length;
+    }
 
-	public void dumpState(DataWriter out) {
-		// TODO
-	}
+    public void dumpState(DataWriter out) {
+        // TODO
+    }
 
-	@Override
-	public int bestAction() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public int bestAction() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-	@Override
-	public int worstAction() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	
+    @Override
+    public int worstAction() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
 
 }

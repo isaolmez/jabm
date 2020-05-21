@@ -15,9 +15,8 @@
 
 package net.sourceforge.jabm.prng;
 
-import org.apache.log4j.Logger;
-
 import cern.jet.random.engine.RandomEngine;
+import org.apache.log4j.Logger;
 
 //import ec.util.ParamClassLoadException;
 //import ec.util.Parameter;
@@ -30,11 +29,11 @@ import cern.jet.random.engine.RandomEngine;
 
 public abstract class PRNGFactory {
 
-	public static final String P_DEF_BASE = "prngfactory";
+    public static final String P_DEF_BASE = "prngfactory";
 
-	protected static PRNGFactory currentFactory = new MT();
+    protected static PRNGFactory currentFactory = new MT();
 
-	static Logger logger = Logger.getLogger(PRNGFactory.class);
+    static Logger logger = Logger.getLogger(PRNGFactory.class);
 
 //	public static void setup(ParameterDatabase parameters, Parameter base) {
 //		try {
@@ -46,17 +45,17 @@ public abstract class PRNGFactory {
 //		}
 //	}
 
-	/**
-	 * Get the concrete factory.
-	 */
-	public static PRNGFactory getFactory() {
-		return currentFactory;
-	}
+    /**
+     * Get the concrete factory.
+     */
+    public static PRNGFactory getFactory() {
+        return currentFactory;
+    }
 
-	public abstract RandomEngine create();
+    public abstract RandomEngine create();
 
-	public abstract RandomEngine create(long seed);
+    public abstract RandomEngine create(long seed);
 
-	public abstract String getDescription();
+    public abstract String getDescription();
 
 }

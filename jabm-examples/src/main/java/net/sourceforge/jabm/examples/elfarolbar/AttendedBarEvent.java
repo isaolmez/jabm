@@ -18,17 +18,16 @@ import net.sourceforge.jabm.event.SimEvent;
 
 /**
  * An event that is fired whenever a patron attends the El Farol Bar.
- * 
- * @author Steve Phelps
  *
+ * @author Steve Phelps
  */
 public class AttendedBarEvent extends SimEvent {
 
-	protected PatronAgent attendee;
+    protected PatronAgent attendee;
 
-	public AttendedBarEvent(PatronAgent attendee) {
-		super();
-		this.attendee = attendee;
-	}
-	
+    public AttendedBarEvent(PatronAgent attendee) {
+        super();
+        this.attendee = attendee;
+    }
+
 }

@@ -17,33 +17,32 @@ package net.sourceforge.jabm.util;
 
 /**
  * Utility class for handing out unique ids.
- * 
- * A using class wishing to assign unique ids to each of its instances should
- * declare a static member variable:
- * 
+ *
+ * A using class wishing to assign unique ids to each of its instances should declare a static member variable:
+ *
  * <code>
- *   static IdAllocator idAllocator = new IdAllocator();
+ * static IdAllocator idAllocator = new IdAllocator();
  * </code>
- * 
+ *
  * In its constructor it should use something like:
- * 
+ *
  * <code>
- *   id = idAllocator.nextId();
+ * id = idAllocator.nextId();
  * </code>
- * 
+ *
  * @author Steve Phelps
  * @version $Revision: 16 $
  */
 
 public class IdAllocator {
 
-	protected long nextId = 0;
+    protected long nextId = 0;
 
-	public IdAllocator() {
-	}
+    public IdAllocator() {
+    }
 
-	public synchronized long nextId() {
-		return nextId++;
-	}
+    public synchronized long nextId() {
+        return nextId++;
+    }
 
 }

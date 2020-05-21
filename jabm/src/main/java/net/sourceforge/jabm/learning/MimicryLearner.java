@@ -17,26 +17,26 @@ package net.sourceforge.jabm.learning;
 
 /**
  * A learner that attempts to adjust its output to match a training signal.
- * 
+ *
  * @author Steve Phelps
  * @version $Revision: 16 $
  */
 
 public interface MimicryLearner extends ContinuousLearner {
 
-	/**
-	 * Provide a training signal to the learning algorithm.
-	 */
-	public void train(double target);
+    /**
+     * Provide a training signal to the learning algorithm.
+     */
+    public void train(double target);
 
-	/**
-	 * Initialise the learning algorithm to output the supplied value.
-	 */
-	public void setOutputLevel(double currentOutput);
+    /**
+     * Initialise the learning algorithm to output the supplied value.
+     */
+    public void setOutputLevel(double currentOutput);
 
-	/**
-	 * Initialise with random values for free parameters
-	 */
-	public void randomInitialise();
+    /**
+     * Initialise with random values for free parameters
+     */
+    public void randomInitialise();
 
 }

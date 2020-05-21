@@ -20,97 +20,94 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import net.sourceforge.jabm.event.BatchFinishedEvent;
 import net.sourceforge.jabm.event.SimEvent;
 import net.sourceforge.jabm.event.SimulationFinishedEvent;
-
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.apache.log4j.Logger;
 
 
 public class BatchMetaReport implements Report, Serializable {
 
-	protected List<Report> reports;
-	
-	protected Map<Object,SummaryStatistics> variables = 
-		new LinkedHashMap<Object,SummaryStatistics>();
-	
-	static Logger logger = Logger.getLogger(BatchMetaReport.class);
-	
-	public BatchMetaReport(ArrayList<Report> reports) {
-		super();
-		this.reports = reports;
-		logger.debug("reports = " + reports);
-	}
-	
-	public BatchMetaReport() {
-	}
+    protected List<Report> reports;
 
-	public void eventOccurred(SimEvent event) {
-		for (Report report : reports) {
-			report.eventOccurred(event);
-		}
-		if (event instanceof SimulationFinishedEvent) {
-			onSimulationFinished();
-		} 
-		if (event instanceof BatchFinishedEvent) {			
-			onBatchFinished();
-		}
-	}
+    protected Map<Object, SummaryStatistics> variables =
+      new LinkedHashMap<Object, SummaryStatistics>();
 
-	private void onBatchFinished() {
-		logger.debug("variables = " + variables);
-		Iterator<Object> i = variables.keySet().iterator();
-		while (i.hasNext()) {
-			Object variable = i.next();
-			SummaryStatistics stats = variables.get(variable);
-			logger.info(variable + ": " + stats);
-		}
-	}
+    static Logger logger = Logger.getLogger(BatchMetaReport.class);
 
-	private void onSimulationFinished() {
-		logger.debug("reports = " + reports);
-		for (Report report : reports) {
-			Map<Object,Number> singleSimulationVars = report.getVariableBindings();
-			Iterator<Object> i = singleSimulationVars.keySet().iterator();
-			while (i.hasNext()) {
-				Object variable = i.next();
-				Object value = singleSimulationVars.get(variable);
-				if (value instanceof Number) {
-					double dValue = singleSimulationVars.get(variable).doubleValue();
-					SummaryStatistics stats = variables.get(variable);
-					if (stats == null) {
-						stats = new SummaryStatistics();
-						variables.put(variable, stats);
-					}
-					stats.addValue(dValue);
-				}
-			}
-		}
-	}
-	
+    public BatchMetaReport(ArrayList<Report> reports) {
+        super();
+        this.reports = reports;
+        logger.debug("reports = " + reports);
+    }
 
-	public List<Report> getReports() {
-		return reports;
-	}
+    public BatchMetaReport() {
+    }
+
+    public void eventOccurred(SimEvent event) {
+        for (Report report : reports) {
+            report.eventOccurred(event);
+        }
+        if (event instanceof SimulationFinishedEvent) {
+            onSimulationFinished();
+        }
+        if (event instanceof BatchFinishedEvent) {
+            onBatchFinished();
+        }
+    }
+
+    private void onBatchFinished() {
+        logger.debug("variables = " + variables);
+        Iterator<Object> i = variables.keySet().iterator();
+        while (i.hasNext()) {
+            Object variable = i.next();
+            SummaryStatistics stats = variables.get(variable);
+            logger.info(variable + ": " + stats);
+        }
+    }
+
+    private void onSimulationFinished() {
+        logger.debug("reports = " + reports);
+        for (Report report : reports) {
+            Map<Object, Number> singleSimulationVars = report.getVariableBindings();
+            Iterator<Object> i = singleSimulationVars.keySet().iterator();
+            while (i.hasNext()) {
+                Object variable = i.next();
+                Object value = singleSimulationVars.get(variable);
+                if (value instanceof Number) {
+                    double dValue = singleSimulationVars.get(variable).doubleValue();
+                    SummaryStatistics stats = variables.get(variable);
+                    if (stats == null) {
+                        stats = new SummaryStatistics();
+                        variables.put(variable, stats);
+                    }
+                    stats.addValue(dValue);
+                }
+            }
+        }
+    }
 
 
-	public void setReports(List<Report> reports) {
-		this.reports = reports;
-	}
+    public List<Report> getReports() {
+        return reports;
+    }
 
 
-	public Map<Object, Number> getVariableBindings() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
+    }
 
-	@Override
-	public String getName() {
-		return null;
-	}
-	
-	
+
+    public Map<Object, Number> getVariableBindings() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
 
 }

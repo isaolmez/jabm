@@ -16,15 +16,14 @@
 package net.sourceforge.jabm.learning;
 
 /**
- * Classes implementing this interface indicate that they know if their output
- * is good enough to be used.
- * 
+ * Classes implementing this interface indicate that they know if their output is good enough to be used.
+ *
  * @author Jinzhong Niu
  * @version $Revision: 16 $
  */
 
 public interface SelfKnowledgable {
 
-	public boolean goodEnough();
+    public boolean goodEnough();
 
 }

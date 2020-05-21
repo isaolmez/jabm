@@ -15,14 +15,12 @@
 package net.sourceforge.jabm.event;
 
 /**
- * Objects which implement this interface can be informed of simulation
- * events.
- * 
- * @author Steve Phelps
+ * Objects which implement this interface can be informed of simulation events.
  *
+ * @author Steve Phelps
  */
 public interface EventListener {
 
-	public void eventOccurred(SimEvent event);
-	
+    public void eventOccurred(SimEvent event);
+
 }

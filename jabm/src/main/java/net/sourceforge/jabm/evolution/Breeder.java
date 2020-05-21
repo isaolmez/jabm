@@ -17,22 +17,18 @@ package net.sourceforge.jabm.evolution;
 import net.sourceforge.jabm.agent.AgentList;
 
 /**
- * A Breeder specifies a mapping between a previous generation of agents
- *  and the next generation.
- *  
- * @author Steve Phelps
+ * A Breeder specifies a mapping between a previous generation of agents and the next generation.
  *
+ * @author Steve Phelps
  */
 public interface Breeder {
 
-	/**
-	 * Compute the next generation of agents.
-	 * 
-	 * @param currentGeneration
-	 *            The agents comprising the current generation.
-	 * @return An AgentList representing the next generation after reproduction
-	 *         has occurred.
-	 */
-	public AgentList reproduce(AgentList currentGeneration);
-	
+    /**
+     * Compute the next generation of agents.
+     *
+     * @param currentGeneration The agents comprising the current generation.
+     * @return An AgentList representing the next generation after reproduction has occurred.
+     */
+    public AgentList reproduce(AgentList currentGeneration);
+
 }

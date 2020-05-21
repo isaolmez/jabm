@@ -15,24 +15,23 @@
 package net.sourceforge.jabm.report;
 
 import java.util.List;
-
 import net.sourceforge.jabm.event.Model;
 
 /**
  * A set of report variables representing a time series.
- * 
+ *
  * @author Steve Phelps
  */
 public interface Timeseries extends ReportVariables, Model {
 
-	public Number getX(int seriesIndex, int itemIndex);
+    public Number getX(int seriesIndex, int itemIndex);
 
-	public Number getY(int seriesIndex, int itemIndex);
+    public Number getY(int seriesIndex, int itemIndex);
 
-	public int size(int seriesIndex);
+    public int size(int seriesIndex);
 
-	public int getNumberOfSeries();
+    public int getNumberOfSeries();
 
-	List<Object> getyVariableNames();
+    List<Object> getyVariableNames();
 
 }

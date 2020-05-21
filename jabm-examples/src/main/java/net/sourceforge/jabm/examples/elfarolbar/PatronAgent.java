@@ -15,7 +15,6 @@
 package net.sourceforge.jabm.examples.elfarolbar;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.EventScheduler;
 import net.sourceforge.jabm.agent.AbstractAgent;
 import net.sourceforge.jabm.event.AgentArrivalEvent;
@@ -23,79 +22,79 @@ import net.sourceforge.jabm.event.SimEvent;
 
 /**
  * An agent representing a patron at the El Farol Bar.
- * 
+ *
  * @author Steve Phelps
  */
 public class PatronAgent extends AbstractAgent implements Serializable {
 
-	/**
-	 * The attendance level at which this agent feels overcrowded. 
-	 */
-	protected int barCapacity;
-	
-	public PatronAgent(EventScheduler scheduler) {
-		super(scheduler);
-	}
-	
-	public PatronAgent() {
-		super();
-	}
+    /**
+     * The attendance level at which this agent feels overcrowded.
+     */
+    protected int barCapacity;
 
-	@Override
-	public void onAgentArrival(AgentArrivalEvent event) {
-		super.onAgentArrival(event);
-		AbstractPredictionStrategy predictionStrategy = 
-			(AbstractPredictionStrategy) getStrategy();
-		double predictedAttendance = predictionStrategy.getCurrentPrediction();
-		if (Math.round(predictedAttendance) < barCapacity) {
-			attendBar();
-		} else {
-			stayAtHome();
-		}
-	}
+    public PatronAgent(EventScheduler scheduler) {
+        super(scheduler);
+    }
 
-	public void stayAtHome() {
-		fireEvent(new StayedAtHomeEvent(this));
-	}
+    public PatronAgent() {
+        super();
+    }
 
-	public void attendBar() {
-		fireEvent(new AttendedBarEvent(this));
-	}
+    @Override
+    public void onAgentArrival(AgentArrivalEvent event) {
+        super.onAgentArrival(event);
+        AbstractPredictionStrategy predictionStrategy =
+          (AbstractPredictionStrategy) getStrategy();
+        double predictedAttendance = predictionStrategy.getCurrentPrediction();
+        if (Math.round(predictedAttendance) < barCapacity) {
+            attendBar();
+        } else {
+            stayAtHome();
+        }
+    }
 
-	@Override
-	public double getPayoff() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    public void stayAtHome() {
+        fireEvent(new StayedAtHomeEvent(this));
+    }
 
-	@Override
-	public void initialise() {
-		// Default is do nothing.
-	}
+    public void attendBar() {
+        fireEvent(new AttendedBarEvent(this));
+    }
+
+    @Override
+    public double getPayoff() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void initialise() {
+        // Default is do nothing.
+    }
 
 
-	public int getBarCapacity() {
-		return barCapacity;
-	}
+    public int getBarCapacity() {
+        return barCapacity;
+    }
 
-	public void setBarCapacity(int barCapacity) {
-		this.barCapacity = barCapacity;
-	}
+    public void setBarCapacity(int barCapacity) {
+        this.barCapacity = barCapacity;
+    }
 
-	@Override
-	public void eventOccurred(SimEvent event) {
-		super.eventOccurred(event);
-	}
+    @Override
+    public void eventOccurred(SimEvent event) {
+        super.eventOccurred(event);
+    }
 
-	@Override
-	public void subscribeToEvents() {
-		super.subscribeToEvents();
-	}
+    @Override
+    public void subscribeToEvents() {
+        super.subscribeToEvents();
+    }
 
-	@Override
-	public String toString() {
-		return "ElFarolBarAgent [strategy=" + strategy
-				+ ", barCapacity=" + barCapacity + "]";
-	}
-	
+    @Override
+    public String toString() {
+        return "ElFarolBarAgent [strategy=" + strategy
+          + ", barCapacity=" + barCapacity + "]";
+    }
+
 }

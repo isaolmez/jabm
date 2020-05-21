@@ -15,56 +15,54 @@
 package net.sourceforge.jabm.report;
 
 import java.util.Map;
-
 import net.sourceforge.jabm.Population;
 import net.sourceforge.jabm.SimulationController;
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.event.SimEvent;
 import net.sourceforge.jabm.event.SimulationEvent;
-
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.apache.log4j.Logger;
 
 public class FitnessReportVariables extends AbstractReportVariables {
 
-	protected SummaryStatistics stats = new SummaryStatistics();
-	
-	static Logger logger = Logger.getLogger(FitnessReportVariables.class);
+    protected SummaryStatistics stats = new SummaryStatistics();
 
-	public FitnessReportVariables() {
-		super("fitness");
-	}
-	
-	@Override
-	public Map<Object, Number> getVariableBindings() {
-		Map<Object, Number> result = super.getVariableBindings();
-		recordSummaryStatistics("population", result, stats);
-		return result;
-	}
+    static Logger logger = Logger.getLogger(FitnessReportVariables.class);
 
-	@Override
-	public void compute(SimEvent event) {
-		super.compute(event);
-		if (event instanceof SimulationEvent) {
-			onSimulationEvent((SimulationEvent) event);
-		}
-	}
+    public FitnessReportVariables() {
+        super("fitness");
+    }
 
-	public void onSimulationEvent(SimulationEvent event) {
-		stats = new SummaryStatistics();
-		SimulationController controller = event.getSimulation()
-				.getSimulationController();
-		Population population = controller.getPopulation();
-		for (Agent agent : population.getAgents()) {
-			double fitness = agent.getPayoff();
-			stats.addValue(fitness);
-		}
-		logger.debug(stats.toString());
-	}
-	
-	@Override
-	public void initialise(SimEvent event) {
-		stats.clear();
-	}
+    @Override
+    public Map<Object, Number> getVariableBindings() {
+        Map<Object, Number> result = super.getVariableBindings();
+        recordSummaryStatistics("population", result, stats);
+        return result;
+    }
+
+    @Override
+    public void compute(SimEvent event) {
+        super.compute(event);
+        if (event instanceof SimulationEvent) {
+            onSimulationEvent((SimulationEvent) event);
+        }
+    }
+
+    public void onSimulationEvent(SimulationEvent event) {
+        stats = new SummaryStatistics();
+        SimulationController controller = event.getSimulation()
+          .getSimulationController();
+        Population population = controller.getPopulation();
+        for (Agent agent : population.getAgents()) {
+            double fitness = agent.getPayoff();
+            stats.addValue(fitness);
+        }
+        logger.debug(stats.toString());
+    }
+
+    @Override
+    public void initialise(SimEvent event) {
+        stats.clear();
+    }
 
 }

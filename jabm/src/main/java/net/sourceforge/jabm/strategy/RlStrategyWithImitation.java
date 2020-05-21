@@ -14,90 +14,88 @@
  */
 package net.sourceforge.jabm.strategy;
 
+import cern.jet.random.engine.RandomEngine;
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.learning.StimuliResponseLearner;
-
 import org.springframework.beans.factory.ObjectFactory;
 
-import cern.jet.random.engine.RandomEngine;
+public class RlStrategyWithImitation extends RlStrategy
+  implements ImitableStrategy, ImitatingStrategy {
 
-public class RlStrategyWithImitation extends RlStrategy 
-		implements ImitableStrategy, ImitatingStrategy {
+    protected RandomEngine prng;
 
-	protected RandomEngine prng;
-	
-	protected ObjectFactory<Strategy> mutationFactory;
-	
-	public RlStrategyWithImitation(Agent agent, 
-			ObjectFactory<Strategy> strategyFactory,
-			StimuliResponseLearner learner) {
-		super(agent, strategyFactory, learner);
-	}
-	
-	public RlStrategyWithImitation(
-			ObjectFactory<Strategy> strategyFactory,
-			StimuliResponseLearner learner) {
-		super(strategyFactory, learner);
-	}
+    protected ObjectFactory<Strategy> mutationFactory;
 
-	public void imitate(Agent otherAgent) {
-		if (otherAgent.getStrategy() instanceof ImitableStrategy) {
-			ImitableStrategy otherStrategy = 
-				(ImitableStrategy) otherAgent.getStrategy();
-			Strategy strategyToImitiate = 
-				(Strategy) otherStrategy.createMimicStrategy();
-			strategyToImitiate.setAgent(this.getAgent());
-			int worst = this.learner.worstAction();
-			disposeOfAction(worst);
-			this.actions[worst] = strategyToImitiate;
-		}
-	}
+    public RlStrategyWithImitation(Agent agent,
+      ObjectFactory<Strategy> strategyFactory,
+      StimuliResponseLearner learner) {
+        super(agent, strategyFactory, learner);
+    }
 
-	@Override
-	public Strategy createMimicStrategy() {
-		try {
-			int best = this.learner.bestAction();
-			Strategy bestStrategy = this.actions[best];
-			if (logger.isDebugEnabled()) {
-				logger.debug("Someone else is copying my best strategy = " + bestStrategy);
-				logger.debug("learner = " + learner);
-			}
-			return (Strategy) bestStrategy.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public RlStrategyWithImitation(
+      ObjectFactory<Strategy> strategyFactory,
+      StimuliResponseLearner learner) {
+        super(strategyFactory, learner);
+    }
 
-	public RandomEngine getPrng() {
-		return prng;
-	}
+    public void imitate(Agent otherAgent) {
+        if (otherAgent.getStrategy() instanceof ImitableStrategy) {
+            ImitableStrategy otherStrategy =
+              (ImitableStrategy) otherAgent.getStrategy();
+            Strategy strategyToImitiate =
+              (Strategy) otherStrategy.createMimicStrategy();
+            strategyToImitiate.setAgent(this.getAgent());
+            int worst = this.learner.worstAction();
+            disposeOfAction(worst);
+            this.actions[worst] = strategyToImitiate;
+        }
+    }
 
-	public void setPrng(RandomEngine prng) {
-		this.prng = prng;
-	}
-	
-	public void mutate() {
+    @Override
+    public Strategy createMimicStrategy() {
+        try {
+            int best = this.learner.bestAction();
+            Strategy bestStrategy = this.actions[best];
+            if (logger.isDebugEnabled()) {
+                logger.debug("Someone else is copying my best strategy = " + bestStrategy);
+                logger.debug("learner = " + learner);
+            }
+            return (Strategy) bestStrategy.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public RandomEngine getPrng() {
+        return prng;
+    }
+
+    public void setPrng(RandomEngine prng) {
+        this.prng = prng;
+    }
+
+    public void mutate() {
 //		int action = (int) Math.round(prng.nextDouble() * (this.actions.length - 1));
-		int action = learner.worstAction();
-		Strategy newStrategy = mutationFactory.getObject();
-		newStrategy.setAgent(this.getAgent());
-		disposeOfAction(action);
-		actions[action] = newStrategy;
-	}
-	
-	
-	public void disposeOfAction(int action) {
-		actions[action].unsubscribeFromEvents();
-		actions[action].setAgent(null);
-	}
+        int action = learner.worstAction();
+        Strategy newStrategy = mutationFactory.getObject();
+        newStrategy.setAgent(this.getAgent());
+        disposeOfAction(action);
+        actions[action] = newStrategy;
+    }
 
-	public ObjectFactory<Strategy> getMutationFactory() {
-		return mutationFactory;
-	}
 
-	public void setMutationFactory(ObjectFactory<Strategy> mutationFactory) {
-		this.mutationFactory = mutationFactory;
-	}
-	
-	
+    public void disposeOfAction(int action) {
+        actions[action].unsubscribeFromEvents();
+        actions[action].setAgent(null);
+    }
+
+    public ObjectFactory<Strategy> getMutationFactory() {
+        return mutationFactory;
+    }
+
+    public void setMutationFactory(ObjectFactory<Strategy> mutationFactory) {
+        this.mutationFactory = mutationFactory;
+    }
+
+
 }

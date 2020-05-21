@@ -19,27 +19,24 @@ import java.io.Serializable;
 
 /**
  * <p>
- * This is an extension of Java's Number class that provides methods for
- * performing untyped polymorphic arithmetic. For example, an UntypedDouble can
- * be added to an UntypedInteger without having to know the class of each
- * operand.
+ * This is an extension of Java's Number class that provides methods for performing untyped polymorphic arithmetic. For
+ * example, an UntypedDouble can be added to an UntypedInteger without having to know the class of each operand.
  * </p>
- * 
+ *
  * @author Steve Phelps
  * @version $Revision: 104 $
- * 
  */
 
 @SuppressWarnings("rawtypes")
 public abstract class UntypedNumber extends Number implements Comparable,
-		Serializable {
+  Serializable {
 
-	public abstract UntypedNumber multiply(UntypedNumber other);
+    public abstract UntypedNumber multiply(UntypedNumber other);
 
-	public abstract UntypedNumber add(UntypedNumber other);
+    public abstract UntypedNumber add(UntypedNumber other);
 
-	public abstract UntypedNumber subtract(UntypedNumber other);
+    public abstract UntypedNumber subtract(UntypedNumber other);
 
-	public abstract UntypedNumber divide(UntypedNumber other);
+    public abstract UntypedNumber divide(UntypedNumber other);
 
 }

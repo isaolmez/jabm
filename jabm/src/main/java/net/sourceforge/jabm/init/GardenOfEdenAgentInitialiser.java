@@ -17,17 +17,16 @@ package net.sourceforge.jabm.init;
 import net.sourceforge.jabm.Population;
 
 /**
- * An agent initialiser which reconstructs the population from scratch before
- * each experiment using the population's agent factory.
- * 
- * @author sphelps
+ * An agent initialiser which reconstructs the population from scratch before each experiment using the population's
+ * agent factory.
  *
+ * @author sphelps
  */
 public class GardenOfEdenAgentInitialiser implements AgentInitialiser {
 
-	@Override
-	public void initialise(Population population) {
-		population.reset();
-	}
+    @Override
+    public void initialise(Population population) {
+        population.reset();
+    }
 
 }

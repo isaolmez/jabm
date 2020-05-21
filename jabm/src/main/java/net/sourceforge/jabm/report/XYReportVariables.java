@@ -17,36 +17,35 @@ package net.sourceforge.jabm.report;
 import java.util.List;
 
 /**
- * A set of ReportVariables which have one independent variable and several
- * dependent variables. The independent variable is typically a time-stamp value
- * and these variables are typically reported in time series form.
- * 
+ * A set of ReportVariables which have one independent variable and several dependent variables. The independent
+ * variable is typically a time-stamp value and these variables are typically reported in time series form.
+ *
  * @author sphelps
  */
 public interface XYReportVariables extends ReportVariables {
 
-	//TODO seriesIndex redundant here.
-	public Number getX(int seriesIndex);
+    //TODO seriesIndex redundant here.
+    public Number getX(int seriesIndex);
 
-	/**
-	 * @param seriesIndex The index of the dependent variable.
-	 * @return The value of the dependent variable in the given series.
-	 */
-	public Number getY(int seriesIndex);
-	
-	/**
-	 * @return The number of independent variables.
-	 */
-	public int getNumberOfSeries();
+    /**
+     * @param seriesIndex The index of the dependent variable.
+     * @return The value of the dependent variable in the given series.
+     */
+    public Number getY(int seriesIndex);
 
-	/**
-	 * @return The names of the dependent variables.
-	 */
-	public List<Object> getyVariableNames();
+    /**
+     * @return The number of independent variables.
+     */
+    public int getNumberOfSeries();
 
-	/**
-	 * @return The name of the independent variable.
-	 */
-	public String getxVariableName();
-	
+    /**
+     * @return The names of the dependent variables.
+     */
+    public List<Object> getyVariableNames();
+
+    /**
+     * @return The name of the independent variable.
+     */
+    public String getxVariableName();
+
 }

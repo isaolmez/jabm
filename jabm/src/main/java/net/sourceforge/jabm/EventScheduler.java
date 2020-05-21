@@ -19,14 +19,14 @@ import net.sourceforge.jabm.event.SimEvent;
 
 public interface EventScheduler {
 
-	public void fireEvent(SimEvent event);
-	
-	public SimulationTime getSimulationTime();
-	
-	@SuppressWarnings("rawtypes")
-	public void addListener(Class eventClass, EventListener listener);
-	
-	public void addListener(EventListener listener);
+    public void fireEvent(SimEvent event);
 
-	public void removeListener(EventListener listener);
+    public SimulationTime getSimulationTime();
+
+    @SuppressWarnings("rawtypes")
+    public void addListener(Class eventClass, EventListener listener);
+
+    public void addListener(EventListener listener);
+
+    public void removeListener(EventListener listener);
 }

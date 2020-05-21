@@ -19,48 +19,47 @@ import java.io.Serializable;
 
 /**
  * <p>
- * A simple wrapper for a primitive <code>double</code> value which is
- * publicly mutable.
+ * A simple wrapper for a primitive <code>double</code> value which is publicly mutable.
  * </p>
  */
 public class MutableDoubleWrapper extends Number implements Serializable {
 
-	public double value;
+    public double value;
 
-	public MutableDoubleWrapper() {
-		this(0);
-	}
+    public MutableDoubleWrapper() {
+        this(0);
+    }
 
-	public MutableDoubleWrapper(double value) {
-		this.value = value;
-	}
+    public MutableDoubleWrapper(double value) {
+        this.value = value;
+    }
 
-	public double doubleValue() {
-		return value;
-	}
+    public double doubleValue() {
+        return value;
+    }
 
-	public double getValue() {
-		return value;
-	}
+    public double getValue() {
+        return value;
+    }
 
-	public void setValue(double value) {
-		this.value = value;
-	}
+    public void setValue(double value) {
+        this.value = value;
+    }
 
-	@Override
-	public int intValue() {
-		return (int) Math.round(value);
-	}
+    @Override
+    public int intValue() {
+        return (int) Math.round(value);
+    }
 
-	@Override
-	public long longValue() {
-		return Math.round(value);
-	}
+    @Override
+    public long longValue() {
+        return Math.round(value);
+    }
 
-	@Override
-	public float floatValue() {
-		return (float) value;
-	}
+    @Override
+    public float floatValue() {
+        return (float) value;
+    }
 
-	
+
 }

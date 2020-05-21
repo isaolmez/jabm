@@ -1,10 +1,9 @@
 package net.sourceforge.jabm.report;
 
+import java.util.List;
 import net.sourceforge.jabm.strategy.Strategy;
 import org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics;
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary;
-
-import java.util.List;
 
 /**
  * (C) Steve Phelps 2015
@@ -26,7 +25,7 @@ public class ContributingPayoffMap extends PayoffMap {
     @Override
     public StatisticalSummary createStatisticalSummary(Strategy s) {
         AggregateSummaryStatistics aggregateStats =
-                (AggregateSummaryStatistics) aggregatePayoffMap.getPayoffDistribution(s);
+          (AggregateSummaryStatistics) aggregatePayoffMap.getPayoffDistribution(s);
         return aggregateStats.createContributingStatistics();
     }
 }

@@ -16,47 +16,46 @@ package net.sourceforge.jabm;
 
 /**
  * Classes implementing this interface define agent-based simulation models.
- * 
- * @author Steve Phelps
  *
+ * @author Steve Phelps
  */
 public interface Simulation extends Runnable {
 
-	/**
-	 * Fetch the simulation controller for this simulation.
-	 */
-	public SimulationController getSimulationController();
+    /**
+     * Fetch the simulation controller for this simulation.
+     */
+    public SimulationController getSimulationController();
 
-	/**
-	 * Query the current simulation time.
-	 */
-	public SimulationTime getSimulationTime();
-	
-	/**
-	 * Fetch the Population of agents for this simulation.
-	 */
-	public Population getPopulation();
-	
-	/**
-	 * Pause the simulation.
-	 */
-	public void pause();
-	
-	/**
-	 * Resume the simulation after pausing.
-	 */
-	public void resume();
-	
-	/**
-	 * Terminate the simulation.
-	 */
-	public void terminate();
-	
-	/**
-	 * Slow down the simulation. 
-	 * 
-	 * @param slowSleepInterval The number of ms to sleep between ticks.
-	 */
-	public void slow(int slowSleepInterval);
-	
+    /**
+     * Query the current simulation time.
+     */
+    public SimulationTime getSimulationTime();
+
+    /**
+     * Fetch the Population of agents for this simulation.
+     */
+    public Population getPopulation();
+
+    /**
+     * Pause the simulation.
+     */
+    public void pause();
+
+    /**
+     * Resume the simulation after pausing.
+     */
+    public void resume();
+
+    /**
+     * Terminate the simulation.
+     */
+    public void terminate();
+
+    /**
+     * Slow down the simulation.
+     *
+     * @param slowSleepInterval The number of ms to sleep between ticks.
+     */
+    public void slow(int slowSleepInterval);
+
 }

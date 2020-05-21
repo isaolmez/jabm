@@ -16,21 +16,22 @@ package net.sourceforge.jabm.evolution;
 
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.strategy.Strategy;
-
 import org.apache.log4j.Logger;
 
 public class StrategyImitationOperator implements ImitationOperator {
 
-	static Logger logger = Logger.getLogger(StrategyImitationOperator.class);
-	
-	@Override
-	public void inheritBehaviour(Agent child, Agent parent) {
-		try {
-			if (logger.isDebugEnabled()) logger.debug("Reproducing " + parent);
-			child.setStrategy((Strategy) parent.getStrategy().clone());
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    static Logger logger = Logger.getLogger(StrategyImitationOperator.class);
+
+    @Override
+    public void inheritBehaviour(Agent child, Agent parent) {
+        try {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Reproducing " + parent);
+            }
+            child.setStrategy((Strategy) parent.getStrategy().clone());
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

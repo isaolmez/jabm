@@ -15,64 +15,63 @@
 
 package net.sourceforge.jabm.learning;
 
-import java.io.Serializable;
-
 import cern.jet.random.AbstractContinousDistribution;
+import java.io.Serializable;
 
 /**
  * @author Steve Phelps
  * @version $Revision: 307 $
  */
 public class WidrowHoffLearnerWithMomentum extends WidrowHoffLearner implements
-		Serializable {
+  Serializable {
 
-	/**
-	 * cumulative discounted delta
-	 */
-	protected double gamma;
+    /**
+     * cumulative discounted delta
+     */
+    protected double gamma;
 
-	protected double momentum;
+    protected double momentum;
 
-	public WidrowHoffLearnerWithMomentum(
-			AbstractContinousDistribution randomParamDistribution) {
-		super(randomParamDistribution);
-	}
+    public WidrowHoffLearnerWithMomentum(
+      AbstractContinousDistribution randomParamDistribution) {
+        super(randomParamDistribution);
+    }
 
-	public WidrowHoffLearnerWithMomentum(double learningRate,
-			AbstractContinousDistribution randomParamDistribution) {
-		super(learningRate, randomParamDistribution);
-	}
+    public WidrowHoffLearnerWithMomentum(double learningRate,
+      AbstractContinousDistribution randomParamDistribution) {
+        super(learningRate, randomParamDistribution);
+    }
 
-	public WidrowHoffLearnerWithMomentum() {
-		super();
-	}
+    public WidrowHoffLearnerWithMomentum() {
+        super();
+    }
 
-	public void initialise() {
-		super.initialise();
-		gamma = 0;
-	}
+    public void initialise() {
+        super.initialise();
+        gamma = 0;
+    }
 
-	public void train(double target) {
-		gamma = momentum * gamma + (1 - momentum) * delta(target);
-		currentOutput += gamma;
-	}
+    public void train(double target) {
+        gamma = momentum * gamma + (1 - momentum) * delta(target);
+        currentOutput += gamma;
+    }
 
-	public void randomInitialise() {
-		super.randomInitialise();
-		gamma = 0;
-		momentum = randomParamDistribution.nextDouble();
-	}
+    public void randomInitialise() {
+        super.randomInitialise();
+        gamma = 0;
+        momentum = randomParamDistribution.nextDouble();
+    }
 
-	public double getMomentum() {
-		return momentum;
-	}
+    public double getMomentum() {
+        return momentum;
+    }
 
-	public void setMomentum(double momentum) {
-		this.momentum = momentum;
-	}
+    public void setMomentum(double momentum) {
+        this.momentum = momentum;
+    }
 
-	public String toString() {
-		return "(" + getClass().getSimpleName() + " learningRate:" + learningRate
-		    + " momentum=" + momentum + ")";
-	}
+    public String toString() {
+        return "(" + getClass().getSimpleName() + " learningRate:" + learningRate
+          + " momentum=" + momentum + ")";
+    }
 }

@@ -14,45 +14,42 @@
  */
 package net.sourceforge.jabm.util;
 
+import cern.jet.random.AbstractContinousDistribution;
 import java.io.Serializable;
 
-import cern.jet.random.AbstractContinousDistribution;
-
 /**
- * A random variate that takes on the absolute value of values drawn
- * from an underlying probability distribution.
- * 
+ * A random variate that takes on the absolute value of values drawn from an underlying probability distribution.
+ *
  * @author Steve Phelps
  */
 public class AbsoluteContinuousDistribution extends
-		AbstractContinousDistribution implements Serializable {
+  AbstractContinousDistribution implements Serializable {
 
-	protected AbstractContinousDistribution underlyingDistribution;
-	
-	public AbsoluteContinuousDistribution(
-			AbstractContinousDistribution underlyingDistribution) {
-		super();
-		this.underlyingDistribution = underlyingDistribution;
-	}
-	
-	public AbsoluteContinuousDistribution() {
-		super();
-	}
+    protected AbstractContinousDistribution underlyingDistribution;
 
-	@Override
-	public double nextDouble() {
-		return Math.abs(underlyingDistribution.nextDouble());
-	}
+    public AbsoluteContinuousDistribution(
+      AbstractContinousDistribution underlyingDistribution) {
+        super();
+        this.underlyingDistribution = underlyingDistribution;
+    }
 
-	public AbstractContinousDistribution getUnderlyingDistribution() {
-		return underlyingDistribution;
-	}
+    public AbsoluteContinuousDistribution() {
+        super();
+    }
 
-	public void setUnderlyingDistribution(
-			AbstractContinousDistribution underlyingDistribution) {
-		this.underlyingDistribution = underlyingDistribution;
-	}
-	
-	
+    @Override
+    public double nextDouble() {
+        return Math.abs(underlyingDistribution.nextDouble());
+    }
+
+    public AbstractContinousDistribution getUnderlyingDistribution() {
+        return underlyingDistribution;
+    }
+
+    public void setUnderlyingDistribution(
+      AbstractContinousDistribution underlyingDistribution) {
+        this.underlyingDistribution = underlyingDistribution;
+    }
+
 
 }

@@ -20,10 +20,10 @@ import net.sourceforge.jabm.DesktopSimulationManager;
  * @author Steve Phelps
  */
 public class Main {
-    
-    public static void main(String [] args) {
-    	System.setProperty("jabm.config", "config/elfarolbar.xml");
-    	System.setProperty("jabm.propertyfile", "config/experiment.properties");
-        DesktopSimulationManager.main(new String[] {});
+
+    public static void main(String[] args) {
+        System.setProperty("jabm.config", "config/elfarolbar.xml");
+        System.setProperty("jabm.propertyfile", "config/experiment.properties");
+        DesktopSimulationManager.main(new String[]{});
     }
 }

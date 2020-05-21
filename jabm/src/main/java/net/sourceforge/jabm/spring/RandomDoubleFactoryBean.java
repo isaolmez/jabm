@@ -18,26 +18,24 @@ import org.springframework.beans.factory.FactoryBean;
 
 /**
  * <p>
- * A <a href="http://www.springsource.com/developer/spring">Spring</a> factory
- * bean which generates random Double values from the specified probability
- * distribution. This can be used to auto-magically configure properties as
- * random variates in a Monte-Carlo simulation.
+ * A <a href="http://www.springsource.com/developer/spring">Spring</a> factory bean which generates random Double values
+ * from the specified probability distribution. This can be used to auto-magically configure properties as random
+ * variates in a Monte-Carlo simulation.
  * </p>
- * 
+ *
  * @author Steve Phelps
- * 
  */
 public class RandomDoubleFactoryBean extends AbstractRandomVariateFactoryBean implements
-		FactoryBean<Double> {
+  FactoryBean<Double> {
 
-	@Override
-	public Double getObject() {
-		return distribution.nextDouble();
-	}
+    @Override
+    public Double getObject() {
+        return distribution.nextDouble();
+    }
 
-	@Override
-	public Class<?> getObjectType() {
-		return Double.class;
-	}
+    @Override
+    public Class<?> getObjectType() {
+        return Double.class;
+    }
 
 }

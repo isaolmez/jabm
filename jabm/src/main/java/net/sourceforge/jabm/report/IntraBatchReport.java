@@ -21,26 +21,24 @@ import net.sourceforge.jabm.event.SimulationFinishedEvent;
 
 /**
  * <p>
- * A report which collects data across simulations and updates
- * report variables at the end of each simulation.
+ * A report which collects data across simulations and updates report variables at the end of each simulation.
  * </p>
- * 
- * @author Steve Phelps
  *
+ * @author Steve Phelps
  */
 public class IntraBatchReport extends AbstractReport {
 
-	@Override
-	public void eventOccurred(SimEvent event) {
-		super.eventOccurred(event);
-		if (event instanceof BatchStartingEvent) {
-			reportVariables.initialise((BatchStartingEvent) event);
-		}
-		if (event instanceof SimulationFinishedEvent) {
-			reportVariables.compute((SimulationFinishedEvent) event);
-		}
-		if (event instanceof BatchFinishedEvent) {
-			reportVariables.dispose(event);
-		}
-	}
+    @Override
+    public void eventOccurred(SimEvent event) {
+        super.eventOccurred(event);
+        if (event instanceof BatchStartingEvent) {
+            reportVariables.initialise((BatchStartingEvent) event);
+        }
+        if (event instanceof SimulationFinishedEvent) {
+            reportVariables.compute((SimulationFinishedEvent) event);
+        }
+        if (event instanceof BatchFinishedEvent) {
+            reportVariables.dispose(event);
+        }
+    }
 }

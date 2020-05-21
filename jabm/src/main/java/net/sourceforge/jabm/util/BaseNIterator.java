@@ -20,52 +20,52 @@ import java.util.Iterator;
 
 /**
  * <p>
- * An iterator that enumerates the base N representation of every non-negative
- * integer that can be represented within the specified number of digits.
+ * An iterator that enumerates the base N representation of every non-negative integer that can be represented within
+ * the specified number of digits.
  * </p>
- * 
+ *
  * @author Steve Phelps
  * @version $Revision: 104 $
  */
 
 public class BaseNIterator implements Iterator<int[]>, Serializable {
 
-	protected int currentNumber = 0;
+    protected int currentNumber = 0;
 
-	protected int base;
+    protected int base;
 
-	protected int numDigits;
+    protected int numDigits;
 
-	protected int maximumNumber;
+    protected int maximumNumber;
 
-	public BaseNIterator(int base, int numDigits) {
-		this.base = base;
-		this.numDigits = numDigits;
-		maximumNumber = ((int) Math.pow(base, numDigits)) - 1;
-	}
+    public BaseNIterator(int base, int numDigits) {
+        this.base = base;
+        this.numDigits = numDigits;
+        maximumNumber = ((int) Math.pow(base, numDigits)) - 1;
+    }
 
-	public int[] next() {
-		int[] digits = convert();
-		currentNumber++;
-		return digits;
-	}
+    public int[] next() {
+        int[] digits = convert();
+        currentNumber++;
+        return digits;
+    }
 
-	public boolean hasNext() {
-		return currentNumber <= maximumNumber;
-	}
+    public boolean hasNext() {
+        return currentNumber <= maximumNumber;
+    }
 
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
 
-	protected int[] convert() {
-		int n = currentNumber;
-		int[] digits = new int[numDigits];
-		for (int i = 0; i < numDigits; i++) {
-			digits[i] = n % base;
-			n /= base;
-		}
-		return digits;
-	}
+    protected int[] convert() {
+        int n = currentNumber;
+        int[] digits = new int[numDigits];
+        for (int i = 0; i < numDigits; i++) {
+            digits[i] = n % base;
+            n /= base;
+        }
+        return digits;
+    }
 
 }

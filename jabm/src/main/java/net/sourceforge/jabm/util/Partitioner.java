@@ -21,102 +21,102 @@ import java.util.Iterator;
 import java.util.Stack;
 
 /**
- * A class that iterates over all numerical partitions of n into k distinct
- * parts including commutative duplications and parts containing zero.
- * 
+ * A class that iterates over all numerical partitions of n into k distinct parts including commutative duplications and
+ * parts containing zero.
+ *
  * @author Steve Phelps
  * @version $Revision: 16 $
  */
 
 public class Partitioner implements Iterator<int[]>, Serializable {
 
-	protected Stack<PartitionerState> stack;
+    protected Stack<PartitionerState> stack;
 
-	protected HashSet<PartitionerState> visitedStates;
+    protected HashSet<PartitionerState> visitedStates;
 
-	public Partitioner(int n, int k) {
-		stack = new Stack<PartitionerState>();
-		visitedStates = new HashSet<PartitionerState>();
-		stack.push(new PartitionerState(new int[k], n));
-	}
+    public Partitioner(int n, int k) {
+        stack = new Stack<PartitionerState>();
+        visitedStates = new HashSet<PartitionerState>();
+        stack.push(new PartitionerState(new int[k], n));
+    }
 
-	public boolean hasNext() {
-		return !stack.isEmpty();
-	}
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
 
-	public int[] next() {
-		return partition();
-	}
+    public int[] next() {
+        return partition();
+    }
 
-	public void remove() {
-		throw 
-		new IllegalArgumentException("method remove() not implemented");
-	}
+    public void remove() {
+        throw
+          new IllegalArgumentException("method remove() not implemented");
+    }
 
-	protected int[] partition() {
-		while (!stack.isEmpty()) {
-			PartitionerState state = stack.pop();
-			if (state.n == 0) {
-				return state.p;
-			}
-			int[] p = state.p;
-			for (int i = 0; i < p.length; i++) {
-				int[] p1 = (int[]) p.clone();
-				p1[i]++;
-				PartitionerState newState = new PartitionerState(p1, state.n - 1);
-				if (!visitedStates.contains(newState)) {
-					stack.push(newState);
-					visitedStates.add(newState);
-				}
-			}
-		}
-		return null;
-	}
+    protected int[] partition() {
+        while (!stack.isEmpty()) {
+            PartitionerState state = stack.pop();
+            if (state.n == 0) {
+                return state.p;
+            }
+            int[] p = state.p;
+            for (int i = 0; i < p.length; i++) {
+                int[] p1 = (int[]) p.clone();
+                p1[i]++;
+                PartitionerState newState = new PartitionerState(p1, state.n - 1);
+                if (!visitedStates.contains(newState)) {
+                    stack.push(newState);
+                    visitedStates.add(newState);
+                }
+            }
+        }
+        return null;
+    }
 
-	public static void main(String[] args) {
-		Partitioner p = new Partitioner(20, 3);
-		while (p.hasNext()) {
-			int[] partition = (int[]) p.next();
-			for (int i = 0; i < partition.length; i++) {
-				System.out.print(partition[i] + " ");
-			}
-			System.out.println("");
-		}
-	}
+    public static void main(String[] args) {
+        Partitioner p = new Partitioner(20, 3);
+        while (p.hasNext()) {
+            int[] partition = (int[]) p.next();
+            for (int i = 0; i < partition.length; i++) {
+                System.out.print(partition[i] + " ");
+            }
+            System.out.println("");
+        }
+    }
 }
 
 class PartitionerState {
 
-	protected int n;
+    protected int n;
 
-	protected int[] p;
+    protected int[] p;
 
-	public PartitionerState(int[] p, int n) {
-		this.n = n;
-		this.p = p;
-	}
+    public PartitionerState(int[] p, int n) {
+        this.n = n;
+        this.p = p;
+    }
 
-	public boolean equals(Object other) {
-		PartitionerState s = (PartitionerState) other;
-		if (this.n != s.n) {
-			return false;
-		}
-		for (int i = 0; i < this.p.length; i++) {
-			if (this.p[i] != s.p[i]) {
-				return false;
-			}
-		}
-		return true;
-	}
+    public boolean equals(Object other) {
+        PartitionerState s = (PartitionerState) other;
+        if (this.n != s.n) {
+            return false;
+        }
+        for (int i = 0; i < this.p.length; i++) {
+            if (this.p[i] != s.p[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	public int hashCode() {
-		int hash = n;
-		int m = 1;
-		for (int i = 0; i < p.length; i++) {
-			hash += m * p[i];
-			m <<= 1;
-		}
-		return hash;
-	}
+    public int hashCode() {
+        int hash = n;
+        int m = 1;
+        for (int i = 0; i < p.length; i++) {
+            hash += m * p[i];
+            m <<= 1;
+        }
+        return hash;
+    }
 
 }

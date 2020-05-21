@@ -17,9 +17,9 @@ package net.sourceforge.jabm.strategy;
 import net.sourceforge.jabm.agent.Agent;
 
 public interface ImitatingStrategy extends Strategy {
-	
-	public void imitate(Agent otherAgent);
 
-	public void mutate();
-	
+    public void imitate(Agent otherAgent);
+
+    public void mutate();
+
 }

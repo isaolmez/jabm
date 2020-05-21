@@ -15,15 +15,14 @@
 package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.Simulation;
 
 public class ReproductionStartingEvent extends SimulationEvent implements
-		Serializable {
+  Serializable {
 
-	public ReproductionStartingEvent(Simulation model) {
-		super(model);
-		// TODO Auto-generated constructor stub
-	}
+    public ReproductionStartingEvent(Simulation model) {
+        super(model);
+        // TODO Auto-generated constructor stub
+    }
 
 }

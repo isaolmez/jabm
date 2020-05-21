@@ -16,34 +16,34 @@ package net.sourceforge.jabm;
 
 import java.io.Serializable;
 
-public class SimulationTime implements Serializable, 
-		Comparable<SimulationTime> {
+public class SimulationTime implements Serializable,
+  Comparable<SimulationTime> {
 
-	protected long ticks;
-	
-	public SimulationTime(long ticks) {
-		super();
-		this.ticks = ticks;
-	}
+    protected long ticks;
 
-	@Override
-	public int compareTo(SimulationTime other) {
-		if (this.ticks > other.ticks) {
-			return 1;
-		} else if (this.ticks < other.ticks) {
-			return -1;
-		} else {
-			return 0;
-		}
-	}
+    public SimulationTime(long ticks) {
+        super();
+        this.ticks = ticks;
+    }
 
-	public long getTicks() {
-		return ticks;
-	}
+    @Override
+    public int compareTo(SimulationTime other) {
+        if (this.ticks > other.ticks) {
+            return 1;
+        } else if (this.ticks < other.ticks) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
 
-	@Override
-	public String toString() {
-		return ticks + "";
-	}
+    public long getTicks() {
+        return ticks;
+    }
+
+    @Override
+    public String toString() {
+        return ticks + "";
+    }
 
 }

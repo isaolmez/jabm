@@ -16,22 +16,21 @@
 package net.sourceforge.jabm.learning;
 
 /**
- * Classes implementing this interface implement myopic stimuli-response
- * reinformcement learning algorithms.
- * 
+ * Classes implementing this interface implement myopic stimuli-response reinformcement learning algorithms.
+ *
  * @author Steve Phelps
  * @version $Revision: 16 $
  */
 
 public interface StimuliResponseLearner extends DiscreteLearner {
 
-	/**
-	 * Reward the learning algorithm according to the last action it chose.
-	 */
-	public void reward(double reward);
-	
-	public int bestAction();
-	
-	public int worstAction();
-	
+    /**
+     * Reward the learning algorithm according to the last action it chose.
+     */
+    public void reward(double reward);
+
+    public int bestAction();
+
+    public int worstAction();
+
 }

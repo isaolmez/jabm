@@ -19,27 +19,26 @@ import java.awt.Font;
 import java.awt.Image;
 
 /**
- * Provides various methods of translating a string argument to an object of a
- * certain type.
- * 
+ * Provides various methods of translating a string argument to an object of a certain type.
+ *
  * @author Jinzhong Niu
  * @version $Revision: 16 $
  */
 public class ObjectConverter {
 
-	// TODO:
-	public static Color getColor(String c) {
-		return null;
-	}
+    // TODO:
+    public static Color getColor(String c) {
+        return null;
+    }
 
-	// TODO:
-	public static Font getFont(String f) {
-		return null;
-	}
+    // TODO:
+    public static Font getFont(String f) {
+        return null;
+    }
 
-	// TODO:
-	public static Image getImage(String i) {
-		return null;
-	}
+    // TODO:
+    public static Image getImage(String i) {
+        return null;
+    }
 
 }

@@ -18,7 +18,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.Map;
-
 import net.sourceforge.jabm.Population;
 import net.sourceforge.jabm.event.BatchFinishedEvent;
 import net.sourceforge.jabm.event.SimEvent;
@@ -26,43 +25,43 @@ import net.sourceforge.jabm.event.SimulationFinishedEvent;
 
 public class TotalFitnessCsvWriter implements Report, Serializable {
 
-	protected transient CSVWriter csvWriter;
-	
-	public TotalFitnessCsvWriter(String filename) {
-		try {
-			csvWriter = new CSVWriter(new FileOutputStream(filename));
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
-	@Override
-	public void eventOccurred(SimEvent e) {
-		if (e instanceof SimulationFinishedEvent) {
-			SimulationFinishedEvent event = (SimulationFinishedEvent) e;
-			Population population = event.getSimulation()
-					.getSimulationController().getPopulation();
-			double totalFitness = population.getAgentList().getTotalFitness();
-			csvWriter.newData(new String[] { "" + totalFitness });
-			csvWriter.endRecord();
+    protected transient CSVWriter csvWriter;
 
-			System.out.println("totalFitness = " + totalFitness);
-		}
-		if (e instanceof BatchFinishedEvent) {
-			csvWriter.close();
-		}
-	}
+    public TotalFitnessCsvWriter(String filename) {
+        try {
+            csvWriter = new CSVWriter(new FileOutputStream(filename));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	public Map<Object, Number> getVariableBindings() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public void eventOccurred(SimEvent e) {
+        if (e instanceof SimulationFinishedEvent) {
+            SimulationFinishedEvent event = (SimulationFinishedEvent) e;
+            Population population = event.getSimulation()
+              .getSimulationController().getPopulation();
+            double totalFitness = population.getAgentList().getTotalFitness();
+            csvWriter.newData(new String[]{"" + totalFitness});
+            csvWriter.endRecord();
 
-	@Override
-	public String getName() {
-		return getClass().getName();
-	}
+            System.out.println("totalFitness = " + totalFitness);
+        }
+        if (e instanceof BatchFinishedEvent) {
+            csvWriter.close();
+        }
+    }
 
-	
+    @Override
+    public Map<Object, Number> getVariableBindings() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return getClass().getName();
+    }
+
+
 }

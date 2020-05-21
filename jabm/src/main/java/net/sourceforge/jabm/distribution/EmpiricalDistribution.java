@@ -1,59 +1,57 @@
 package net.sourceforge.jabm.distribution;
 
+import cern.jet.random.AbstractContinousDistribution;
+import cern.jet.random.engine.RandomEngine;
 import java.io.File;
-
 import org.apache.commons.math3.random.RandomGenerator;
 import org.springframework.beans.factory.InitializingBean;
 
-import cern.jet.random.AbstractContinousDistribution;
-import cern.jet.random.engine.RandomEngine;
+public class EmpiricalDistribution extends AbstractContinousDistribution
+  implements InitializingBean {
 
-public class EmpiricalDistribution extends AbstractContinousDistribution 
-		implements InitializingBean {
+    protected org.apache.commons.math3.random.EmpiricalDistribution delegate;
 
-	protected org.apache.commons.math3.random.EmpiricalDistribution delegate;
-	
-	protected String dataFileName;
-	
-	protected int binCount;
-	
-	protected RandomEngine prng;
-	
-	@Override
-	public double nextDouble() {
-		return delegate.getNextValue();
-	}
+    protected String dataFileName;
 
-	public String getDataFileName() {
-		return dataFileName;
-	}
+    protected int binCount;
 
-	public void setDataFileName(String dataFileName) {
-		this.dataFileName = dataFileName;
-	}
-	
-	public int getBinCount() {
-		return binCount;
-	}
+    protected RandomEngine prng;
 
-	public void setBinCount(int binCount) {
-		this.binCount = binCount;
-	}
-	
-	public RandomEngine getPrng() {
-		return prng;
-	}
+    @Override
+    public double nextDouble() {
+        return delegate.getNextValue();
+    }
 
-	public void setPrng(RandomEngine prng) {
-		this.prng = prng;
-	}
+    public String getDataFileName() {
+        return dataFileName;
+    }
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		RandomGenerator generator = new RandomGeneratorAdaptor(prng);
-		delegate = 
-				new org.apache.commons.math3.random.EmpiricalDistribution(binCount, generator);
-		delegate.load(new File(dataFileName));
-	}
-	
+    public void setDataFileName(String dataFileName) {
+        this.dataFileName = dataFileName;
+    }
+
+    public int getBinCount() {
+        return binCount;
+    }
+
+    public void setBinCount(int binCount) {
+        this.binCount = binCount;
+    }
+
+    public RandomEngine getPrng() {
+        return prng;
+    }
+
+    public void setPrng(RandomEngine prng) {
+        this.prng = prng;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        RandomGenerator generator = new RandomGeneratorAdaptor(prng);
+        delegate =
+          new org.apache.commons.math3.random.EmpiricalDistribution(binCount, generator);
+        delegate.load(new File(dataFileName));
+    }
+
 }

@@ -17,49 +17,46 @@ package net.sourceforge.jabm.spring;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Random;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.FactoryBean;
 
 /**
  * <p>
- * A <a href="http://www.springsource.com/developer/spring">Spring</a>
- * factory bean which returns a seed based on the current time and the IP 
- * address of the host.  
+ * A <a href="http://www.springsource.com/developer/spring">Spring</a> factory bean which returns a seed based on the
+ * current time and the IP address of the host.
  * </p>
- * 
+ *
  * @author Steve Phelps
- * 
  */
 public class PRNGSeedFactoryBean implements FactoryBean<Integer> {
-	
-	protected Random metaPrng = new Random();
-	
-	static Logger logger = Logger.getLogger(PRNGSeedFactoryBean.class);
-	
-	@Override
-	public Integer getObject()  {
-		try {
-			int time = new java.util.Date().hashCode();
-			int ipAddress = InetAddress.getLocalHost().hashCode();
-			int rand = metaPrng.nextInt();
-			int seed = (ipAddress & 0xffff) |
-						((time & 0x00ff) << 32) | (rand & 0x0f000000);
-			logger.info("seed = " + seed);
-			return seed;
-		} catch (UnknownHostException e) {
-			throw new RuntimeException(e);
-		}
-	}
 
-	@Override
-	public Class<?> getObjectType() {
-		return Integer.class;
-	}
+    protected Random metaPrng = new Random();
 
-	@Override
-	public boolean isSingleton() {
-		return false;
-	}
-	
+    static Logger logger = Logger.getLogger(PRNGSeedFactoryBean.class);
+
+    @Override
+    public Integer getObject() {
+        try {
+            int time = new java.util.Date().hashCode();
+            int ipAddress = InetAddress.getLocalHost().hashCode();
+            int rand = metaPrng.nextInt();
+            int seed = (ipAddress & 0xffff) |
+              ((time & 0x00ff) << 32) | (rand & 0x0f000000);
+            logger.info("seed = " + seed);
+            return seed;
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Class<?> getObjectType() {
+        return Integer.class;
+    }
+
+    @Override
+    public boolean isSingleton() {
+        return false;
+    }
+
 }

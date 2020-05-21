@@ -20,23 +20,22 @@ import net.sourceforge.jabm.event.SimEvent;
 
 public class FreshInteractionIntervalReport extends InteractionIntervalReport {
 
-	@Override
-	public void onInteractionsFinished(InteractionsFinishedEvent event) {
-		super.onInteractionsFinished(event);
-	}
+    @Override
+    public void onInteractionsFinished(InteractionsFinishedEvent event) {
+        super.onInteractionsFinished(event);
+    }
 
-	@Override
-	public void eventOccurred(SimEvent event) {
-		super.eventOccurred(event);
-		if (event instanceof RoundStartingEvent) {
-			onRoundStarting((RoundStartingEvent) event);
-		}
-	}
+    @Override
+    public void eventOccurred(SimEvent event) {
+        super.eventOccurred(event);
+        if (event instanceof RoundStartingEvent) {
+            onRoundStarting((RoundStartingEvent) event);
+        }
+    }
 
-	public void onRoundStarting(RoundStartingEvent event) {
-		reportVariables.initialise(event);
-	}
-	
-	
+    public void onRoundStarting(RoundStartingEvent event) {
+        reportVariables.initialise(event);
+    }
+
 
 }

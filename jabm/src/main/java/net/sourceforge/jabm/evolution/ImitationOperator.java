@@ -18,6 +18,6 @@ import net.sourceforge.jabm.agent.Agent;
 
 public interface ImitationOperator {
 
-	public void inheritBehaviour(Agent child, Agent parent);
-	
+    public void inheritBehaviour(Agent child, Agent parent);
+
 }

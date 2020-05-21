@@ -15,49 +15,48 @@
 package net.sourceforge.jabm.agent.utility;
 
 import java.io.Serializable;
-
 import org.apache.log4j.Logger;
 
 public class QuadraticUtilityFunction extends AbstractUtilityFunction implements
-		Serializable {
+  Serializable {
 
-	protected double alpha;
-	
-	protected double beta;
-	
-	static Logger logger = Logger.getLogger(QuadraticUtilityFunction.class);
-	
-	public QuadraticUtilityFunction(double alpha,
-			double beta) {
-		this.alpha = alpha;
-		this.beta = beta;
-	}
+    protected double alpha;
 
-	public QuadraticUtilityFunction() {
-		super();
-	}
+    protected double beta;
 
-	@Override
-	public double calculatePayoff(double profit) {
-		double result = alpha * profit  +  beta * profit * profit;
-		return result;
-	}
+    static Logger logger = Logger.getLogger(QuadraticUtilityFunction.class);
 
-	public double getAlpha() {
-		return alpha;
-	}
+    public QuadraticUtilityFunction(double alpha,
+      double beta) {
+        this.alpha = alpha;
+        this.beta = beta;
+    }
 
-	public void setAlpha(double alpha) {
-		this.alpha = alpha;
-	}
+    public QuadraticUtilityFunction() {
+        super();
+    }
 
-	public double getBeta() {
-		return beta;
-	}
+    @Override
+    public double calculatePayoff(double profit) {
+        double result = alpha * profit + beta * profit * profit;
+        return result;
+    }
 
-	public void setBeta(double beta) {
-		this.beta = beta;
-	}
+    public double getAlpha() {
+        return alpha;
+    }
 
-	
+    public void setAlpha(double alpha) {
+        this.alpha = alpha;
+    }
+
+    public double getBeta() {
+        return beta;
+    }
+
+    public void setBeta(double beta) {
+        this.beta = beta;
+    }
+
+
 }

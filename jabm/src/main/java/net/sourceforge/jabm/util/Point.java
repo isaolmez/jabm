@@ -18,60 +18,60 @@ import java.io.Serializable;
 
 public class Point implements Serializable, Comparable<Point> {
 
-	protected double coordinates[];
+    protected double coordinates[];
 
-	public Point(double[] coordinates) {
-		super();
-		this.coordinates = coordinates;
-	}
+    public Point(double[] coordinates) {
+        super();
+        this.coordinates = coordinates;
+    }
 
-	public boolean equals(Object obj) {
-		if (obj instanceof Point) {
-			for(int i=0; i<coordinates.length; i++) {
-				if (!MathUtil.approxEqual(this.coordinates[i], ((Point) obj).coordinates[i], 1e-3)) {
-					return false;
-				} 
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public boolean equals(Object obj) {
+        if (obj instanceof Point) {
+            for (int i = 0; i < coordinates.length; i++) {
+                if (!MathUtil.approxEqual(this.coordinates[i], ((Point) obj).coordinates[i], 1e-3)) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	public int hashCode() {
-		float sum = 0;
-		for(int i=0; i<coordinates.length; i++) {
-			sum += coordinates[i] * Math.pow(10, i);
-		}
-		return Math.round(sum);
-	}
-	
-	public String toString() {
-		StringBuffer result = new StringBuffer("(");
-		for(int i=0; i<coordinates.length; i++) {
-			result.append(coordinates[i] + "");
-			if (i<coordinates.length-1) {
-				result.append(",");
-			}
-		}
-		result.append(")");
-		return result.toString();
-	}
-	
-	public double[] getCoordinates() {
-		return coordinates;
-	}
+    public int hashCode() {
+        float sum = 0;
+        for (int i = 0; i < coordinates.length; i++) {
+            sum += coordinates[i] * Math.pow(10, i);
+        }
+        return Math.round(sum);
+    }
 
-	public int compareTo(Point o) {
-		Point other = (Point) o;
-		if (this.equals(other)) {
-			return 0;
-		} else {
-			if (this.hashCode() < other.hashCode()) {
-				return -1;
-			} else {
-				return 1;
-			}
-		}
-	}
+    public String toString() {
+        StringBuffer result = new StringBuffer("(");
+        for (int i = 0; i < coordinates.length; i++) {
+            result.append(coordinates[i] + "");
+            if (i < coordinates.length - 1) {
+                result.append(",");
+            }
+        }
+        result.append(")");
+        return result.toString();
+    }
+
+    public double[] getCoordinates() {
+        return coordinates;
+    }
+
+    public int compareTo(Point o) {
+        Point other = (Point) o;
+        if (this.equals(other)) {
+            return 0;
+        } else {
+            if (this.hashCode() < other.hashCode()) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+    }
 }

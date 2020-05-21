@@ -1,10 +1,9 @@
 package net.sourceforge.jabm.report;
 
+import java.util.LinkedList;
 import junit.framework.TestCase;
 import net.sourceforge.jabm.strategy.MockStrategy;
 import net.sourceforge.jabm.strategy.Strategy;
-
-import java.util.LinkedList;
 
 /**
  * Created by sphelps on 09/07/15.

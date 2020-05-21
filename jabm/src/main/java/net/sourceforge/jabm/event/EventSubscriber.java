@@ -4,6 +4,6 @@ import net.sourceforge.jabm.EventScheduler;
 
 public interface EventSubscriber {
 
-	public void subscribeToEvents(EventScheduler scheduler);
-	
+    public void subscribeToEvents(EventScheduler scheduler);
+
 }

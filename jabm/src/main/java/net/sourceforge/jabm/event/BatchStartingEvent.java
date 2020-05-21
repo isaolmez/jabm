@@ -15,19 +15,18 @@
 package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.SimulationController;
 
 /**
  * An event that is fired before a batch of one or more simulations has started.
- * 
+ *
  * @author Steve Phelps
  */
 public class BatchStartingEvent extends SimulationControllerEvent implements
-		Serializable {
+  Serializable {
 
-	public BatchStartingEvent(SimulationController model) {
-		super(model);
-	}
+    public BatchStartingEvent(SimulationController model) {
+        super(model);
+    }
 
 }

@@ -16,96 +16,94 @@ package net.sourceforge.jabm.strategy;
 
 import java.io.Serializable;
 import java.util.List;
-
 import net.sourceforge.jabm.EventScheduler;
 import net.sourceforge.jabm.agent.Agent;
 import net.sourceforge.jabm.learning.StatelessQLearner;
 import net.sourceforge.jabm.learning.StimuliResponseLearner;
 import net.sourceforge.jabm.report.Taggable;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-public class RlStrategy extends AbstractRlStrategy 
-		implements Serializable, InitializingBean, Taggable {
+public class RlStrategy extends AbstractRlStrategy
+  implements Serializable, InitializingBean, Taggable {
 
-	protected StimuliResponseLearner learner;
-	
-	static Logger logger = Logger.getLogger(RlStrategy.class);
-	
-	public RlStrategy(Agent agent, 
-							ObjectFactory<Strategy> strategyFactory, 
-							StimuliResponseLearner learner) {
-		super(agent);
-		this.learner = learner;
-		this.strategyFactory = strategyFactory;
-		initialise();
-	}
-	
-	public RlStrategy(ObjectFactory<Strategy> strategyFactory,
-			StimuliResponseLearner learner) {
-		this(null, strategyFactory, learner);
-	}
-	
-	public RlStrategy() {
-	}
+    protected StimuliResponseLearner learner;
 
-	public void initialise() {
-		int numActions = learner.getNumberOfActions();
-		actions = new Strategy[numActions];
-		for(int i=0; i<numActions; i++) {
-			Strategy strategy = strategyFactory.getObject();
-			strategy.setAgent(agent);
-			actions[i] = strategy;
-		}
-	}
-	
-	@Override
-	public void subscribeToEvents(EventScheduler scheduler) {
-		super.subscribeToEvents(scheduler);
-		for(int i=0; i<actions.length; i++) {
-			actions[i].subscribeToEvents(scheduler);
-		}
+    static Logger logger = Logger.getLogger(RlStrategy.class);
+
+    public RlStrategy(Agent agent,
+      ObjectFactory<Strategy> strategyFactory,
+      StimuliResponseLearner learner) {
+        super(agent);
+        this.learner = learner;
+        this.strategyFactory = strategyFactory;
+        initialise();
+    }
+
+    public RlStrategy(ObjectFactory<Strategy> strategyFactory,
+      StimuliResponseLearner learner) {
+        this(null, strategyFactory, learner);
+    }
+
+    public RlStrategy() {
+    }
+
+    public void initialise() {
+        int numActions = learner.getNumberOfActions();
+        actions = new Strategy[numActions];
+        for (int i = 0; i < numActions; i++) {
+            Strategy strategy = strategyFactory.getObject();
+            strategy.setAgent(agent);
+            actions[i] = strategy;
+        }
+    }
+
+    @Override
+    public void subscribeToEvents(EventScheduler scheduler) {
+        super.subscribeToEvents(scheduler);
+        for (int i = 0; i < actions.length; i++) {
+            actions[i].subscribeToEvents(scheduler);
+        }
 //		scheduler.addListener(SimulationFinishedEvent.class, this);
 //		scheduler.addListener(InteractionsFinishedEvent.class, this);
-	}
+    }
 
-	public void execute(List<Agent> otherAgents) {		
-		assert this.agent != null;
-		if (agent.isInteracted()) {
-			double reward = agent.getPayoffDelta();
-			learner.reward(reward);
-		}
-		int action = learner.act();
-		currentStrategy = actions[action];
-		assert currentStrategy.getAgent() != null;
-		currentStrategy.execute(otherAgents);		
-	}
+    public void execute(List<Agent> otherAgents) {
+        assert this.agent != null;
+        if (agent.isInteracted()) {
+            double reward = agent.getPayoffDelta();
+            learner.reward(reward);
+        }
+        int action = learner.act();
+        currentStrategy = actions[action];
+        assert currentStrategy.getAgent() != null;
+        currentStrategy.execute(otherAgents);
+    }
 
-	public StimuliResponseLearner getLearner() {
-		return learner;
-	}
+    public StimuliResponseLearner getLearner() {
+        return learner;
+    }
 
-	@Required
-	public void setLearner(StimuliResponseLearner learner) {
-		this.learner = learner;
-		initialise();
-	}
+    @Required
+    public void setLearner(StimuliResponseLearner learner) {
+        this.learner = learner;
+        initialise();
+    }
 
-	@Override
-	public void setAgent(Agent agent) {
-		super.setAgent(agent);
-		for(int i=0; i<actions.length; i++) {
-			actions[i].setAgent(agent);
-		}
-	}
+    @Override
+    public void setAgent(Agent agent) {
+        super.setAgent(agent);
+        for (int i = 0; i < actions.length; i++) {
+            actions[i].setAgent(agent);
+        }
+    }
 
-	@Override
-	public Strategy clone() throws CloneNotSupportedException {
-		throw new CloneNotSupportedException();
-	}
+    @Override
+    public Strategy clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
 //
 //	@Override
 //	public void eventOccurred(SimEvent event) {
@@ -114,40 +112,40 @@ public class RlStrategy extends AbstractRlStrategy
 //			onInteractionsFinished();
 //		}
 //	}
-	
+
 //	public void onInteractionsFinished() {
 //		double reward = agent.getPayoffDelta();
 //		learner.reward(reward);
 //	}
 
-	public void setInitialPropensities(double[] initialPropensities) {
-		StatelessQLearner qLearner = (StatelessQLearner) this.learner;
-		double[] propensities = qLearner.getqLearner().getValueEstimates(0);
-		System.arraycopy(initialPropensities, 0, propensities, 0, actions.length);
-	}
+    public void setInitialPropensities(double[] initialPropensities) {
+        StatelessQLearner qLearner = (StatelessQLearner) this.learner;
+        double[] propensities = qLearner.getqLearner().getValueEstimates(0);
+        System.arraycopy(initialPropensities, 0, propensities, 0, actions.length);
+    }
 
-	public int getNumberOfActions() {
-		return learner.getNumberOfActions();
-	}
+    public int getNumberOfActions() {
+        return learner.getNumberOfActions();
+    }
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
+    @Override
+    public void afterPropertiesSet() throws Exception {
 //		initialise();
-	}
+    }
 
-	@Override
-	public void setTag(String tag) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void setTag(String tag) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public String getTag() {
-		if (currentStrategy != null && currentStrategy instanceof Taggable) {
-			return "RL: " + ((Taggable) currentStrategy).getTag();
-		} else {
-			return this.getClass().toString();
-		}
-	}
-	
+    }
+
+    @Override
+    public String getTag() {
+        if (currentStrategy != null && currentStrategy instanceof Taggable) {
+            return "RL: " + ((Taggable) currentStrategy).getTag();
+        } else {
+            return this.getClass().toString();
+        }
+    }
+
 }

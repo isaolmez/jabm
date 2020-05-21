@@ -16,143 +16,137 @@
 package net.sourceforge.jabm.util;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.apache.log4j.Logger;
 
 /**
  * <p>
- * A utility class for cumulative tracking of stats for a set of doubles.
- * Moments are incremented dynamically, rather than keeping the actual cases in
- * memory.
+ * A utility class for cumulative tracking of stats for a set of doubles. Moments are incremented dynamically, rather
+ * than keeping the actual cases in memory.
  * </p>
  * <p>
  * Example usage:
  * </p>
  * <p>
  * <code>
- * Distribution series1 = new SummaryStats("series1");<br>
- * series1.newData(4.5);<br>
- * series1.newData(5.6);<br>
- * series1.newData(9.0);<br>
- * System.out.println("Standard deviation of series1 = " + series1.getStdDev());<br>
- * series1.newData(5.56);<br>
- * series1.newData(12);<br>
- * System.out.println("And now the standard deviation = " + series1.getStdDev());<br>
+ * Distribution series1 = new SummaryStats("series1");<br> series1.newData(4.5);<br> series1.newData(5.6);<br>
+ * series1.newData(9.0);<br> System.out.println("Standard deviation of series1 = " + series1.getStdDev());<br>
+ * series1.newData(5.56);<br> series1.newData(12);<br> System.out.println("And now the standard deviation = " +
+ * series1.getStdDev());<br>
  * </code>
  * </p>
- * 
+ *
  * @author Steve Phelps
  * @version $Revision: 230 $
  */
 
 public class SummaryStats implements Serializable, Cloneable,
-    Resetable, Distribution {
+  Resetable, Distribution {
 
-	protected SummaryStatistics stats;
-	
-	/**
-	 * The name of this data set.
-	 */
-	protected String varName;
+    protected SummaryStatistics stats;
 
-	static Logger logger = Logger.getLogger(SummaryStats.class);
+    /**
+     * The name of this data set.
+     */
+    protected String varName;
 
-	public SummaryStats(String varName) {
-		this.varName = varName;
-		initialise();
-	}
+    static Logger logger = Logger.getLogger(SummaryStats.class);
 
-	public SummaryStats() {
-		this("");
-	}
+    public SummaryStats(String varName) {
+        this.varName = varName;
+        initialise();
+    }
 
-	public void initialise() {
-		stats = new SummaryStatistics();
-	}
+    public SummaryStats() {
+        this("");
+    }
 
-	/**
-	 * Add a new datum to the set.
-	 */
-	public void newData(double i) {
-		stats.addValue(i);
-	}
+    public void initialise() {
+        stats = new SummaryStatistics();
+    }
 
-	/**
-	 * Get the number of items in the set.
-	 */
-	public int getN() {
-		return (int) stats.getN();
-	}
+    /**
+     * Add a new datum to the set.
+     */
+    public void newData(double i) {
+        stats.addValue(i);
+    }
 
-	/**
-	 * Get the mean of the data.
-	 */
-	public double getMean() {
-		return stats.getMean();
-	}
+    /**
+     * Get the number of items in the set.
+     */
+    public int getN() {
+        return (int) stats.getN();
+    }
 
-	/**
-	 * Get the variance about the mean.
-	 */
-	public double getVariance() {
-		return stats.getVariance();
-	}
+    /**
+     * Get the mean of the data.
+     */
+    public double getMean() {
+        return stats.getMean();
+    }
 
-	/**
-	 * Get the standard deviation from the mean.
-	 */
-	public double getStdDev() {
-		return stats.getStandardDeviation();
-	}
+    /**
+     * Get the variance about the mean.
+     */
+    public double getVariance() {
+        return stats.getVariance();
+    }
 
-	/**
-	 * Get the minimum datum.
-	 */
-	public double getMin() {
-		return stats.getMin();
-	}
+    /**
+     * Get the standard deviation from the mean.
+     */
+    public double getStdDev() {
+        return stats.getStandardDeviation();
+    }
 
-	/**
-	 * Get the maximum datum.
-	 */
-	public double getMax() {
-		return stats.getMax();
-	}
+    /**
+     * Get the minimum datum.
+     */
+    public double getMin() {
+        return stats.getMin();
+    }
 
-	/**
-	 * Get the total of the data
-	 */
-	public double getTotal() {
-		return stats.getSum();
-	}
+    /**
+     * Get the maximum datum.
+     */
+    public double getMax() {
+        return stats.getMax();
+    }
 
-	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
-	}
+    /**
+     * Get the total of the data
+     */
+    public double getTotal() {
+        return stats.getSum();
+    }
 
-	public void reset() {
-		initialise();
-	}
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
-	public String getName() {
-		return varName;
-	}
+    public void reset() {
+        initialise();
+    }
 
-	public String toString() {
-		return "(" + getClass() + " varName:" + varName + " n:" + getN()
-				+ " min:" + getMin() + " max:" + getMax() + " mean:"
-				+ getMean() + " stdev:" + getStdDev() + ")";
-	}
+    public String getName() {
+        return varName;
+    }
 
-	public void log() {
-		logger.info(getName());
-		logger.info("\tn:\t" + getN());
-		logger.info("\tmin:\t" + getMin());
-		logger.info("\tmax:\t" + getMax());
-		logger.info("\tmean:\t" + getMean());
-		logger.info("\tstdev:\t" + getStdDev());
-	}
+    public String toString() {
+        return "(" + getClass() + " varName:" + varName + " n:" + getN()
+          + " min:" + getMin() + " max:" + getMax() + " mean:"
+          + getMean() + " stdev:" + getStdDev() + ")";
+    }
+
+    public void log() {
+        logger.info(getName());
+        logger.info("\tn:\t" + getN());
+        logger.info("\tmin:\t" + getMin());
+        logger.info("\tmax:\t" + getMax());
+        logger.info("\tmean:\t" + getMean());
+        logger.info("\tstdev:\t" + getStdDev());
+    }
 
 
 }

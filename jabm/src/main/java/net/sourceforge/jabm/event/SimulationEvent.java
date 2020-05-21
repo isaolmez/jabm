@@ -15,29 +15,26 @@
 package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.Simulation;
 
 /**
  * An event pertaining to a specific Simulation.
- * 
- * @see net.sourceforge.jabm.Simulation
- * 
- * @author Steve Phelps
  *
+ * @author Steve Phelps
+ * @see net.sourceforge.jabm.Simulation
  */
 public abstract class SimulationEvent extends SimEvent implements Serializable {
 
-	protected Simulation simulation;
-	
-	public SimulationEvent(Simulation model) {
-		this.simulation = model;
-	}
-	
-	public SimulationEvent() {
-	}
-	
-	public Simulation getSimulation() {
-		return simulation;
-	}
+    protected Simulation simulation;
+
+    public SimulationEvent(Simulation model) {
+        this.simulation = model;
+    }
+
+    public SimulationEvent() {
+    }
+
+    public Simulation getSimulation() {
+        return simulation;
+    }
 }

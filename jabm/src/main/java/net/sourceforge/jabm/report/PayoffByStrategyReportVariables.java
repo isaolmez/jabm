@@ -16,7 +16,6 @@ package net.sourceforge.jabm.report;
 
 import java.io.Serializable;
 import java.util.Map;
-
 import net.sourceforge.jabm.Population;
 import net.sourceforge.jabm.SimulationController;
 import net.sourceforge.jabm.agent.Agent;
@@ -26,45 +25,45 @@ import net.sourceforge.jabm.event.SimulationEvent;
 import net.sourceforge.jabm.strategy.Strategy;
 
 public class PayoffByStrategyReportVariables extends AbstractReportVariables
-		implements ReportVariables, Serializable {
+  implements ReportVariables, Serializable {
 
-	private PayoffMap payoffMap = new PayoffMap();
+    private PayoffMap payoffMap = new PayoffMap();
 
-	public PayoffByStrategyReportVariables() {
-		super("payoffs");
-	}
+    public PayoffByStrategyReportVariables() {
+        super("payoffs");
+    }
 
-	@Override
-	public void compute(SimEvent e) {
-		SimulationEvent event = (SimulationEvent) e;
-		SimulationController controller = event.getSimulation()
-				.getSimulationController();
-		Population population = controller.getPopulation();
-		for (Agent agent : population.getAgentList().getAgents()) {
-			if (agent.isInteracted()) {
-				double fitness = getPayoff(agent);
-				Strategy strategy = getStrategy(agent);
-				updatePayoff(strategy, fitness);
-			}
-		}
-		fireEvent(new ReportVariablesChangedEvent(this));
-	}
-	
-	public Strategy getStrategy(Agent agent) {
-		return agent.getStrategy();
-	}
-	
-	public void updatePayoff(Strategy strategy, double fitness) {
-		if (!Double.isInfinite(fitness) & !Double.isNaN(fitness)) { //TODO Configurable?
-			payoffMap.updatePayoff(strategy, fitness);
-		}
-	}
-	
-	public double getPayoff(Agent agent) {
-		return agent.getPayoff();
-	}
-	
-	public Map<Object, Number> getVariableBindings() {
+    @Override
+    public void compute(SimEvent e) {
+        SimulationEvent event = (SimulationEvent) e;
+        SimulationController controller = event.getSimulation()
+          .getSimulationController();
+        Population population = controller.getPopulation();
+        for (Agent agent : population.getAgentList().getAgents()) {
+            if (agent.isInteracted()) {
+                double fitness = getPayoff(agent);
+                Strategy strategy = getStrategy(agent);
+                updatePayoff(strategy, fitness);
+            }
+        }
+        fireEvent(new ReportVariablesChangedEvent(this));
+    }
+
+    public Strategy getStrategy(Agent agent) {
+        return agent.getStrategy();
+    }
+
+    public void updatePayoff(Strategy strategy, double fitness) {
+        if (!Double.isInfinite(fitness) & !Double.isNaN(fitness)) { //TODO Configurable?
+            payoffMap.updatePayoff(strategy, fitness);
+        }
+    }
+
+    public double getPayoff(Agent agent) {
+        return agent.getPayoff();
+    }
+
+    public Map<Object, Number> getVariableBindings() {
         Map<Object, Number> result = super.getVariableBindings();
         for (Strategy strategy : payoffMap.getStrategies()) {
             double meanPayoff = payoffMap.getMeanPayoff(strategy);
@@ -72,27 +71,27 @@ public class PayoffByStrategyReportVariables extends AbstractReportVariables
         }
         return result;
     }
-	
-	public PayoffMap getPayoffMap() {
-		return payoffMap;
-	}
-	
-	public void setPayoffMap(PayoffMap payoffMap) {
-		this.payoffMap = payoffMap;
-	}
 
-	@Override
-	public void dispose(SimEvent event) {
-	}
+    public PayoffMap getPayoffMap() {
+        return payoffMap;
+    }
 
-	@Override
-	public void initialise(SimEvent event) {
-		initialise();
-	}
-	
-	public void initialise() {
-		payoffMap.initialise();
-	}
+    public void setPayoffMap(PayoffMap payoffMap) {
+        this.payoffMap = payoffMap;
+    }
+
+    @Override
+    public void dispose(SimEvent event) {
+    }
+
+    @Override
+    public void initialise(SimEvent event) {
+        initialise();
+    }
+
+    public void initialise() {
+        payoffMap.initialise();
+    }
 
 }
 

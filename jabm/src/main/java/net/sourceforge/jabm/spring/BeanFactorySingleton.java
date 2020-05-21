@@ -15,9 +15,7 @@
 package net.sourceforge.jabm.spring;
 
 import java.util.Properties;
-
 import net.sourceforge.jabm.util.SystemProperties;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -27,53 +25,53 @@ import org.springframework.core.io.Resource;
 
 public class BeanFactorySingleton {
 
-	protected static DefaultListableBeanFactory beanFactory;
-	
-	public static synchronized BeanFactory getBeanFactory() {
-		if (beanFactory == null) {
-			initialiseFactory();
-		}
-		return beanFactory;
-	}
+    protected static DefaultListableBeanFactory beanFactory;
 
-	public static synchronized void registerFactory(
-			DefaultListableBeanFactory beanFactory) {
-		BeanFactorySingleton.beanFactory = beanFactory;
-	}
-	
-	public static Object getBean(String id) {
-		return getBeanFactory().getBean(id);
-	}
-	
-	public static void initialiseFactory(Resource resource) {
-		
-		beanFactory = new DefaultListableBeanFactory();
+    public static synchronized BeanFactory getBeanFactory() {
+        if (beanFactory == null) {
+            initialiseFactory();
+        }
+        return beanFactory;
+    }
 
-		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-		reader.loadBeanDefinitions(resource);
-		
-		// Caching must be disabled for
-		// net.sourceforge.jabm.init.RandomVariateSimulationInitialiser
-		beanFactory.setCacheBeanMetadata(false);
-		beanFactory
-				.addBeanPostProcessor(new RequiredAnnotationBeanPostProcessor());
-		
-		// Register the custom simulation scope
-		beanFactory.registerScope(SimulationScope.ATTRIBUTE_VALUE,
-				SimulationScope.getSingletonInstance());
-	}
+    public static synchronized void registerFactory(
+      DefaultListableBeanFactory beanFactory) {
+        BeanFactorySingleton.beanFactory = beanFactory;
+    }
 
-	public static void initialiseFactory() {
-		Properties systemProperties = SystemProperties.jabsConfiguration();
-		String configFile = systemProperties
-				.getProperty(SystemProperties.PROPERTY_CONFIG);
-		if (configFile == null) {
-			throw new IllegalArgumentException(
-					"Must specify a configuration file by setting the system property "
-							+ SystemProperties.PROPERTY_BASE + "."
-							+ SystemProperties.PROPERTY_CONFIG);
-		}
-		initialiseFactory(new FileSystemResource(configFile));
-	}
-	
+    public static Object getBean(String id) {
+        return getBeanFactory().getBean(id);
+    }
+
+    public static void initialiseFactory(Resource resource) {
+
+        beanFactory = new DefaultListableBeanFactory();
+
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions(resource);
+
+        // Caching must be disabled for
+        // net.sourceforge.jabm.init.RandomVariateSimulationInitialiser
+        beanFactory.setCacheBeanMetadata(false);
+        beanFactory
+          .addBeanPostProcessor(new RequiredAnnotationBeanPostProcessor());
+
+        // Register the custom simulation scope
+        beanFactory.registerScope(SimulationScope.ATTRIBUTE_VALUE,
+          SimulationScope.getSingletonInstance());
+    }
+
+    public static void initialiseFactory() {
+        Properties systemProperties = SystemProperties.jabsConfiguration();
+        String configFile = systemProperties
+          .getProperty(SystemProperties.PROPERTY_CONFIG);
+        if (configFile == null) {
+            throw new IllegalArgumentException(
+              "Must specify a configuration file by setting the system property "
+                + SystemProperties.PROPERTY_BASE + "."
+                + SystemProperties.PROPERTY_CONFIG);
+        }
+        initialiseFactory(new FileSystemResource(configFile));
+    }
+
 }

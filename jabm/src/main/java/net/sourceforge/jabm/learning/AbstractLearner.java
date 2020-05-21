@@ -16,7 +16,6 @@
 package net.sourceforge.jabm.learning;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.report.DataWriter;
 
 /**
@@ -24,23 +23,23 @@ import net.sourceforge.jabm.report.DataWriter;
  * @version $Revision: 189 $
  */
 public abstract class AbstractLearner implements Learner,
-		Serializable {
+  Serializable {
 
-	protected LearnerMonitor monitor = null;
+    protected LearnerMonitor monitor = null;
 
-	public AbstractLearner() {
-	}
+    public AbstractLearner() {
+    }
 
-	public void monitor() {
-		if (monitor != null) {
-			monitor.startRecording();
-			dumpState(monitor);
-			monitor.finishRecording();
-		}
-	}
+    public void monitor() {
+        if (monitor != null) {
+            monitor.startRecording();
+            dumpState(monitor);
+            monitor.finishRecording();
+        }
+    }
 
-	public abstract double getLearningDelta();
+    public abstract double getLearningDelta();
 
-	public abstract void dumpState(DataWriter out);
+    public abstract void dumpState(DataWriter out);
 
 }

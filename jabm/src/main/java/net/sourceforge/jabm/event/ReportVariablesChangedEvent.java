@@ -18,16 +18,16 @@ import net.sourceforge.jabm.report.ReportVariables;
 
 public class ReportVariablesChangedEvent extends SimEvent {
 
-	protected ReportVariables reportVariables;
+    protected ReportVariables reportVariables;
 
-	public ReportVariablesChangedEvent(ReportVariables reportVariables) {
-		super();
-		this.reportVariables = reportVariables;
-	}
+    public ReportVariablesChangedEvent(ReportVariables reportVariables) {
+        super();
+        this.reportVariables = reportVariables;
+    }
 
-	public ReportVariables getReportVariables() {
-		return reportVariables;
-	}
-	
-	
+    public ReportVariables getReportVariables() {
+        return reportVariables;
+    }
+
+
 }

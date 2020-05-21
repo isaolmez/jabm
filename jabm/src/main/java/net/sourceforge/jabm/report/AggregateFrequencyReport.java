@@ -16,39 +16,37 @@ package net.sourceforge.jabm.report;
 
 import java.io.Serializable;
 import java.util.Map;
-
 import net.sourceforge.jabm.event.SimEvent;
-
 import org.apache.commons.math3.stat.Frequency;
 
 
 public class AggregateFrequencyReport implements FrequencyReport, Serializable {
 
-	protected FrequencyReport singleCaseReport;
-	
-	public AggregateFrequencyReport(FrequencyReport singleCaseReport) {
-		super();
-		this.singleCaseReport = singleCaseReport;
-	}
+    protected FrequencyReport singleCaseReport;
 
-	public Frequency getFrequency() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public AggregateFrequencyReport(FrequencyReport singleCaseReport) {
+        super();
+        this.singleCaseReport = singleCaseReport;
+    }
 
-	public void eventOccurred(SimEvent event) {
-		// TODO Auto-generated method stub
+    public Frequency getFrequency() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	}
+    public void eventOccurred(SimEvent event) {
+        // TODO Auto-generated method stub
 
-	public Map<Object, Number> getVariableBindings() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    }
 
-	@Override
-	public String getName() {
-		return null;
-	}
+    public Map<Object, Number> getVariableBindings() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
 
 }

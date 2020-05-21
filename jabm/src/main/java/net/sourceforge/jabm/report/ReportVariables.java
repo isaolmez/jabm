@@ -18,48 +18,41 @@ import net.sourceforge.jabm.event.SimEvent;
 
 /**
  * <p>
- * This interface defines Report objects which keep track of variables which are
- * recomputed in response to various simulation events.
+ * This interface defines Report objects which keep track of variables which are recomputed in response to various
+ * simulation events.
  * </p>
- * 
+ *
  * <p>
- * This interface allows the same metrics to be collected in different ways, for
- * example at different frequencies: we might collect data on the mean
- * population fitness at the end of each generation, at the end of each
- * simulation, or at some specified temporal frequency.
+ * This interface allows the same metrics to be collected in different ways, for example at different frequencies: we
+ * might collect data on the mean population fitness at the end of each generation, at the end of each simulation, or at
+ * some specified temporal frequency.
  * </p>
- * 
+ *
  * <p>
- * In this example, the computation of population fitness can be coded once in a
- * single implementation of ReportVariables, and then different Reports can be
- * created which update these variables at the required frequency or in response
- * to the required events.
+ * In this example, the computation of population fitness can be coded once in a single implementation of
+ * ReportVariables, and then different Reports can be created which update these variables at the required frequency or
+ * in response to the required events.
  * </p>
- * 
+ *
  * @author Steve Phelps
- * 
  */
 public interface ReportVariables extends Report {
 
-	/**
-	 * Update variables.
-	 * @param event
-	 */
-	public void compute(SimEvent event);
-	
-	/**
-	 * Clean up any side effects (eg close file).
-	 * @param event
-	 */
-	public void dispose(SimEvent event);
-	
-	/**
-	 * Initialise the variables in response to event.
-	 * 
-	 * @param event
-	 */
-	public void initialise(SimEvent event);
-	
-	public String getName();
-	
+    /**
+     * Update variables.
+     */
+    public void compute(SimEvent event);
+
+    /**
+     * Clean up any side effects (eg close file).
+     */
+    public void dispose(SimEvent event);
+
+    /**
+     * Initialise the variables in response to event.
+     */
+    public void initialise(SimEvent event);
+
+    public String getName();
+
 }

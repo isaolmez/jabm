@@ -16,56 +16,51 @@ package net.sourceforge.jabm.init;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import net.sourceforge.jabm.Population;
 
 /**
- * An AgentInitialiser which combines a list of other AgentInitialisers. Each
- * sub-initialiser is executed in turn (the ordering being specified by ordering
- * of the supplied list); when this class's 
- * 
+ * An AgentInitialiser which combines a list of other AgentInitialisers. Each sub-initialiser is executed in turn (the
+ * ordering being specified by ordering of the supplied list); when this class's
+ *
  * @author Steve Phelps
- * 
  */
 public class CombiAgentInitialiser implements AgentInitialiser, Serializable {
 
-	protected ArrayList<AgentInitialiser> initialisers;
-	
-	/**
-	 * Create a new agent initialiser by combining the effect
-	 * of the supplied list of initialisers.
-	 * @param initialisers
-	 */
-	public CombiAgentInitialiser(ArrayList<AgentInitialiser> initialisers) {
-		super();
-		this.initialisers = initialisers;
-	}
-	
-	public CombiAgentInitialiser() {
-		this(new ArrayList<AgentInitialiser>());
-	}
+    protected ArrayList<AgentInitialiser> initialisers;
 
-	public void initialise(Population population) {
-		for(AgentInitialiser initialiser : initialisers) {
-			initialiser.initialise(population);
-		}
-	}
+    /**
+     * Create a new agent initialiser by combining the effect of the supplied list of initialisers.
+     */
+    public CombiAgentInitialiser(ArrayList<AgentInitialiser> initialisers) {
+        super();
+        this.initialisers = initialisers;
+    }
 
-	public ArrayList<AgentInitialiser> getInitialisers() {
-		return initialisers;
-	}
+    public CombiAgentInitialiser() {
+        this(new ArrayList<AgentInitialiser>());
+    }
 
-	public void setInitialisers(ArrayList<AgentInitialiser> initialisers) {
-		this.initialisers = initialisers;
-	}
-	
-	public void setInitialiser(AgentInitialiser initialiser) {
-		initialisers = new ArrayList<AgentInitialiser>(2);
-		initialisers.add(0, new BasicAgentInitialiser());
-		initialisers.add(1, initialiser);
-	}
-	
-	public AgentInitialiser getInitialiser() {
-		return initialisers.get(1);
-	}
+    public void initialise(Population population) {
+        for (AgentInitialiser initialiser : initialisers) {
+            initialiser.initialise(population);
+        }
+    }
+
+    public ArrayList<AgentInitialiser> getInitialisers() {
+        return initialisers;
+    }
+
+    public void setInitialisers(ArrayList<AgentInitialiser> initialisers) {
+        this.initialisers = initialisers;
+    }
+
+    public void setInitialiser(AgentInitialiser initialiser) {
+        initialisers = new ArrayList<AgentInitialiser>(2);
+        initialisers.add(0, new BasicAgentInitialiser());
+        initialisers.add(1, initialiser);
+    }
+
+    public AgentInitialiser getInitialiser() {
+        return initialisers.get(1);
+    }
 }

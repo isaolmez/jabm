@@ -17,7 +17,6 @@ package net.sourceforge.jabm.util;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -25,89 +24,89 @@ import org.springframework.beans.factory.annotation.Required;
 @SuppressWarnings("rawtypes")
 public class CombiObjectFactory implements ObjectFactory {
 
-	protected ArrayList<Integer> numberOfObjectsPerFactory;
-	
-	protected ArrayList<ObjectFactory> factories;
-	
-	protected int currentFactory = 0;
-	
-	protected int count = 0;
-	
-	protected int overFlowFactory = -1;
-	
-	protected boolean overflowed = false;
-	
-	public CombiObjectFactory(ArrayList<ObjectFactory> factories,
-			ArrayList<Integer> numberOfObjectsPerFactory) {
-		super();
-		this.numberOfObjectsPerFactory = numberOfObjectsPerFactory;
-		this.factories = factories;
-	}
-	
-	public CombiObjectFactory() {
-	}
+    protected ArrayList<Integer> numberOfObjectsPerFactory;
 
-	@Override
-	public Object getObject() throws BeansException {
-		while (count >= numberOfObjectsPerFactory.get(currentFactory) && !overflowed) {
-			nextFactory();
-		}
-		Object result = factories.get(currentFactory).getObject();
-		count++;
-		return result;
-	}
-	
-	public void nextFactory() {
-		currentFactory++;
-		if (currentFactory > factories.size()) {
-			currentFactory = overFlowFactory;
-		}
-		count = 0;
-	}
+    protected ArrayList<ObjectFactory> factories;
 
-	public int getOverFlowFactory() {
-		return overFlowFactory;
-	}
+    protected int currentFactory = 0;
 
-	public void setOverFlowFactory(int overFlowFactory) {
-		this.overFlowFactory = overFlowFactory;
-	}
+    protected int count = 0;
 
-	public ArrayList<Integer> getNumberOfObjectsPerFactory() {
-		return numberOfObjectsPerFactory;
-	}
+    protected int overFlowFactory = -1;
 
-	public void setNumberOfObjectsPerFactory(
-			ArrayList<Integer> numberOfObjectsPerFactory) {
-		this.numberOfObjectsPerFactory = numberOfObjectsPerFactory;
-	}
+    protected boolean overflowed = false;
 
-	public ArrayList<ObjectFactory> getFactories() {
-		return factories;
-	}
+    public CombiObjectFactory(ArrayList<ObjectFactory> factories,
+      ArrayList<Integer> numberOfObjectsPerFactory) {
+        super();
+        this.numberOfObjectsPerFactory = numberOfObjectsPerFactory;
+        this.factories = factories;
+    }
 
-	public void setFactories(ArrayList<ObjectFactory> factories) {
-		this.factories = factories;
-	}
+    public CombiObjectFactory() {
+    }
 
-	@Required
-	public void setFactoryMap(Map<ObjectFactory, Integer> factoryMap) {
-		int n = factoryMap.keySet().size();
-		factories = new ArrayList<ObjectFactory>(n);
-		numberOfObjectsPerFactory = new ArrayList<Integer>(n);
-		for(ObjectFactory factory : factoryMap.keySet()) {
-			factories.add(factory);
-			numberOfObjectsPerFactory.add(factoryMap.get(factory));
-		}
-	}
-	
-	public Map<ObjectFactory, Integer> getFactoryMap() {
-		LinkedHashMap<ObjectFactory, Integer> result
-			= new LinkedHashMap<ObjectFactory, Integer>();
-		for(int i=0; i<factories.size(); i++) {
-			result.put(factories.get(i), numberOfObjectsPerFactory.get(i));
-		}
-		return result;
-	}
-	
+    @Override
+    public Object getObject() throws BeansException {
+        while (count >= numberOfObjectsPerFactory.get(currentFactory) && !overflowed) {
+            nextFactory();
+        }
+        Object result = factories.get(currentFactory).getObject();
+        count++;
+        return result;
+    }
+
+    public void nextFactory() {
+        currentFactory++;
+        if (currentFactory > factories.size()) {
+            currentFactory = overFlowFactory;
+        }
+        count = 0;
+    }
+
+    public int getOverFlowFactory() {
+        return overFlowFactory;
+    }
+
+    public void setOverFlowFactory(int overFlowFactory) {
+        this.overFlowFactory = overFlowFactory;
+    }
+
+    public ArrayList<Integer> getNumberOfObjectsPerFactory() {
+        return numberOfObjectsPerFactory;
+    }
+
+    public void setNumberOfObjectsPerFactory(
+      ArrayList<Integer> numberOfObjectsPerFactory) {
+        this.numberOfObjectsPerFactory = numberOfObjectsPerFactory;
+    }
+
+    public ArrayList<ObjectFactory> getFactories() {
+        return factories;
+    }
+
+    public void setFactories(ArrayList<ObjectFactory> factories) {
+        this.factories = factories;
+    }
+
+    @Required
+    public void setFactoryMap(Map<ObjectFactory, Integer> factoryMap) {
+        int n = factoryMap.keySet().size();
+        factories = new ArrayList<ObjectFactory>(n);
+        numberOfObjectsPerFactory = new ArrayList<Integer>(n);
+        for (ObjectFactory factory : factoryMap.keySet()) {
+            factories.add(factory);
+            numberOfObjectsPerFactory.add(factoryMap.get(factory));
+        }
+    }
+
+    public Map<ObjectFactory, Integer> getFactoryMap() {
+        LinkedHashMap<ObjectFactory, Integer> result
+          = new LinkedHashMap<ObjectFactory, Integer>();
+        for (int i = 0; i < factories.size(); i++) {
+            result.put(factories.get(i), numberOfObjectsPerFactory.get(i));
+        }
+        return result;
+    }
+
 }

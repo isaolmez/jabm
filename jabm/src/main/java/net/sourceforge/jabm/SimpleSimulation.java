@@ -15,48 +15,47 @@
 package net.sourceforge.jabm;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.event.RoundFinishedEvent;
 import net.sourceforge.jabm.event.RoundStartingEvent;
 import net.sourceforge.jabm.event.SimulationFinishedEvent;
 import net.sourceforge.jabm.event.SimulationStartingEvent;
 
 public class SimpleSimulation extends AbstractSimulation implements
-		Serializable {
+  Serializable {
 
-	public SimpleSimulation(SimulationController simulationController) {
-		super(simulationController);
-	}
+    public SimpleSimulation(SimulationController simulationController) {
+        super(simulationController);
+    }
 
-	public SimpleSimulation() {
-		super();
-	}
-	
-	public void begin() {
-		initialiseAgents();
-		fireEvent(new SimulationStartingEvent(this));
-	}
-	
-	public void end() {
-		fireEvent(new SimulationFinishedEvent(this));
-	}
+    public SimpleSimulation() {
+        super();
+    }
 
-	public void run() {
-		begin();
-		step();
-		end();
-	}
-	
-	public void step() {
-		super.step();
-		fireEvent(new RoundStartingEvent(this));
-		invokeAgentInteractions();
-		fireEvent(new RoundFinishedEvent(this));	
-	}
+    public void begin() {
+        initialiseAgents();
+        fireEvent(new SimulationStartingEvent(this));
+    }
 
-	@Override
-	public SimulationTime getSimulationTime() {
-		return simulationController.getSimulationTime();
-	}
+    public void end() {
+        fireEvent(new SimulationFinishedEvent(this));
+    }
+
+    public void run() {
+        begin();
+        step();
+        end();
+    }
+
+    public void step() {
+        super.step();
+        fireEvent(new RoundStartingEvent(this));
+        invokeAgentInteractions();
+        fireEvent(new RoundFinishedEvent(this));
+    }
+
+    @Override
+    public SimulationTime getSimulationTime() {
+        return simulationController.getSimulationTime();
+    }
 
 }

@@ -15,20 +15,19 @@
 package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.agent.Agent;
 
 public abstract class AgentEvent extends SimEvent implements Serializable {
 
-	protected Agent agent;
-	
-	public AgentEvent(Agent agent) {
-		this.agent = agent;
-	}
+    protected Agent agent;
 
-	public Agent getAgent() {
-		return agent;
-	}
-	
-	
+    public AgentEvent(Agent agent) {
+        this.agent = agent;
+    }
+
+    public Agent getAgent() {
+        return agent;
+    }
+
+
 }

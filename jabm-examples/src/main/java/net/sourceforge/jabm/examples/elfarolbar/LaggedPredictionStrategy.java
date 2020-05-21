@@ -16,48 +16,44 @@ package net.sourceforge.jabm.examples.elfarolbar;
 
 
 /**
- * A strategy which predicts the next-period attendance using the historical
- * attendance at a pre-specified lag.
- * 
+ * A strategy which predicts the next-period attendance using the historical attendance at a pre-specified lag.
+ *
  * @author Steve Phelps
- * 
  */
 public class LaggedPredictionStrategy extends AbstractPredictionStrategy {
 
-	protected int lag;
-	
-	public LaggedPredictionStrategy(int lag) {
-		super();
-		this.lag = lag;
-	}
-	
-	public LaggedPredictionStrategy() {
-		super();
-	}
+    protected int lag;
 
-	@Override
-	public void makePrediction() {	
-		currentPrediction = barTender.getAttendanceAtLag(lag);
-	}
+    public LaggedPredictionStrategy(int lag) {
+        super();
+        this.lag = lag;
+    }
 
-	public int getLag() {
-		return lag;
-	}
+    public LaggedPredictionStrategy() {
+        super();
+    }
 
-	/**
-	 * The time-series lag to use for predicted the next week's attendance.
-	 *  
-	 * @param lag
-	 */
-	public void setLag(int lag) {
-		this.lag = lag;
-	}
+    @Override
+    public void makePrediction() {
+        currentPrediction = barTender.getAttendanceAtLag(lag);
+    }
 
-	@Override
-	public String toString() {
-		return "LaggedPredictionStrategy [lag=" + lag + " currentPrediction="
-				+ currentPrediction + "]";
-	}
+    public int getLag() {
+        return lag;
+    }
 
-	
+    /**
+     * The time-series lag to use for predicted the next week's attendance.
+     */
+    public void setLag(int lag) {
+        this.lag = lag;
+    }
+
+    @Override
+    public String toString() {
+        return "LaggedPredictionStrategy [lag=" + lag + " currentPrediction="
+          + currentPrediction + "]";
+    }
+
+
 }

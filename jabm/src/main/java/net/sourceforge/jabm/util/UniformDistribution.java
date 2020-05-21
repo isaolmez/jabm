@@ -14,15 +14,14 @@
  */
 package net.sourceforge.jabm.util;
 
-import java.io.Serializable;
-
 import cern.jet.random.Uniform;
 import cern.jet.random.engine.RandomEngine;
+import java.io.Serializable;
 
 public class UniformDistribution extends Uniform implements Serializable {
-	
-	public UniformDistribution(double min, double max, RandomEngine prng) {
-		super(min, max, prng);
-	}
+
+    public UniformDistribution(double min, double max, RandomEngine prng) {
+        super(min, max, prng);
+    }
 
 }

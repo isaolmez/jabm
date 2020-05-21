@@ -14,42 +14,39 @@
  */
 package net.sourceforge.jabm.prng;
 
+import cern.jet.random.engine.MersenneTwister64;
 import java.io.Serializable;
 import java.util.Date;
-
 import org.apache.log4j.Logger;
-
-import cern.jet.random.engine.MersenneTwister64;
 
 public class MersenneTwister extends MersenneTwister64 implements Serializable {
 
-	protected int seed;
-	
-	static Logger logger = Logger.getLogger(MersenneTwister.class);
-	
-	public MersenneTwister() {
-		this(new Date());
-	}
-	
-	public MersenneTwister(Date date) {
-		super(date);
-	}
+    protected int seed;
 
-	public MersenneTwister(int seed) {
-		super(seed);
-	}
+    static Logger logger = Logger.getLogger(MersenneTwister.class);
 
-	@Override
-	public void setSeed(int seed) {
-		super.setSeed(seed);
-		this.seed = seed;
-		logger.debug("seed = " + seed);
-	}
-	
-	public int getSeed() {
-		return this.seed;
-	}
-	
-	
-	
+    public MersenneTwister() {
+        this(new Date());
+    }
+
+    public MersenneTwister(Date date) {
+        super(date);
+    }
+
+    public MersenneTwister(int seed) {
+        super(seed);
+    }
+
+    @Override
+    public void setSeed(int seed) {
+        super.setSeed(seed);
+        this.seed = seed;
+        logger.debug("seed = " + seed);
+    }
+
+    public int getSeed() {
+        return this.seed;
+    }
+
+
 }

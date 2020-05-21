@@ -16,53 +16,51 @@
 package net.sourceforge.jabm.learning;
 
 
-
-import java.io.Serializable;
-
-import net.sourceforge.jabm.report.DataWriter;
-import net.sourceforge.jabm.util.FixedLengthQueue;
-import net.sourceforge.jabm.util.Prototypeable;
 import cern.jet.random.AbstractContinousDistribution;
 import cern.jet.random.Uniform;
 import cern.jet.random.engine.RandomEngine;
+import java.io.Serializable;
+import net.sourceforge.jabm.report.DataWriter;
+import net.sourceforge.jabm.util.FixedLengthQueue;
+import net.sourceforge.jabm.util.Prototypeable;
 
 /**
- * maintains a sliding window over the trained data series and use the average
- * of data items falling into the window as the output learned.
- * 
+ * maintains a sliding window over the trained data series and use the average of data items falling into the window as
+ * the output learned.
+ *
  * @author Jinzhong Niu
  * @version $Revision: 104 $
  */
 
 public class SlidingWindowLearner extends AbstractLearner implements
-    MimicryLearner, SelfKnowledgable, Prototypeable, Serializable {
-	
-	protected AbstractContinousDistribution randomParamDistribution;
+  MimicryLearner, SelfKnowledgable, Prototypeable, Serializable {
 
-	/**
-	 * A parameter used to adjust the size of the window
-	 */
-	protected int windowSize = 4;
+    protected AbstractContinousDistribution randomParamDistribution;
 
-	public static final String P_WINDOWSIZE = "windowsize";
+    /**
+     * A parameter used to adjust the size of the window
+     */
+    protected int windowSize = 4;
 
-	/**
-	 * The current output level.
-	 */
-	protected double currentOutput;
+    public static final String P_WINDOWSIZE = "windowsize";
 
-	public static final String P_DEF_BASE = "slidingwindowlearner";
+    /**
+     * The current output level.
+     */
+    protected double currentOutput;
 
-	protected FixedLengthQueue memory;
+    public static final String P_DEF_BASE = "slidingwindowlearner";
 
-	public SlidingWindowLearner(RandomEngine prng) {
-		randomParamDistribution = new Uniform(1, 10, prng);
-	}
-	
-	public SlidingWindowLearner(
-			AbstractContinousDistribution randomParamDistribution) {
-		this.randomParamDistribution = randomParamDistribution;
-	}
+    protected FixedLengthQueue memory;
+
+    public SlidingWindowLearner(RandomEngine prng) {
+        randomParamDistribution = new Uniform(1, 10, prng);
+    }
+
+    public SlidingWindowLearner(
+      AbstractContinousDistribution randomParamDistribution) {
+        this.randomParamDistribution = randomParamDistribution;
+    }
 
 //	public void setup(ParameterDatabase parameters, Parameter base) {
 //		super.setup(parameters, base);
@@ -73,72 +71,72 @@ public class SlidingWindowLearner extends AbstractLearner implements
 //		initialise();
 //	}
 
-	public void initialise() {
-		createMemory();
-	}
+    public void initialise() {
+        createMemory();
+    }
 
-	public void reset() {
-		if (memory != null) {
-			memory.reset();
-		}
-	}
+    public void reset() {
+        if (memory != null) {
+            memory.reset();
+        }
+    }
 
-	public void randomInitialise() {
-		windowSize = randomParamDistribution.nextInt();
-	}
+    public void randomInitialise() {
+        windowSize = randomParamDistribution.nextInt();
+    }
 
-	public void setWindowSize(int windowSize) {
-		this.windowSize = windowSize;
-	}
+    public void setWindowSize(int windowSize) {
+        this.windowSize = windowSize;
+    }
 
-	public int getWindowSize() {
-		return windowSize;
-	}
+    public int getWindowSize() {
+        return windowSize;
+    }
 
-	protected void createMemory() {
-		assert (windowSize >= 1);
-		memory = new FixedLengthQueue(windowSize);
-	}
+    protected void createMemory() {
+        assert (windowSize >= 1);
+        memory = new FixedLengthQueue(windowSize);
+    }
 
-	public double act() {
-		return currentOutput;
-	}
+    public double act() {
+        return currentOutput;
+    }
 
-	public void train(double target) {
-		memory.newData(target);
-		currentOutput = memory.getMean();
-	}
+    public void train(double target) {
+        memory.newData(target);
+        currentOutput = memory.getMean();
+    }
 
-	public void dumpState(DataWriter out) {
-		// TODO
-	}
+    public void dumpState(DataWriter out) {
+        // TODO
+    }
 
-	public double getCurrentOutput() {
-		return currentOutput;
-	}
+    public double getCurrentOutput() {
+        return currentOutput;
+    }
 
-	/**
-	 * no effect on FixedLengthQueue-based next output!
-	 */
-	public void setOutputLevel(double currentOutput) {
-		this.currentOutput = currentOutput;
-	}
+    /**
+     * no effect on FixedLengthQueue-based next output!
+     */
+    public void setOutputLevel(double currentOutput) {
+        this.currentOutput = currentOutput;
+    }
 
-	public double getLearningDelta() {
-		return 0;
-	}
+    public double getLearningDelta() {
+        return 0;
+    }
 
-	public Object protoClone() {
-		SlidingWindowLearner clone = new SlidingWindowLearner(this.randomParamDistribution);
-		clone.setWindowSize(windowSize);
-		return clone;
-	}
+    public Object protoClone() {
+        SlidingWindowLearner clone = new SlidingWindowLearner(this.randomParamDistribution);
+        clone.setWindowSize(windowSize);
+        return clone;
+    }
 
-	public String toString() {
-		return "(" + getClass().getSimpleName() + " windowSize:" + windowSize + ")";
-	}
+    public String toString() {
+        return "(" + getClass().getSimpleName() + " windowSize:" + windowSize + ")";
+    }
 
-	public boolean goodEnough() {
-		return memory.count() >= windowSize;
-	}
+    public boolean goodEnough() {
+        return memory.count() >= windowSize;
+    }
 }

@@ -14,88 +14,84 @@
  */
 package net.sourceforge.jabm.learning;
 
-import net.sourceforge.jabm.prng.DiscreteProbabilityDistribution;
 import cern.jet.random.engine.RandomEngine;
+import net.sourceforge.jabm.prng.DiscreteProbabilityDistribution;
 
 /**
  * <p>
  * An implementation of the softmax action selection policy.
  * </p>
- * 
+ *
  * <p>
- * See:<br>
- * Sutton, R. S., Barto, A. G., 1998. Reinforcement Learning: An Introduction.
- * MIT Press.<br>
+ * See:<br> Sutton, R. S., Barto, A. G., 1998. Reinforcement Learning: An Introduction. MIT Press.<br>
  * </p>
- * 
+ *
  * @author Steve Phelps
- * 
  */
 public class SoftMaxActionSelector implements ActionSelector {
 
-	protected RandomEngine prng;
-	
-	/**
-	 * The "temperature" used to modulate the propensity distribution.
-	 */
-	protected double tau;
-	
-	public SoftMaxActionSelector() {
-		super();
-	}
-	
-	public SoftMaxActionSelector(RandomEngine prng, double tau) {
-		super();
-		this.prng = prng;
-		this.tau = tau;
-	}
+    protected RandomEngine prng;
 
-	@Override
-	public int act(int state, MDPLearner learner) {
-		double q[] = learner.getValueEstimates(state);
-		double p[] = new double[q.length];
-		double total = 0;
-		double totalQ = 0;
-		for(int i=0; i<p.length; i++) {
-			double propensity = Math.exp(q[i]/tau);
-			p[i] = propensity;
-			total += propensity;
-			totalQ += q[i];
-		}
-		if (Math.abs(totalQ) > 10e-6) {
-			for(int i=0; i<q.length; i++) {
-				p[i] = p[i] / total;
-			}
-		} else {
-			for(int i=0; i<q.length; i++) {
-				p[i] = 1.0/(double) q.length;
-			}
-		}
-		
-		DiscreteProbabilityDistribution dist = 
-			new DiscreteProbabilityDistribution(prng, p);
-		return dist.generateRandomEvent();
-	}
+    /**
+     * The "temperature" used to modulate the propensity distribution.
+     */
+    protected double tau;
 
-	public RandomEngine getPrng() {
-		return prng;
-	}
+    public SoftMaxActionSelector() {
+        super();
+    }
 
-	public void setPrng(RandomEngine prng) {
-		this.prng = prng;
-	}
+    public SoftMaxActionSelector(RandomEngine prng, double tau) {
+        super();
+        this.prng = prng;
+        this.tau = tau;
+    }
 
-	public double getTau() {
-		return tau;
-	}
+    @Override
+    public int act(int state, MDPLearner learner) {
+        double q[] = learner.getValueEstimates(state);
+        double p[] = new double[q.length];
+        double total = 0;
+        double totalQ = 0;
+        for (int i = 0; i < p.length; i++) {
+            double propensity = Math.exp(q[i] / tau);
+            p[i] = propensity;
+            total += propensity;
+            totalQ += q[i];
+        }
+        if (Math.abs(totalQ) > 10e-6) {
+            for (int i = 0; i < q.length; i++) {
+                p[i] = p[i] / total;
+            }
+        } else {
+            for (int i = 0; i < q.length; i++) {
+                p[i] = 1.0 / (double) q.length;
+            }
+        }
 
-	/**
-	 * @param tau  The "temperature" used to modulate the propensities.
-	 */
-	public void setTau(double tau) {
-		this.tau = tau;
-	}
+        DiscreteProbabilityDistribution dist =
+          new DiscreteProbabilityDistribution(prng, p);
+        return dist.generateRandomEvent();
+    }
 
-	
-	
+    public RandomEngine getPrng() {
+        return prng;
+    }
+
+    public void setPrng(RandomEngine prng) {
+        this.prng = prng;
+    }
+
+    public double getTau() {
+        return tau;
+    }
+
+    /**
+     * @param tau The "temperature" used to modulate the propensities.
+     */
+    public void setTau(double tau) {
+        this.tau = tau;
+    }
+
+
 }

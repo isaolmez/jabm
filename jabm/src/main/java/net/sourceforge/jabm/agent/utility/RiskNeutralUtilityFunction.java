@@ -17,24 +17,24 @@ package net.sourceforge.jabm.agent.utility;
 import java.io.Serializable;
 
 public class RiskNeutralUtilityFunction extends AbstractUtilityFunction
-		implements Serializable, UtilityFunction {
+  implements Serializable, UtilityFunction {
 
-	protected double coefficient = 1.0;
-	
-	public RiskNeutralUtilityFunction() {
-		super();
-	}
+    protected double coefficient = 1.0;
 
-	public double calculatePayoff(double profit) {
-		return coefficient * profit;
-	}
+    public RiskNeutralUtilityFunction() {
+        super();
+    }
 
-	public double getCoefficient() {
-		return coefficient;
-	}
+    public double calculatePayoff(double profit) {
+        return coefficient * profit;
+    }
 
-	public void setCoefficient(double coefficient) {
-		this.coefficient = coefficient;
-	}
-	
+    public double getCoefficient() {
+        return coefficient;
+    }
+
+    public void setCoefficient(double coefficient) {
+        this.coefficient = coefficient;
+    }
+
 }

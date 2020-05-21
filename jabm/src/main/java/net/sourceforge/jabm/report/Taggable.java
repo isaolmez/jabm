@@ -16,8 +16,8 @@ package net.sourceforge.jabm.report;
 
 public interface Taggable {
 
-	public void setTag(String tag);
-	
-	public String getTag();
-	
+    public void setTag(String tag);
+
+    public String getTag();
+
 }

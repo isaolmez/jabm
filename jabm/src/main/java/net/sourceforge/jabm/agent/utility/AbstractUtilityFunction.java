@@ -17,11 +17,11 @@ package net.sourceforge.jabm.agent.utility;
 import java.io.Serializable;
 
 public abstract class AbstractUtilityFunction implements Serializable,
-		UtilityFunction {
+  UtilityFunction {
 
-	public AbstractUtilityFunction() {
-		super();
-	}
+    public AbstractUtilityFunction() {
+        super();
+    }
 
 
 }

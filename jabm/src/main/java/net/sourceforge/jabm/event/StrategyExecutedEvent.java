@@ -17,32 +17,29 @@ package net.sourceforge.jabm.event;
 import net.sourceforge.jabm.strategy.Strategy;
 
 /**
- * An event that is fired whenever a strategy implementing ExecutableStrategy is
- * executed by an agent.
- * 
+ * An event that is fired whenever a strategy implementing ExecutableStrategy is executed by an agent.
+ *
  * @author Steve Phelps
- * 
  */
 public class StrategyExecutedEvent extends SimEvent {
 
-	/**
-	 * The strategy that was executed.
-	 */
-	protected Strategy strategy;
+    /**
+     * The strategy that was executed.
+     */
+    protected Strategy strategy;
 
-	public StrategyExecutedEvent(Strategy strategy) {
-		super();
-		this.strategy = strategy;
-	}
+    public StrategyExecutedEvent(Strategy strategy) {
+        super();
+        this.strategy = strategy;
+    }
 
-	public Strategy getStrategy() {
-		return strategy;
-	}
+    public Strategy getStrategy() {
+        return strategy;
+    }
 
-	public void setStrategy(Strategy strategy) {
-		this.strategy = strategy;
-	}
-	
-	
-	
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
+
+
 }

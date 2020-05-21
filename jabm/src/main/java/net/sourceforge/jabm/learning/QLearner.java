@@ -15,136 +15,132 @@
 
 package net.sourceforge.jabm.learning;
 
+import cern.jet.random.Uniform;
+import cern.jet.random.engine.RandomEngine;
 import java.io.Serializable;
-
 import net.sourceforge.jabm.report.DataWriter;
 import net.sourceforge.jabm.util.Prototypeable;
 import net.sourceforge.jabm.util.Resetable;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 
-import cern.jet.random.Uniform;
-import cern.jet.random.engine.RandomEngine;
-
 /**
  * <p>
- * An implementation of the Q-learning algorithm. This algorithm is described in
- * Watkins, J. C. H., Dayan, P., 1992. Q-learning. Machine Learning 8, 279-292.
+ * An implementation of the Q-learning algorithm. This algorithm is described in Watkins, J. C. H., Dayan, P., 1992.
+ * Q-learning. Machine Learning 8, 279-292.
  * </p>
- * 
+ *
  * @author Steve Phelps
  * @version $Revision: 189 $
  */
 
 public class QLearner extends AbstractLearner implements MDPLearner, Resetable,
-    	InitializingBean, Serializable, Prototypeable {
+  InitializingBean, Serializable, Prototypeable {
 
-	/**
-	 * The number of possible states
-	 */
-	protected int numStates;
+    /**
+     * The number of possible states
+     */
+    protected int numStates;
 
-	/**
-	 * The number of possible actions
-	 */
-	protected int numActions;
+    /**
+     * The number of possible actions
+     */
+    protected int numActions;
 
-	/**
-	 * The matrix representing the estimated payoff of each possible action in
-	 * each possible state.
-	 */
-	protected double q[][];
+    /**
+     * The matrix representing the estimated payoff of each possible action in each possible state.
+     */
+    protected double q[][];
 
-	/**
-	 * The learning rate.
-	 */
-	protected double learningRate;
+    /**
+     * The learning rate.
+     */
+    protected double learningRate;
 
-	/**
-	 * The discount rate for future payoffs.
-	 */
-	protected double discountRate;
+    /**
+     * The discount rate for future payoffs.
+     */
+    protected double discountRate;
 
 
-	/**
-	 * The previous state
-	 */
-	protected int previousState;
+    /**
+     * The previous state
+     */
+    protected int previousState;
 
-	/**
-	 * The current state
-	 */
-	protected int currentState;
+    /**
+     * The current state
+     */
+    protected int currentState;
 
-	/**
-	 * The last action that was chosen.
-	 */
-	protected int lastActionChosen;
+    /**
+     * The last action that was chosen.
+     */
+    protected int lastActionChosen;
 
-	/**
-	 * The best action for the current state
-	 */
-	protected int bestAction;
-	
-	protected RandomEngine prng;
-	
-	protected ActionSelector actionSelector;
+    /**
+     * The best action for the current state
+     */
+    protected int bestAction;
 
-	protected double initialQValue;
+    protected RandomEngine prng;
 
-	static final double DEFAULT_LEARNING_RATE = 0.5;
+    protected ActionSelector actionSelector;
 
-	static final double DEFAULT_DISCOUNT_RATE = 0.8;
+    protected double initialQValue;
 
-	static Logger logger = Logger.getLogger(QLearner.class);
+    static final double DEFAULT_LEARNING_RATE = 0.5;
 
-	public QLearner(int numStates, int numActions,
-	    double learningRate, double discountRate, RandomEngine prng) {
-		setStatesAndActions(numStates, numActions);
-		this.learningRate = learningRate;
-		this.discountRate = discountRate;
-		this.prng = prng;
-		this.actionSelector = new EpsilonGreedyActionSelector(prng);
-		initialise();
-	}
+    static final double DEFAULT_DISCOUNT_RATE = 0.8;
 
-	public QLearner(RandomEngine prng) {
-		this(0, 0, DEFAULT_LEARNING_RATE, DEFAULT_DISCOUNT_RATE, prng);
-	}
-	
-	public QLearner() {
-		this(null);
-	}
+    static Logger logger = Logger.getLogger(QLearner.class);
 
-	public Object protoClone() {
-		try {
-			QLearner cloned = (QLearner) clone();
-			return cloned;
-		} catch (CloneNotSupportedException e) {
-			logger.error(e.getMessage());
-			throw new Error(e);
-		}
-	}
+    public QLearner(int numStates, int numActions,
+      double learningRate, double discountRate, RandomEngine prng) {
+        setStatesAndActions(numStates, numActions);
+        this.learningRate = learningRate;
+        this.discountRate = discountRate;
+        this.prng = prng;
+        this.actionSelector = new EpsilonGreedyActionSelector(prng);
+        initialise();
+    }
 
-	public void initialise() {
-		q = new double[numStates][numActions];
-		for (int s = 0; s < numStates; s++) {
-			for (int a = 0; a < numActions; a++) {
-				q[s][a] = initialQValue;
-			}
-		}
-		currentState = 0;
-		previousState = 0;
-		bestAction = 0;
-		lastActionChosen = 0;
-	}
+    public QLearner(RandomEngine prng) {
+        this(0, 0, DEFAULT_LEARNING_RATE, DEFAULT_DISCOUNT_RATE, prng);
+    }
 
-	public void setStatesAndActions(int numStates, int numActions) {
-		this.numStates = numStates;
-		this.numActions = numActions;
-		initialise();
-	}
+    public QLearner() {
+        this(null);
+    }
+
+    public Object protoClone() {
+        try {
+            QLearner cloned = (QLearner) clone();
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            logger.error(e.getMessage());
+            throw new Error(e);
+        }
+    }
+
+    public void initialise() {
+        q = new double[numStates][numActions];
+        for (int s = 0; s < numStates; s++) {
+            for (int a = 0; a < numActions; a++) {
+                q[s][a] = initialQValue;
+            }
+        }
+        currentState = 0;
+        previousState = 0;
+        bestAction = 0;
+        lastActionChosen = 0;
+    }
+
+    public void setStatesAndActions(int numStates, int numActions) {
+        this.numStates = numStates;
+        this.numActions = numActions;
+        initialise();
+    }
 
 //	public void setup(ParameterDatabase parameters, Parameter base) {
 //
@@ -166,155 +162,155 @@ public class QLearner extends AbstractLearner implements MDPLearner, Resetable,
 //		setStatesAndActions(numStates, numActions);
 //	}
 
-	public void setState(int newState) {
-		previousState = currentState;
-		currentState = newState;
-	}
+    public void setState(int newState) {
+        previousState = currentState;
+        currentState = newState;
+    }
 
-	public int getState() {
-		return currentState;
-	}
+    public int getState() {
+        return currentState;
+    }
 
-	public int act() {
-		this.lastActionChosen = actionSelector.act(currentState, this);
-		return lastActionChosen;
-	}
+    public int act() {
+        this.lastActionChosen = actionSelector.act(currentState, this);
+        return lastActionChosen;
+    }
 
-	public void newState(double reward, int newState) {
-		updateQ(reward, newState);
-		setState(newState);
-	}
+    public void newState(double reward, int newState) {
+        updateQ(reward, newState);
+        setState(newState);
+    }
 
-	protected void updateQ(double reward, int newState) {
-		q[currentState][lastActionChosen] = learningRate
-		    * (reward + discountRate * maxQ(newState)) + (1 - learningRate)
-		    * q[currentState][lastActionChosen];
-	}
+    protected void updateQ(double reward, int newState) {
+        q[currentState][lastActionChosen] = learningRate
+          * (reward + discountRate * maxQ(newState)) + (1 - learningRate)
+          * q[currentState][lastActionChosen];
+    }
 
-	public double maxQ(int newState) {
-		Uniform dist = new Uniform(0, numActions-1, prng);
-		bestAction = dist.nextInt();
-		double max = q[newState][bestAction];
-		for (int a = 0; a < numActions; a++) {
-			if (q[newState][a] > max) {
-				max = q[newState][a];
-				bestAction = a;
-			}
-		}
-		return max;
-	}
-	
-	public int worstAction(int state) {
-		int result = 0;
-		double min = Double.POSITIVE_INFINITY;
-		for (int a = 0; a < numActions; a++) {
-			if (q[state][a] > min) {
-				min = q[state][a];
-			}
-		}
-		return result;
-	}
+    public double maxQ(int newState) {
+        Uniform dist = new Uniform(0, numActions - 1, prng);
+        bestAction = dist.nextInt();
+        double max = q[newState][bestAction];
+        for (int a = 0; a < numActions; a++) {
+            if (q[newState][a] > max) {
+                max = q[newState][a];
+                bestAction = a;
+            }
+        }
+        return max;
+    }
 
-	public int bestAction(int state) {
-		maxQ(state);
-		return bestAction;
-	}
+    public int worstAction(int state) {
+        int result = 0;
+        double min = Double.POSITIVE_INFINITY;
+        for (int a = 0; a < numActions; a++) {
+            if (q[state][a] > min) {
+                min = q[state][a];
+            }
+        }
+        return result;
+    }
 
-	public void reset() {
-		initialise();
-	}
+    public int bestAction(int state) {
+        maxQ(state);
+        return bestAction;
+    }
 
-	public void setDiscountRate(double discountRate) {
-		this.discountRate = discountRate;
-	}
+    public void reset() {
+        initialise();
+    }
 
-	public double getDiscountRate() {
-		return discountRate;
-	}
+    public void setDiscountRate(double discountRate) {
+        this.discountRate = discountRate;
+    }
 
-	public int getLastActionChosen() {
-		return lastActionChosen;
-	}
+    public double getDiscountRate() {
+        return discountRate;
+    }
 
-	public double getLearningDelta() {
-		return 0; // TODO
-	}
+    public int getLastActionChosen() {
+        return lastActionChosen;
+    }
 
-	public void dumpState(DataWriter out) {
-		// TODO
-	}
+    public double getLearningDelta() {
+        return 0; // TODO
+    }
 
-	public int getNumberOfActions() {
-		return numActions;
-	}
+    public void dumpState(DataWriter out) {
+        // TODO
+    }
 
-	
-	public double getLearningRate() {
-		return learningRate;
-	}
-	
-	public void setLearningRate(double learningRate) {
-		this.learningRate = learningRate;
-	}
+    public int getNumberOfActions() {
+        return numActions;
+    }
 
-	public int getNumberOfStates() {
-		return numStates;
-	}
-	
-	public void setNumberOfStates(int numStates) {
-		this.numStates = numStates;
-	}
 
-	public void setNumberOfActions(int numActions) {
-		this.numActions = numActions;
-	}
+    public double getLearningRate() {
+        return learningRate;
+    }
 
-	public int getPreviousState() {
-		return previousState;
-	}
-	
-	public RandomEngine getPrng() {
-		return prng;
-	}
+    public void setLearningRate(double learningRate) {
+        this.learningRate = learningRate;
+    }
 
-	public void setPrng(RandomEngine prng) {
-		this.prng = prng;
-	}
+    public int getNumberOfStates() {
+        return numStates;
+    }
 
-	public ActionSelector getActionSelector() {
-		return actionSelector;
-	}
+    public void setNumberOfStates(int numStates) {
+        this.numStates = numStates;
+    }
 
-	public void setActionSelector(ActionSelector actionSelector) {
-		this.actionSelector = actionSelector;
-	}
+    public void setNumberOfActions(int numActions) {
+        this.numActions = numActions;
+    }
 
-	public String toString() {
-		return "(" + getClass() + " lastActionChosen:" + lastActionChosen
-		    + " actionSelector:" + actionSelector + " learningRate:" + learningRate
-		    + " discountRate:" + discountRate + ")";
-	}
+    public int getPreviousState() {
+        return previousState;
+    }
 
-	public double getValueEstimate(int action) {
-		return q[this.currentState][action];
-	}
+    public RandomEngine getPrng() {
+        return prng;
+    }
 
-	public void setInitialQValue(double initialQValue) {
-		this.initialQValue = initialQValue;
-	}
-	
-	public double getInitialQValue() {
-		return this.initialQValue;
-	}
+    public void setPrng(RandomEngine prng) {
+        this.prng = prng;
+    }
 
-	@Override
-	public double[] getValueEstimates(int state) {
-		return this.q[state];
-	}
+    public ActionSelector getActionSelector() {
+        return actionSelector;
+    }
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		initialise();
-	}
+    public void setActionSelector(ActionSelector actionSelector) {
+        this.actionSelector = actionSelector;
+    }
+
+    public String toString() {
+        return "(" + getClass() + " lastActionChosen:" + lastActionChosen
+          + " actionSelector:" + actionSelector + " learningRate:" + learningRate
+          + " discountRate:" + discountRate + ")";
+    }
+
+    public double getValueEstimate(int action) {
+        return q[this.currentState][action];
+    }
+
+    public void setInitialQValue(double initialQValue) {
+        this.initialQValue = initialQValue;
+    }
+
+    public double getInitialQValue() {
+        return this.initialQValue;
+    }
+
+    @Override
+    public double[] getValueEstimates(int state) {
+        return this.q[state];
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        initialise();
+    }
 
 }

@@ -15,22 +15,20 @@
 package net.sourceforge.jabm.event;
 
 import java.io.Serializable;
-
 import net.sourceforge.jabm.Simulation;
 
 /**
  * An event that is fired after a simulation tick (round) has finished.
- *  
- * @author Steve Phelps
  *
+ * @author Steve Phelps
  */
 public class RoundFinishedEvent extends SimulationEvent implements Serializable {
 
-	public RoundFinishedEvent(Simulation simulation) {
-		super(simulation);
-	}
-	
-	public RoundFinishedEvent() {
-	}
+    public RoundFinishedEvent(Simulation simulation) {
+        super(simulation);
+    }
+
+    public RoundFinishedEvent() {
+    }
 
 }

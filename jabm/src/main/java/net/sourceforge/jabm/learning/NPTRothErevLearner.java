@@ -19,49 +19,47 @@ import cern.jet.random.engine.RandomEngine;
 
 /**
  * <p>
- * A modification of RothErev to address parameter degeneracy, and modified
- * learning with 0-reward. These modifications are made in the context of using
- * the RE algorithm for trader agents in a double auction. See:
+ * A modification of RothErev to address parameter degeneracy, and modified learning with 0-reward. These modifications
+ * are made in the context of using the RE algorithm for trader agents in a double auction. See:
  * </p>
  * <p>
- * "Market Power and Efficiency in a Computational Electricity Market with
- * Discriminatory Double-Auction Pricing" Nicolaisen, Petrov & Tesfatsion<br>
- * in IEEE Transactions on Evolutionary Computation Vol. 5, No. 5, p 504.
+ * "Market Power and Efficiency in a Computational Electricity Market with Discriminatory Double-Auction Pricing"
+ * Nicolaisen, Petrov & Tesfatsion<br> in IEEE Transactions on Evolutionary Computation Vol. 5, No. 5, p 504.
  * </p>
- * 
+ *
  * @author Steve Phelps
  * @version $Revision: 16 $
  */
 
 public class NPTRothErevLearner extends RothErevLearner {
 
-	
-	public NPTRothErevLearner(int k, double r, double e, double s1,
-			RandomEngine prng) {
-		super(k, r, e, s1, prng);
-	}
 
-	public NPTRothErevLearner(RandomEngine prng) {
-		super(prng);
-	}
-	
-	public NPTRothErevLearner(int k, RandomEngine prng, double[] propensities) {
-		super(k, prng, propensities);
-	}
+    public NPTRothErevLearner(int k, double r, double e, double s1,
+      RandomEngine prng) {
+        super(k, r, e, s1, prng);
+    }
 
-	public NPTRothErevLearner(int k, RandomEngine prng) {
-		super(k, prng);
-	}
+    public NPTRothErevLearner(RandomEngine prng) {
+        super(prng);
+    }
 
-	/**
-	 * The modified update function.
-	 */
-	public double experience(int i, int action, double reward) {
-		if (i == action) {
-			return reward * (1 - e);
-		} else {
-			return q[i] * (e / (double) (k - 1));
-		}
-	}
+    public NPTRothErevLearner(int k, RandomEngine prng, double[] propensities) {
+        super(k, prng, propensities);
+    }
+
+    public NPTRothErevLearner(int k, RandomEngine prng) {
+        super(k, prng);
+    }
+
+    /**
+     * The modified update function.
+     */
+    public double experience(int i, int action, double reward) {
+        if (i == action) {
+            return reward * (1 - e);
+        } else {
+            return q[i] * (e / (double) (k - 1));
+        }
+    }
 
 }
