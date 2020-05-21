@@ -1,48 +1,47 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>jabm-examples</artifactId>
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<archive>
-						<manifest>
-							<mainClass>net.sourceforge.jabm.examples.elfarolbar.Main</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.sourceforge.jabm</groupId>
+        <artifactId>jabm-with-examples</artifactId>
+        <version>0.9.6</version>
+    </parent>
+    <artifactId>jabm-examples</artifactId>
 
-	<distributionManagement>
-		<snapshotRepository>
-		<id>ossrh</id>
-		<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-	</snapshotRepository>
-	<repository>
-		<id>ossrh</id>
-		<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-	</repository>
+    <dependencies>
+        <dependency>
+            <groupId>net.sourceforge.jabm</groupId>
+            <artifactId>jabm</artifactId>
+            <version>0.9.9</version>
+        </dependency>
+    </dependencies>
 
-	</distributionManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>net.sourceforge.jabm.examples.elfarolbar.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-	<dependencies>
-		<dependency>
-			<groupId>net.sourceforge.jabm</groupId>
-			<artifactId>jabm</artifactId>
-			<version>0.9.6</version>
-		</dependency>
-	</dependencies>
-
-	<parent>
-		<groupId>net.sourceforge.jabm</groupId>
-		<artifactId>jabm-with-examples</artifactId>
-		<version>0.9.6</version>
-	</parent>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 </project>
