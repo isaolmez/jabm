@@ -108,9 +108,9 @@ public class SimulationManager implements Runnable {
 		SystemProperties systemProperties = SystemProperties
 				.jabsConfiguration();
 		propFile = systemProperties
-				.getProperty(SystemProperties.PROPERTY_PROPFILE);
+				.getProperty(SystemProperties.PROPERTY_PROP_FILE);
 		varFile = systemProperties.getProperty(
-				SystemProperties.PROPERTY_VARFILE);
+				SystemProperties.PROPERTY_VAR_FILE);
 		baseDirName = systemProperties.getProperty(
 				SystemProperties.PROPERTY_BASE_DIR_NAME, "data");	
 		configOnly = Boolean.parseBoolean(systemProperties.getProperty(

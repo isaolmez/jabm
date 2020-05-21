@@ -49,8 +49,7 @@ public class BeanFactorySingleton {
 		
 		beanFactory = new DefaultListableBeanFactory();
 
-		XmlBeanDefinitionReader reader = 
-				new XmlBeanDefinitionReader(beanFactory);
+		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 		
 		// Caching must be disabled for
